@@ -1,7 +1,11 @@
+
+
 [TOC]
 
 #  Einleitung
-Ein Widget ist ein Desktop-Zubehör, welches ein sehr einfaches User Interface besitzt und unter allen anderen Anwendungen und Desktop Icons angezeigt wird.
+Im Sinne des FSST Wahlpflichtfaches soll eine Gruppenarbeit im Ramen einer Desktop-Applikation erstellt werden.
+
+In dieser Projektarbeit handelt es sich um ein sogenanntes "Widget", dies ist ein Desktop-Zubehör, welches ein sehr einfaches User Interface besitzt und unter allen anderen Anwendungen und Desktop Icons angezeigt wird.
 
 # Allgemeines
 
@@ -11,7 +15,7 @@ Hierbei wird ein "Wetter Widget" erstellt, welches das derzeitige Wetter und die
 Durch ein Unterformular kann der derzeitige Standort ausgewählt werden
 
 ## Bereits bestehende Systeme oder Produkte
->Bestehen eventuell projektbezogene Systeme oder Produkte, die bereits vom Auftraggeber erledigt wurden und nun nicht mehr vom Auftragnehmer umgesetzt werden müssen? Sofern diese trotzdem für das Projekt relevant sind, erwähnen Sie sie ebenfalls im Pflichtenheft.
+ -
 
 ## Teams und Schnittstellen
 Team-Mitglieder:
@@ -28,26 +32,46 @@ Speicher:
 | Abkürzung | Bedeutung            |
 | --------- | -------------------- |
 | `MVVM`    | Model-View-ViewModel |
+| Branch    | Arbeitszweig in Git  |
 
 
 
 ## Rahmenbedingungen
->Hier gehen Sie zum Beispiel auf die gesamte Bearbeitungszeit ein. Beschreiben Sie ruhig auch die geplanten Betriebs- und Arbeitszeiten.
+Hierbei werden Anfangs im GitLab Repo mehrere Tickets erstellt, welche einem Team-Mitglied zugeteilt werden. Anschließend erstellt das zugeteilte Team-Mitglied einen entsprechenden Branch für das Ticket. Bei Vervollständigung des Tickets wird der Branch in den Main-Branch gemerged.
 
 # Technische Anforderungen
->Hier halten Sie fest, was Sie für die Umsetzung brauchen – zum Beispiel Hard- und Software. An dieser Stelle ist es sinnvoll auszuführen, welches Equipment Sie für welche Aufgabe benötigen.
+- IDE 
+  - VS 2019 / 2022
+- Nuget-Packages
+  - SQL Package
+- API
+  - OpenWeather API
 
 # Problemanalyse
- >Fassen Sie die wichtigsten Probleme zusammen, die Sie erwarten. Wichtig ist vor allem, dass Sie für die wahrscheinlichsten Probleme bereits einen Lösungsansatz formulieren, um später Zeit zu sparen. Machen Sie sich auch über unwahrscheinliche Probleme Gedanken.
+- [ ] UI nicht auf Icon-Ebene anzeigbar
+  - Mögliche Lösung: Applikation unter allen Fenstern anzeigen, um dem Nutzer somit das Gefühl zu geben, als wäre es auf der gleichen Ebene
 
 #  Qualität
-  >Welche Anforderungen stellen Sie an die Qualität? Beschreiben Sie auch, wie die Qualitätssicherung, -kontrolle und -abnahme aussieht.
+- Widget
+  - Applikation soll nicht in Taskbar angezeigt werden
+  - Applikation soll sich unter allen anderen Fenstern befinden
+  - Der User soll das Gefühl bekommen, dass sich die Applikation auf direkter Ebene mit den Desktop-Icons befindet.
+- Einhaltung des MVVM 
+  - Keine direkte Abhängigkeit -> Wird in Anforderung genauer beschrieben
 
 #  Anforderungen
 Funktionale Anforderungen sind gewünschte Funktionalitäten oder Verhalten eines Systems bzw. Produkts. Sie beschreiben, was das zu entwickelnde Produkt tun oder können soll. Nichtfunktionale Anforderungen betreffen z.B. das Design und die user experience (UX).
-## Anforderung 1
-## Anforderung 2
-## Anforderung 3
+## Anforderung 1 : MVVM
+
+Das gesamte Projekt sollte dem MVVM System entsprechen. D.H. Es müssen alle Elemente der Applikation "lose" miteinander verknüpft werden. Es darf sich beispielsweise kein Element der UI-Ebene (View) direkt auf ein Klasse im Hintergrund (Model) beziehen. Dazwischen sollte immer ein passendes ViewModel stehen. Auch sollen alle Aufträge welche im UI durch den User ausgelöst werden, mit Hilfe von Commands durchgeführt werden.
+
+## Anforderung 2 : API-Abruf
+
+Die Wetterdaten sollen automatisch bei Online-Nutzung der Applikation mit Hilfe der API heruntergeladen werden
+
+## Anforderung 3 : Offline Nutzung
+
+Die Applikation soll komplett offline Nutzbar sein. D.H. dass Die Daten der API in die lokale Datenbank gespeichert werden und diese (im Offline Modus) wieder aus der Datenbank gelesen werden können
 
 # Projektentwicklung
 >Hier soll als erstes auch die grundsätzliche Struktur der Anwendung beschrieben werden. Welche Art von Anwendung (z.B. Konsolen- oder WPF-Anwendung)? Wie ist die Anwendung strukturiert (z.B. Frontend und Library)? Welche Klassen sind zu erwarten, welches Klassendesign?
