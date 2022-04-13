@@ -1,12 +1,9 @@
-﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Text;
+﻿using System.ComponentModel;
 
 namespace weather_widget.ViewModel
 {
     /// <summary>
-    /// Basis, von welcher alle ViewModels erben -> Einfacher INotifyPropertyChanged einzubinden
+    /// Basis which other viewmodels inherit from -> Easier to implement INotifyPropertyChanged 
     /// </summary>
 
     public class ViewModelBase : INotifyPropertyChanged

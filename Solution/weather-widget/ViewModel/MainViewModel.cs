@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using weather_widget.Store;
+﻿using weather_widget.Store;
 
 namespace weather_widget.ViewModel
 {

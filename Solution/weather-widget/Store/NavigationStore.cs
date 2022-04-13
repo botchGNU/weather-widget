@@ -1,12 +1,10 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using weather_widget.ViewModel;
 
 namespace weather_widget.Store
 {
     /// <summary>
-    /// Speichert und navigiert derzeitiges ViewModel
+    /// Stores the current viewmodel
     /// </summary>
     public class NavigationStore
     {
@@ -21,6 +19,7 @@ namespace weather_widget.Store
                 OnCurrentViewModelChanged();
             }
         }
+
 
         public event Action CurrentViewModelChanged;
 

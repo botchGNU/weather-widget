@@ -4,6 +4,8 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:weather_widget"
+        xmlns:viewmodel="clr-namespace:weather_widget.ViewModel"
+        xmlns:view="clr-namespace:weather_widget.View"
         mc:Ignorable="d"
         Title="MainWindow" 
         Height="200" Width="310"
@@ -11,7 +13,21 @@
         AllowsTransparency="True"
         Background="#99292929"
         ShowInTaskbar="False">
+    
     <Grid>
-
+        
+        <!-- Display correct view depending on viewmodel-->
+        <Grid.Resources>
+            <DataTemplate DataType="{x:Type viewmodel:SettingsViewModel}">
+                <view:SettingsView/>
+            </DataTemplate>
+            <DataTemplate DataType="{x:Type viewmodel:DashboardViewModel}">
+                <view:DashboardView/>
+            </DataTemplate>
+        </Grid.Resources>
+        
+        <!-- Use the current viewmodel as content control-->
+        <ContentControl Content="{Binding CurrentViewModel}"/>
+        
     </Grid>
 </Window>
