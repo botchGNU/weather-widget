@@ -5,3 +5,7 @@ https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2 ... Icon
 Installed Pycharm -> Convert Cities (JSON-File) to SQLite-File -> Try to req.
 
 Converting into SQLite-File --> \2h
+
+## 14-04-2022 - Thursday
+
+Model for weather information `weatherinfomodel`
