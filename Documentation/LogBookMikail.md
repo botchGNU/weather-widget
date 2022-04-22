@@ -8,4 +8,7 @@ Converting into SQLite-File --> \2h
 
 ## 14-04-2022 - Thursday
 
-Model for weather information `weatherinfomodel`
+Model for weather information `weatherInfoModel `--> \1/2h
+
+Start with API-Manager --> \1/2h
+
