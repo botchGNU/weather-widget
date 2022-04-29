@@ -1,5 +1,16 @@
+# Bugs
+
+- [ ] 
+
+# ToDo
+
+- [ ] Start with `Database-Manager`
+- [ ] Create database for weather info
+
+# Log
 
 ## 08-04-2022 - Friday
+
 organising project folder/files/ ... on gitlab
 https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2 ... Icons for different weather
 
