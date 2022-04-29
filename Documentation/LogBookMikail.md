@@ -12,3 +12,9 @@ Model for weather information `weatherInfoModel `--> \1/2h
 
 Start with API-Manager --> \1/2h
 
+JSON Converter --> https://github.com/kerminator-dev/WeatherWidget/blob/main/src/WeatherWidget/WeatherWidget/Models/JSON/OpenWeatherJSON.cs change code to my needs \2h
+
+TO DO: Pflichtenheft, UI-Entwürfe, Aufteilung Arbeitspakete, Klassendiagramme, ER-Diagramme
+
+till 02.05 --> per E-Mail
+

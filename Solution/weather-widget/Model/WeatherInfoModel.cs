@@ -4,28 +4,70 @@ using System.Text;
 
 namespace weather_widget.Model
 {
+
+    /// <Zusammenfassung>
+    /// Weather status (each object should have weather data in 3 hour intervals)
+    /// </summary>
     class WeatherInfoModel
     {
         #region properties
+        /// <summary>
+        /// Description of current weather
+        /// </summary>
+        public string WeatherDescription { get; set; }
 
-        // Description of current weather
-        public string Weather { get; set; }
-        // Weathericon path --> Weathericon; for displaying the icon e.g. xxxFOLDERxxx/icons/04d.png
+        /// <summary>
+        /// Weathericon path --> Weathericon; for displaying the icon e.g. xxxFOLDERxxx/icons/04d.png
+        /// </summary>
         public string WeatherIcon { get; set; }
-        // Weatherday as day of week
-        public string WeatherDay { get; set; }
-        // Temperature in Celsius
-        public string Temperature { get; set; }
-        // Max. Temperature in Celsius
-        public string MaxTemperature { get; set; }
-        // Min. Temperature in Celsius
-        public string MinTemperature { get; set; }
-        // Wind direction as text
-        public string WindDirection { get; set; }
-        // Wind speed in m/s
-        public string WindSpeed { get; set; }
-        // Humidity in %
-        public string Humidity { get; set; }
+
+
+        /// <summary>
+        /// Weatherday: Datetime
+        /// </summary>
+        public DateTime WeatherDayTime { get; set; }
+
+
+        /// <summary>
+        /// Max. Temperature in Celsius
+        /// </summary>
+        public double MaxTemperature { get; set; }
+
+
+        /// <summary>
+        /// Min. Temperature in Celsius
+        /// </summary>
+        public double MinTemperature { get; set; }
+
+
+        /// <summary>
+        /// Wind direction as a value
+        /// </summary>
+        public double WindDirection { get; set; }
+
+
+        /// <summary>
+        /// Wind speed in m/s
+        /// </summary>
+        public double WindSpeed { get; set; }
+
+
+        /// <summary>
+        /// Humidity in %
+        /// </summary>
+        public double Humidity { get; set; }
         #endregion
+
+        public WeatherInfoModel(string weatherdesc, string weathericon, DateTime weatherdaytime, double maxtemp, double mintemp, double winddir, double windspeed, double humidity)
+        {
+            WeatherDescription = weatherdesc;
+            WeatherIcon = weathericon;
+            WeatherDayTime = weatherdaytime;
+            MaxTemperature = maxtemp;
+            MinTemperature = mintemp;
+            WindDirection = winddir;
+            WindSpeed = windspeed;
+            Humidity = humidity;
+        }
     }
 }
