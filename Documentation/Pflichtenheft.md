@@ -15,7 +15,9 @@ Hierbei wird ein "Wetter Widget" erstellt, welches das derzeitige Wetter und die
 Durch ein Unterformular kann der derzeitige Standort ausgewählt werden
 
 ## Bereits bestehende Systeme oder Produkte
- -
+ - [Icons](https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2)
+ - [JSON Converter](https://github.com/kerminator-dev/WeatherWidget/blob/main/src/WeatherWidget/WeatherWidget/Models/JSON/OpenWeatherJSON.cs)
+ - [Inspiration](https://github.com/kerminator-dev/WeatherWidget)
 
 ## Teams und Schnittstellen
 Team-Mitglieder:
@@ -27,6 +29,11 @@ Speicher:
 
 - GitLab
 - GitHub (Mirror)
+
+Schnittstellen:
+- API
+- Datenbank
+Nachdem die Daten aus dem Internet geholt wurden, werden dies in einer Datenbank abgespeichert und von dort aus abgerufen.
 
 ## Abkürzungen
 | Abkürzung | Bedeutung            |
@@ -74,6 +81,15 @@ Die Wetterdaten sollen automatisch bei Online-Nutzung der Applikation mit Hilfe 
 Die Applikation soll komplett offline Nutzbar sein. D.H. dass Die Daten der API in die lokale Datenbank gespeichert werden und diese (im Offline Modus) wieder aus der Datenbank gelesen werden können
 
 # Projektentwicklung
+
+| Open                      | In Progress                    | Closed  | \|   | All                                        | Member |
+| ------------------------- | ------------------------------ | ------- | ---- | ------------------------------------------ | ------ |
+| ViewModels                | API-Manager, Model Weatherinfo | API-Key | \|   | API-Key                                    | Mikail |
+| (Database-Update-Manager) | basic MVVM structure           |         | \|   | API-Manager,Model Weatherinfo              | Mikail |
+| Database-Manager          |                                |         | \|   | ViewModels                                 | Tim    |
+|                           |                                |         | \|   | basic MVVM structure                       | Tim    |
+|                           |                                |         | \|   | Database-Manager (Database-Update-Manager) | Mikail |
+
 >Hier soll als erstes auch die grundsätzliche Struktur der Anwendung beschrieben werden. Welche Art von Anwendung (z.B. Konsolen- oder WPF-Anwendung)? Wie ist die Anwendung strukturiert (z.B. Frontend und Library)? Welche Klassen sind zu erwarten, welches Klassendesign?
 >
 >Beschreiben Sie genau, wann, was passiert und wie das gesamte Projekt organisiert ist. Hier ist Das Projekt in kleinere Aufgabenbereiche einzuteilen, diese exakt zu beschreiben, der notwendige Arbeitsaufwand zu schätzen **und** zu protokollieren. Dazu können sogenannte Tickets dienen.
