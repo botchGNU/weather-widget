@@ -10,7 +10,7 @@ namespace weather_widget.Model
 {
     class APIManagerModel
     {
-        private static string API_KEY = "809a3aafdef755e5e0e431bd7bc48824";
+        private static string API_KEY = "YOUR-API_KEY";
 
         // TO DO: Do this in DataBase Manager
         #region private constants for units
