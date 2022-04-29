@@ -98,7 +98,7 @@ Die Applikation soll komplett offline Nutzbar sein. D.H. dass Die Daten der API 
 ### Tim
 [Log-Buch Tim](./LogBookTim.md)
 ### Mikail
-[Log-Buch Mikail](./LogBookTim.md)
+[Log-Buch Mikail](./LogBookMikail.md)
 
 >Hier soll als erstes auch die grundsätzliche Struktur der Anwendung beschrieben werden. Welche Art von Anwendung (z.B. Konsolen- oder WPF-Anwendung)? Wie ist die Anwendung strukturiert (z.B. Frontend und Library)? Welche Klassen sind zu erwarten, welches Klassendesign?
 >
