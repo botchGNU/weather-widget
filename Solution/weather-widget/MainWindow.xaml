@@ -7,7 +7,7 @@
         xmlns:viewmodel="clr-namespace:weather_widget.ViewModel"
         xmlns:view="clr-namespace:weather_widget.View"
         mc:Ignorable="d"
-        Title="MainWindow" 
+        Title="WeatherWidget" 
         Height="200" Width="310"
         WindowStyle="None"
         AllowsTransparency="True"

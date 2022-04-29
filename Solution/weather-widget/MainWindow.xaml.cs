@@ -23,10 +23,17 @@ namespace weather_widget
     /// </summary>
     public partial class MainWindow : Window
     {
-        WeatherInfoListModel weatherInfos;
+        //WeatherInfoListModel weatherInfos;
         public MainWindow()
         {
+
+
+
             InitializeComponent();
+
+
+
+            /*
             //List<WeatherInfoModel> weatherInfo = await APIManagerModel.GetWeather("Rankweil");
 
             //Task<WeatherInfoListModel> weatherInfos = APIManagerModel.GetWeather("Rankweil");
@@ -36,7 +43,7 @@ namespace weather_widget
             Debug.WriteLine("Do Other stuff");
             Debug.WriteLine("Do Other stuff");
             Debug.WriteLine("Do Other stuff");
-            /*
+            
             for (int i = 0; i < int.MaxValue; i++)
             {
                 Debug.WriteLine(weatherInfos.Count);
@@ -46,9 +53,9 @@ namespace weather_widget
             Task<WeatherInfoListModel> TaskWeatherInfoListModel = 
             WeatherInfoListModel weatherInfos = await GetWeather("Rankweil");
             */
-            
+
         }
-        private async void GetWeather(string cityname)
+        /* private async void GetWeather(string cityname)
         {
             APIManagerModel aPIManagerModel = new APIManagerModel();
             Task<WeatherInfoListModel> TaskweatherInfos = aPIManagerModel.GetWeather(cityname);
@@ -56,12 +63,13 @@ namespace weather_widget
             weatherInfos = await TaskweatherInfos;
             Debug.WriteLine(weatherInfos.Count);
 
-            /*
+            
             Task<string> s = api.GetWeather("Rankweil");
             string ss = await s;
             Debug.WriteLine(ss);
-            */
-        }
+            
+        } 
+        */
     }
 
 

@@ -109,7 +109,7 @@
         </Border>
 
         <DockPanel Grid.Column="1"
-                   LastChildFill="False">
+                   LastChildFill="True">
             <StackPanel DockPanel.Dock="Top"
                         Height="20"
                         FlowDirection="RightToLeft"
@@ -124,7 +124,23 @@
                         Command="{Binding SettingsButtonCommand}"
                         />
 
+                
             </StackPanel>
+            
+            <ListView ItemsSource="{Binding ForecastList}"
+                      Background="Transparent" 
+                      Foreground="White" 
+                      BorderBrush="Transparent">
+                
+                <ListView.View>
+                    <GridView AllowsColumnReorder="true">
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=WeatherDescription}" Header="Des"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=MaxTemperature}" Header="Max"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=MinTemperature}" Header="Min"/>
+                        <GridViewColumn DisplayMemberBinding="{Binding Path=Humidity}" Header="Hum"/>
+                    </GridView>
+                </ListView.View>
+            </ListView>
         </DockPanel>
 
         

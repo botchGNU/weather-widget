@@ -45,7 +45,4 @@ namespace weather_widget
         }
         #endregion
     }
-
-
-
 }
