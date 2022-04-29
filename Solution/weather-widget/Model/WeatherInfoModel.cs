@@ -45,6 +45,11 @@ namespace weather_widget.Model
         /// </summary>
         public double WindDirection { get; set; }
 
+        /// <summary>
+        /// Wind direction as string (NN, ...)
+        /// </summary>
+        public string WindDirectionAsString { get; set; }
+
 
         /// <summary>
         /// Wind speed in m/s
@@ -58,7 +63,7 @@ namespace weather_widget.Model
         public double Humidity { get; set; }
         #endregion
 
-        public WeatherInfoModel(string weatherdesc, string weathericon, DateTime weatherdaytime, double maxtemp, double mintemp, double winddir, double windspeed, double humidity)
+        public WeatherInfoModel(string weatherdesc, string weathericon, DateTime weatherdaytime, double maxtemp, double mintemp, double winddir, string winddirasstring, double windspeed, double humidity)
         {
             WeatherDescription = weatherdesc;
             WeatherIcon = weathericon;
@@ -66,6 +71,7 @@ namespace weather_widget.Model
             MaxTemperature = maxtemp;
             MinTemperature = mintemp;
             WindDirection = winddir;
+            WindDirectionAsString = winddirasstring;
             WindSpeed = windspeed;
             Humidity = humidity;
         }

@@ -89,26 +89,26 @@ namespace weather_widget.Model
                 maxtemp: double.Parse(item.MainInfo.Temp_max.ToString()),
                 mintemp: double.Parse(item.MainInfo.Temp_min.ToString()),
                 winddir: double.Parse(item.WeatherWindInfo.WindDirection.ToString()),
+                winddirasstring: WindDirConverter(double.Parse(item.WeatherWindInfo.WindDirection.ToString())),
                 windspeed: double.Parse(item.WeatherWindInfo.WindSpeed.ToString()),
                 humidity: double.Parse(item.MainInfo.Humidity.ToString())
             );
-        }
+        } 
+        //TO DO: Do this in Database manager --> User will access to data only with Databasemanager NOT APIManager!!!7
 
-        /*
-        TO DO: Do this in Database manager --> User will access to data only with Databasemanager NOT APIManager!!!
+
         /// <summary>
         /// Converts the received value into a direction, which is understandable (as String)
         /// </summary>
         /// <param name="winddir"></param>
         /// <returns>String dir</returns>
-        private static string WindDirConverter(string winddir)
+        private static string WindDirConverter(double winddir)
         {
-            double degree = double.Parse(winddir);
+            double degree = winddir;
 
-            int fixeddegree = int((degree / 22.5) + .5);
-            arr[] = ["N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW"];
-            return arr[(val % 16)];
+            int fixeddegree = (int)((degree / 22.5) + .5);
+            string[] arr = new string[] { "N", "NNE", "NE", "ENE", "E", "ESE", "SE", "SSE", "S", "SSW", "SW", "WSW", "W", "WNW", "NW", "NNW" };
+            return arr[(fixeddegree % 16)];
         }
-        */
     }
 }
