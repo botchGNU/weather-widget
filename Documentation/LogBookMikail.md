@@ -1,9 +1,7 @@
 
-
-https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2 ... Icons for different weather
-
 ## 08-04-2022 - Friday
 organising project folder/files/ ... on gitlab
+https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2 ... Icons for different weather
 
 ## 13-04-2022 - Wednesday (Easter Holidays)
 Installed Pycharm -> Convert Cities (JSON-File) to SQLite-File -> Try to req.
@@ -32,3 +30,5 @@ Working on API-Manager, JSON-Converter
 
 ## 29-04-2022 - Friday
 finishing `Pflichtenheft.md`, documentation `LogBookMikail.md` --> \2h
+
+update on `WeatherInfoModel` --> \1/4h (String for wind direction)
