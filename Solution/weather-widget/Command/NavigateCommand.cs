@@ -1,11 +1,12 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Text;
 using weather_widget.Store;
 using weather_widget.ViewModel;
 
 namespace weather_widget.Command
 {
+    /// <summary>
+    /// Command in order to create and switch viewmodels
+    /// </summary>
     internal class NavigateCommand : CommandBase
     {
         private readonly NavigationStore _navigationStore;

@@ -3,11 +3,11 @@
 namespace weather_widget.View
 {
     /// <summary>
-    /// Interaction logic for DashboardView.xaml
+    /// Interaction logic for SettingsView.xaml
     /// </summary>
-    public partial class DashboardView : UserControl
+    public partial class SettingsView : UserControl
     {
-        public DashboardView()
+        public SettingsView()
         {
             InitializeComponent();
         }

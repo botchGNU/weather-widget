@@ -7,36 +7,133 @@
              mc:Ignorable="d" 
              d:DesignHeight="200" d:DesignWidth="310">
 
-    <!--View für Dashboard (Anzeige des wetters)-->
+    <!--View for Dashboard (Display forecast)-->
 
-    <Grid>
+    <UserControl.Resources>
+        
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="White"/>
+            <!--Setter Property="Margin" Value="30 0"/-->
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+        </Style>
+        
+    </UserControl.Resources>
+
+
+    <Grid Margin="0">
+
         <Grid.ColumnDefinitions>
-            <ColumnDefinition/>
-            <ColumnDefinition/>
+            <ColumnDefinition Width="3*"/>
+            <ColumnDefinition Width="2*"/>
         </Grid.ColumnDefinitions>
 
-        <Grid.RowDefinitions>
-            <RowDefinition/>
-            <RowDefinition/>
-        </Grid.RowDefinitions>
+        <Border Grid.Column="0"
+                Padding="10px">
+            <Grid>
+                <Grid.RowDefinitions>
+                    <RowDefinition/>
+                    <RowDefinition/>
+                </Grid.RowDefinitions>
+
+                <StackPanel Grid.Row="0"
+                            x:Name="TopPanel"
+                            VerticalAlignment="Top"
+                            HorizontalAlignment="Left">
+
+                    <Label x:Name="CurrentDayOfWeek"
+                           Foreground="White"
+                           Content="{Binding CurrentDay}"
+                           FontSize="18px"
+                           Padding="10 0"
+                           />
 
 
-        <!--Anzeige derzeitige Temperatur-->
-        <TextBlock Grid.Column="0"
-                   Grid.Row="0"
-                   Text="{Binding CurrentWeatherDegrees}" 
-                   FontSize="48" 
-                   HorizontalAlignment="Center" 
-                   VerticalAlignment="Center" 
-                   Foreground="#FFA0A0A0"/>
+                    <Label x:Name="CurrentDate"
+                           Foreground="White"
+                           Content="{Binding CurrentDate}"
+                           FontSize="20px"
+                           Padding="10 0"
+                           />
+
+
+
+                    <Label x:Name="CurrentWeatherType" 
+                           Foreground="White"
+                           Content="{Binding CurrentType}"
+                           FontSize="22"
+                           Padding="10"
+                           />
+                    
+                </StackPanel>
+
+                <StackPanel Grid.Row="1"
+                            x:Name="BottomPanel"
+                            VerticalAlignment="Bottom" 
+                            HorizontalAlignment="Left">
+
+                    <Label x:Name="CurrentMaxTemperature" 
+                           Foreground="White"
+                           Content="{Binding CurrentTemperature}"
+                           FontSize="45"
+                           Padding="0 0">
+                        
+                        <Label.ToolTip>
+                            <ToolTip>Maximum temperature for the current day</ToolTip>
+                        </Label.ToolTip>
+                        
+                    </Label>
+                    
+                    
+                    
+                    <Label x:Name="CurrentPlace" 
+                           Foreground="White"
+                           Content="{Binding CurrentLocation}"
+                           FontSize="18"
+                           Padding="0 0">
+                        <Label.ToolTip>
+                            <ToolTip>Current place and country code</ToolTip>
+                        </Label.ToolTip>
+                    </Label>
+                    
+                </StackPanel>
+                
+                
+                
+            </Grid>
+        </Border>
+
+        <DockPanel Grid.Column="1"
+                   LastChildFill="False">
+            <StackPanel DockPanel.Dock="Top"
+                        Height="20"
+                        FlowDirection="RightToLeft"
+                        Orientation="Horizontal">
+
+                <Button Content="✕"
+                        Height="20" Width="20"
+                        Command="{Binding CloseButtonCommand}"/>
+
+                <Button Content="⚙"
+                        Height="20" Width="20"
+                        Command="{Binding SettingsButtonCommand}"
+                        />
+
+            </StackPanel>
+        </DockPanel>
 
         
-        <!--ListBox für Vorschau der nächsten Woche-->
-        <ListBox Grid.Row="1"
-                 Grid.Column="1"
-                 Background="Transparent"
-                 Margin="10"
-                 DataContext="{Binding ForecastList}"/>
+        
+        
+        
+
+
+
 
     </Grid>
 </UserControl>

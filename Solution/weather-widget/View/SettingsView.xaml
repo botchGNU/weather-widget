@@ -1,0 +1,83 @@
+﻿<UserControl x:Class="weather_widget.View.SettingsView"
+             xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+             xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
+             xmlns:local="clr-namespace:weather_widget.View"
+             mc:Ignorable="d" 
+             d:DesignHeight="200" d:DesignWidth="310">
+    
+    <UserControl.Resources>
+
+        <Style TargetType="Label">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Padding" Value="0"/>
+        </Style>
+
+        <Style TargetType="Button">
+            <Setter Property="Foreground" Value="White"/>
+            <Setter Property="Background" Value="Transparent"/>
+            <Setter Property="BorderBrush" Value="Transparent"/>
+        </Style>
+
+    </UserControl.Resources>
+
+    <DockPanel>
+        <Grid Height="20"
+              DockPanel.Dock="Top">
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition/>
+                <ColumnDefinition/>
+            </Grid.ColumnDefinitions>
+
+            <StackPanel Orientation="Horizontal"
+                        Grid.Column="1"
+                        FlowDirection="RightToLeft">
+                
+                <Button Grid.Column="1"
+                    Height="20"
+                    Width="20"
+                    Content="✕"
+                    Command="{Binding CloseButtonCommand}"/>
+
+                <Button Grid.Column="1"
+                    Height="20"
+                    Width="20"
+                    Content="D"
+                    Command="{Binding BackToDashboardButtonCommand}"
+                    />
+            </StackPanel>
+
+
+            <Label  Grid.Column="0"
+                    HorizontalAlignment="Left"
+                    Content="Settings"
+                    FontSize="12"
+                    Padding="2,2,2,2"/>
+
+        </Grid>
+
+        <Grid Height="100" Width="200">
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+
+            <Label Content="City:" 
+                   HorizontalAlignment="Center" 
+                   VerticalAlignment="Center" FontSize="18"/>
+
+            <TextBox Grid.Row="1"
+                     Background="Transparent"
+                     Foreground="White"
+                     SelectionBrush="LightBlue"/>
+            
+            <Button Grid.Row="2"
+                    Content="Confirm"
+                    Command="{Binding ConfirmButtonCommand}" FontSize="20"/>
+        </Grid>
+        
+
+    </DockPanel>
+</UserControl>
