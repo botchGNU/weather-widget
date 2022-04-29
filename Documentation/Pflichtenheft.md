@@ -83,6 +83,7 @@ Die Applikation soll komplett offline Nutzbar sein. D.H. dass Die Daten der API 
 # Projektentwicklung
 
 ## Konzept
+Wetterbericht: 5 Tage, statt 16 Tage (falsch in Abbildung):
 ![Application-Structure](./ApplicationStructure.jpeg)
 
 ## Aufteilung
@@ -93,6 +94,12 @@ Die Applikation soll komplett offline Nutzbar sein. D.H. dass Die Daten der API 
 | Database-Manager          |                                |         | \|   | ViewModels                                 | Tim    |
 |                           |                                |         | \|   | basic MVVM structure                       | Tim    |
 |                           |                                |         | \|   | Database-Manager (Database-Update-Manager) | Mikail |
+
+- API-Manager:
+  - API-Manager soll die Daten aus dem Internet holen und in WeatherModel deserializieren und in eine Liste abspeichern
+- Database-Manager:
+  - Database-Manager soll alle Daten, die Wetterinformationen angeht, in die Datenbank speichern, lesen, verändern und löschen.
+  - Database-Update-Manager/Update-Manager geplant ist eine Klasse, welche "Signale" an Database-Manager übermittelt, um Daten aus Datenbank zu holen.
 
 ## Logbücher (Referenzen)
 ### Tim
