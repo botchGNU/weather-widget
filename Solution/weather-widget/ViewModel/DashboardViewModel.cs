@@ -14,7 +14,7 @@ namespace weather_widget.ViewModel
         {
             for (int i = 0; i < 5; i++)
             {
-                var weatherNew = new WeatherInfoModel("Cloudy","N.A.",DateTime.Now,i+10,i,22,i+5,5);
+                var weatherNew = new WeatherInfoModel("Cloudy","N.A.",DateTime.Now,i+10,i,22, "NNW",i+5,50);
                 _testingList.Add(weatherNew);
             }
             OnPropertyChanged(nameof(ForecastList));
