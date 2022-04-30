@@ -5,25 +5,17 @@ using System.Linq;
 namespace weather_widget.Model
 {
     /// <summary>
-    /// Weather data for each day
+    /// Weather data for each day, 3h forecasts
     /// </summary>
     class WeatherInfoListModel : List<WeatherInfoModel>
     {
-        /*
-        /// <summary>
-        /// Weather conditions for every 3 hours
-        /// </summary>
-        public List<WeatherInfoModel> WeatherInfos { get; private set; }
-        */
-
         /// <summary>
         /// WeatherInfoListModel constructor
         /// </summary>
         public WeatherInfoListModel()
-        {
+        {}
 
-        }
-
+        /*
         /// <summary>
         /// Get the average temperature for the day
         /// </summary>

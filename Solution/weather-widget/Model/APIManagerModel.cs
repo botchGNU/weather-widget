@@ -12,14 +12,15 @@ namespace weather_widget.Model
     class APIManagerModel
     {
         private static string API_KEY = File.ReadAllText(@"..\\..\\..\\..\\..\\API.key"); //=> ".\weather-widget\API.key"
+        //private static string API_KEY = "11"; //=> ".\weather-widget\API.key"
 
         // TO DO: Do this in DataBase Manager
-        #region private constants for units
+        /*
         private const string unitWinSpeed = "m/s";
         private const string unitIcon = ".png";
         private const string unitTemp = "°C";
         private const string unitHumidity = "%";
-        #endregion
+        */
 
         public async Task<WeatherInfoListModel> GetWeather(string location)
         {
@@ -31,38 +32,37 @@ namespace weather_widget.Model
                 {
                     string response = await client.GetStringAsync(url);
                     // No error occured (internet connection available & max request is not exceeded)
-                    if(!(response.ToUpper().Contains(@"""MESSAGE"": ""YOUR ACCOUNT IS TEMPORARY""") && response.Contains(@"""COD"": 429")))
+                    if(!(response.ToUpper().Contains(@"""MESSAGE"": ""YOUR ACCOUNT IS TEMPORARY""") && response.ToUpper().Contains(@"""COD"": 429")))
                     {
                         return GetWeatherInfos(response.ToString());
                     }
-                    else if(response.ToUpper().Contains(@"""MESSAGE"": ""YOUR ACCOUNT IS TEMPORARY""") || response.Contains(@"""COD"": 429"))
+                }
+                catch (HttpRequestException ex)
+                {
+                    if(ex.Message.ToUpper().Contains("429"))
                     {
                         throw new Exception("1: Max request reached!"); // Maximum reached
                     }
-                    else if(response.ToUpper().Contains(@"""MESSAGE"": ""INVALID API KEY""") || response.Contains(@"""COD"": 401"))
+                    else if (ex.Message.ToUpper().Contains("401"))
                     {
-                        throw new Exception("1: Invalid API-Key!"); // API-Key is wrong
+                        throw new Exception("2: Invalid API-Key!"); // API-Key is wrong
                     }
-                    else if(response.ToUpper().Contains(@"""MESSAGE"": ""INVALID API KEY""") || response.Contains(@"""COD"": 401"))
+                    else if(ex.Message.ToUpper().Contains("404"))
                     {
-                        // TO DO: give info, that max req. is reached --> search in sqlite db
-                        throw new Exception("1: Max request is reached!");
+                        throw new Exception("4: Wrong city name / Invalid city name!"); // wrong city
                     }
-                    else if (response.ToUpper().Contains(@"""MESSAGE"": ""INVALID API KEY""") || response.Contains(@"""COD"": 401"))
+                    else if(ex.Message.ToUpper().Contains("500") || ex.Message.ToUpper().Contains("502") || ex.Message.ToUpper().Contains("503") || ex.Message.ToUpper().Contains("504"))
                     {
-                        // TO DO: give info, that max req. is reached --> search in sqlite db
-                        throw new Exception("1: Max request is reached!");
+                        throw new Exception("5: Unknown error code! Please contact openweather: https://home.openweathermap.org/questions."); // undefinied error code --> contact openweather 
                     }
-                }
-                catch (HttpRequestException)
-                {
-                    // TO DO: No internet connection or API-Key is invalid
-                    throw new Exception("2: No internet connection or API-Key is invalid!");
+                    else
+                    {
+                        throw new Exception("6: No internet connection! Please be sure that you have access to the internet"); // No Internet connection
+                    }
                 }
                 catch (Exception)
                 {
-                    // TO DO: Something went wrong
-                    throw new Exception("3: Something went worng!");
+                    throw new Exception("7: Something went worng! Please try again!");
                 }
                 return null;
             }
@@ -72,8 +72,6 @@ namespace weather_widget.Model
         {
             JSONResponce jSONResponce = JsonConvert.DeserializeObject<JSONResponce>(JSONContent);
             Debug.WriteLine(JsonConvert.DeserializeObject<JSONResponce>(JSONContent).Items[0].WeatherWindInfo.WindDirection);
-
-            // TO DO: Convert it into WeatherInfoModel --> Done
 
             // Weather states (each item 3 hours apart)
             WeatherInfoListModel weatherInfos = new WeatherInfoListModel();
@@ -90,13 +88,13 @@ namespace weather_widget.Model
         /// Convert ListItem object to WeatherInfoModel object
         /// </summary>
         /// <param name="item">Weather data (for every 3 hours)</param>
-        /// <returns></returns>
+        /// <returns>WeatherInfoModel</returns>
         private static WeatherInfoModel ToWeatherInfoModel(JSONListItem item)
         {
             return new WeatherInfoModel
             (
                 weatherdesc: item.WeatherTypes[0].Description,
-                weathericon: item.WeatherTypes[0].Icon,
+                weathericon: item.WeatherTypes[0].Icon+".png",
                 weatherdaytime: DateTime.Parse(item.DateTime), // content: string DateTime --> Parse to DateTime
                 maxtemp: double.Parse(item.MainInfo.Temp_max.ToString()),
                 mintemp: double.Parse(item.MainInfo.Temp_min.ToString()),
@@ -106,14 +104,12 @@ namespace weather_widget.Model
                 humidity: double.Parse(item.MainInfo.Humidity.ToString())
             );
         } 
-        //TO DO: Do this in Database manager --> User will access to data only with Databasemanager NOT APIManager!!!7
-
 
         /// <summary>
         /// Converts the received value into a direction, which is understandable (as String)
         /// </summary>
         /// <param name="winddir"></param>
-        /// <returns>String dir</returns>
+        /// <returns>String wind direction</returns>
         private static string WindDirConverter(double winddir)
         {
             double degree = winddir;
