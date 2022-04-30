@@ -8,6 +8,7 @@ namespace weather_widget.ViewModel
 {
     class DashboardViewModel : ViewModelBase
     {
+        #region testing purpuse
         private WeatherInfoListModel _testingList = new WeatherInfoListModel();
 
         private void FillTestingList()
@@ -19,13 +20,14 @@ namespace weather_widget.ViewModel
             }
             OnPropertyChanged(nameof(ForecastList));
         }
+        #endregion
 
         #region ctor
         public DashboardViewModel(NavigationStore navigationStore, Func<SettingsViewModel> createSettingsViewModel)
         {
             SettingsButtonCommand = new NavigateCommand(navigationStore, createSettingsViewModel);
             CloseButtonCommand = new ExitApplicationCommand();
-            FillTestingList();
+            FillTestingList();  //testing purpose
         }
         #endregion
         #region commands
@@ -33,8 +35,21 @@ namespace weather_widget.ViewModel
         public ICommand CloseButtonCommand { get; } //Command in order to terminate entire application
         #endregion
 
-        #region properties
-        public string CurrentDate { get => DateTime.Now.ToString();}
+        #region properties  
+        //bindings for view <-> viewmodel
+        public string CurrentDate 
+        {
+            get 
+            { 
+                return 
+                    (
+                     DateTime.Now.Day + "/" + 
+                     DateTime.Now.Month + "/" +
+                     DateTime.Now.Year
+                    ); 
+            }
+                
+        }
         public string CurrentDay { get => DateTime.Now.DayOfWeek.ToString(); }
         public string CurrentLocation 
         { 

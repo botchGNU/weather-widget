@@ -34,6 +34,10 @@ namespace weather_widget
 
 
         #region create methods
+        /// <summary>
+        /// Methods in order to create new ViewModeles -> Passed into ViewModels
+        /// </summary>
+        /// <returns></returns>
         private DashboardViewModel CreateDashboardViewModel()
         {
             return new DashboardViewModel(_navStore, CreateSettingsViewModel);
