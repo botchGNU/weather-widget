@@ -17,7 +17,7 @@ namespace weather_widget.Model
         public string WeatherDescription { get; set; }
 
         /// <summary>
-        /// Weathericon path --> Weathericon; for displaying the icon e.g. xxxFOLDERxxx/icons/04d.png
+        /// Weathericon --> Weathericon e.g. 04d.png
         /// </summary>
         public string WeatherIcon { get; set; }
 
