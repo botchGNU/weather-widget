@@ -22,7 +22,7 @@
             double MaxTemperature "within 3h"
             double MinTemperature "within 3h"
             double WindDirection "as value"
-            double WindDirectionAsString "as string e.g. N, NW,..."
+            string WindDirectionAsString "as string e.g. N, NW,..."
             double WindSpeed "in m/s"
             double Humidity "in %"       		
        }
