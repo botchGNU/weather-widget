@@ -17,7 +17,7 @@
        		string CityName FK "Foreign Key: The name of the city from Citylist"
             string CountryZip FK "The zipped name of the country from Citylist"
             string WeatherDescription "Description of current weather"
-            string WeatherIcon "Weathericon path --> Weathericon; for displaying the icon e.g. xxxFOLDERxxx/icons/04d.png"
+            string WeatherIcon "Weathericon e.g. 04d.png"
             DateTime WeatherDayTime "Datetime"
             double MaxTemperature "within 3h"
             double MinTemperature "within 3h"
