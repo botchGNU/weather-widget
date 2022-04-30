@@ -23,7 +23,7 @@ namespace weather_widget
     /// </summary>
     public partial class MainWindow : Window
     {
-        //WeatherInfoListModel weatherInfos;
+        WeatherInfoListModel weatherInfos;
         public MainWindow()
         {
 
@@ -33,43 +33,42 @@ namespace weather_widget
 
 
 
-            /*
+
             //List<WeatherInfoModel> weatherInfo = await APIManagerModel.GetWeather("Rankweil");
 
             //Task<WeatherInfoListModel> weatherInfos = APIManagerModel.GetWeather("Rankweil");
-            GetWeather("Rankweil");
+            try
+            {
+                GetWeather("Halloiu");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
 
             Debug.WriteLine("Do Other stuff");
             Debug.WriteLine("Do Other stuff");
             Debug.WriteLine("Do Other stuff");
             Debug.WriteLine("Do Other stuff");
             
-            for (int i = 0; i < int.MaxValue; i++)
-            {
-                Debug.WriteLine(weatherInfos.Count);
-            }
-            */
-            /*
-            Task<WeatherInfoListModel> TaskWeatherInfoListModel = 
-            WeatherInfoListModel weatherInfos = await GetWeather("Rankweil");
-            */
 
         }
-        /* private async void GetWeather(string cityname)
+        private async void GetWeather(string cityname)
         {
-            APIManagerModel aPIManagerModel = new APIManagerModel();
-            Task<WeatherInfoListModel> TaskweatherInfos = aPIManagerModel.GetWeather(cityname);
+            APIManagerModel apimanagerModel = new APIManagerModel();
+            Task<WeatherInfoListModel> TaskweatherInfos = apimanagerModel.GetWeather(cityname);
 
             weatherInfos = await TaskweatherInfos;
             Debug.WriteLine(weatherInfos.Count);
 
-            
+            /*
             Task<string> s = api.GetWeather("Rankweil");
             string ss = await s;
             Debug.WriteLine(ss);
+            */
             
         } 
-        */
     }
 
 

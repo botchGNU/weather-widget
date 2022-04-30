@@ -2,6 +2,7 @@
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
+using System.IO;
 using System.Net.Http;
 using System.Text;
 using System.Threading.Tasks;
@@ -10,7 +11,7 @@ namespace weather_widget.Model
 {
     class APIManagerModel
     {
-        private static string API_KEY = "YOUR-API_KEY";
+        private static string API_KEY = File.ReadAllText(@"..\\..\\..\\..\\..\\API.key"); //=> ".\weather-widget\API.key"
 
         // TO DO: Do this in DataBase Manager
         #region private constants for units
@@ -19,9 +20,6 @@ namespace weather_widget.Model
         private const string unitTemp = "°C";
         private const string unitHumidity = "%";
         #endregion
-
-        //        public async Task<List<WeatherDailyInfoModel>> GetWeather(string location)
-        // public async Task<string> GetWeather(string location)
 
         public async Task<WeatherInfoListModel> GetWeather(string location)
         {
@@ -33,26 +31,40 @@ namespace weather_widget.Model
                 {
                     string response = await client.GetStringAsync(url);
                     // No error occured (internet connection available & max request is not exceeded)
-                    if(!(response.Contains(@"""message"": ""Your account is temporary""") && response.Contains(@"""cod"": 429")))
+                    if(!(response.ToUpper().Contains(@"""MESSAGE"": ""YOUR ACCOUNT IS TEMPORARY""") && response.Contains(@"""COD"": 429")))
                     {
                         return GetWeatherInfos(response.ToString());
                     }
-                    else
+                    else if(response.ToUpper().Contains(@"""MESSAGE"": ""YOUR ACCOUNT IS TEMPORARY""") || response.Contains(@"""COD"": 429"))
                     {
-                        // TO DO: give info for searching in sqlite db
-                        // for now: just return an empty list of weatherinfos
-                        return new WeatherInfoListModel();
+                        throw new Exception("1: Max request reached!"); // Maximum reached
+                    }
+                    else if(response.ToUpper().Contains(@"""MESSAGE"": ""INVALID API KEY""") || response.Contains(@"""COD"": 401"))
+                    {
+                        throw new Exception("1: Invalid API-Key!"); // API-Key is wrong
+                    }
+                    else if(response.ToUpper().Contains(@"""MESSAGE"": ""INVALID API KEY""") || response.Contains(@"""COD"": 401"))
+                    {
+                        // TO DO: give info, that max req. is reached --> search in sqlite db
+                        throw new Exception("1: Max request is reached!");
+                    }
+                    else if (response.ToUpper().Contains(@"""MESSAGE"": ""INVALID API KEY""") || response.Contains(@"""COD"": 401"))
+                    {
+                        // TO DO: give info, that max req. is reached --> search in sqlite db
+                        throw new Exception("1: Max request is reached!");
                     }
                 }
-                catch (HttpRequestException ex)
+                catch (HttpRequestException)
                 {
-                    /*
-                    // TO DO: do something, if it goes wrong
-                    // for now: just return an empty list of weahterinfos
-                    return new List<WeatherInfoModel>(); 
-                    */
-                    return new WeatherInfoListModel();
+                    // TO DO: No internet connection or API-Key is invalid
+                    throw new Exception("2: No internet connection or API-Key is invalid!");
                 }
+                catch (Exception)
+                {
+                    // TO DO: Something went wrong
+                    throw new Exception("3: Something went worng!");
+                }
+                return null;
             }
         }
 
