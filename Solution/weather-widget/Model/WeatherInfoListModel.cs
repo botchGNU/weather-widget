@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Data.SQLite;
 using System.Linq;
 
 namespace weather_widget.Model
@@ -9,11 +10,83 @@ namespace weather_widget.Model
     /// </summary>
     class WeatherInfoListModel : List<WeatherInfoModel>
     {
+        #region properties for saving to DB
+        public string cityname { get; set; } = string.Empty;
+        public int cityid { get; set; } = 0;
+        public string countryzip { get; set; } = string.Empty;
+        #endregion
+
         /// <summary>
         /// WeatherInfoListModel constructor
         /// </summary>
         public WeatherInfoListModel()
         {}
+
+        public void SaveToSqlite(string fileName)
+        {
+            // Info zu SQLite:
+            // https://SQLite.org
+           
+            // Install-Package system.data.sqlite
+
+            /* .NET Core (using Microsoft.Data.SQLite)
+            SqliteConnection conn = CreateSQLiteConnection(fileName);
+
+            // Kommando erzeugen, das mit der DB kommuniziert
+            SqliteCommand cmd = new SqliteCommand("DROP TABLE IF EXISTS adressdata", conn);
+            cmd.ExecuteNonQuery();
+            */
+
+            
+            // .NET Framework
+            SQLiteConnection connection = CreateSQLiteConnection(fileName);
+
+            // create command, which will communicate with DB
+            SQLiteCommand cmd = new SQLiteCommand(connection);
+
+            cmd.CommandText = "DROP TABLE IF EXISTS weatherinfo";
+
+            cmd.ExecuteNonQuery();
+
+            // TODO: cityid, cityname, coutryzip --> FOREIGN KEYS
+            cmd.CommandText = @"CREATE TABLE weatherinfo(id INTEGER PRIMARY KEY,
+                              cityid INTEGER, cityname TEXT, countryzip TEXT,
+                              weatherdescription TEXT, weathericon TEXT, weatherdaytime TEXT, maxtemperature DOUBLE, 
+                              mintemperature DOUBLE, winddirection DOUBLE, winddirectionasstring TEXT, windspeed DOUBLE, humidity DOUBLE)";
+            cmd.ExecuteNonQuery();
+
+            foreach (WeatherInfoModel item in this)
+            {
+                // CRUD ... Create Read Update Delete
+
+                // neue Datensätze -> INSERT ("create")
+                cmd.CommandText = $"INSERT INTO " +
+                    $"weatherinfo(cityid, cityname, countryzip, weatherdescription, weathericon, weatherdaytime, maxtemperature, mintemperature, winddirection, winddirectionasstring, windspeed, humidity)" +
+                    $"VALUES({(cityid)},'{cityname}','{countryzip}','{item.WeatherDescription}','{item.WeatherIcon}','{item.WeatherDayTime.ToString()}','{item.MaxTemperature}','{item.MinTemperature}','{item.WindDirection}','{item.WindDirectionAsString}', '{item.WindSpeed}', '{item.Humidity}')";
+                cmd.ExecuteNonQuery();
+
+                // geänderte Datensätze -> UPDATE 
+
+                // gelöschte Datensätze -> DELETE
+
+            }
+
+            connection.Close();
+        }
+        private SQLiteConnection CreateSQLiteConnection(string fileName)
+        {
+            SQLiteConnection conn = new SQLiteConnection($"Data Source={fileName}");
+            try
+            {
+                conn.Open();
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
+
+            return conn;
+        }
 
         /*
         /// <summary>
