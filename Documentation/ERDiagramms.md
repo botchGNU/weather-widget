@@ -1,20 +1,45 @@
+# Data-Structure:
+
+
 ```mermaid
  erDiagram
+ 	   CITYLIST ||..o{ WEAHTERINFO : canhave
+ 	   CITYLIST{
+ 	   int id PK "Unique id for city"
+ 	   string name "city name"
+ 	   string state "state zip (is not going to be used)"
+ 	   string country "country zip"
+ 	   string coord "coordinates stored e.g. as {'lon': 47.159401, 'lat': 34.330502}"
+ 	   }
        WEATHERINFO { 
        		int id PK "Unique id with autoincrement"
-       		string CityName FK "The name of the city from Citylist"
+       		int CityID FK "Foreign Key: The id of the city from Citylist"
+       		string CityName FK "Foreign Key: The name of the city from Citylist"
             string CountryZip FK "The zipped name of the country from Citylist"
-            string Weather "Description of current weather"
+            string WeatherDescription "Description of current weather"
             string WeatherIcon "Weathericon path --> Weathericon; for displaying the icon e.g. xxxFOLDERxxx/icons/04d.png"
-            string WeatherDay "Weatherday: Datetime"
-            string Temperature "avg. temperature in these 3 hours"
-            string MaxTemperature ""
-            string MinTemperature
-            string WindDirection
-            string WindSpeed
-            string Humidity      		
+            DateTime WeatherDayTime "Datetime"
+            double MaxTemperature "within 3h"
+            double MinTemperature "within 3h"
+            double WindDirection "as value"
+            double WindDirectionAsString "as string e.g. N, NW,..."
+            double WindSpeed "in m/s"
+            double Humidity "in %"       		
        }
-       DOG {
+```
+
+Each city can have 0 or more forecasts. Average/min./max. temperature is going to be received by database.
+
+
+
+Example for ER-Diagram:
+
+
+
+
+```mermaid
+erDiagram
+DOG {
          int age
          string breed
          string pedigree
@@ -33,6 +58,7 @@
          float costPerSession
        }
 ```
+
 
 Information for creating an ER-Diagram
 
