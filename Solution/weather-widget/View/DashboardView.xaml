@@ -51,8 +51,7 @@
                            Foreground="White"
                            Content="{Binding CurrentDay}"
                            FontSize="18px"
-                           Padding="10 0"
-                           />
+                           Padding="10 0"/>
 
                     <!--current date DD/MM/YYYY-->
                     <Label x:Name="CurrentDate"
