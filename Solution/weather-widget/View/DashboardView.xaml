@@ -22,7 +22,7 @@
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
         </Style>
-        
+
     </UserControl.Resources>
 
 
@@ -30,7 +30,7 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="2.5*"/>
         </Grid.ColumnDefinitions>
 
         <Border Grid.Column="0"
@@ -46,14 +46,14 @@
                             VerticalAlignment="Top"
                             HorizontalAlignment="Left">
 
+                    <!--current day of the week -> fullname -->
                     <Label x:Name="CurrentDayOfWeek"
                            Foreground="White"
                            Content="{Binding CurrentDay}"
                            FontSize="18px"
-                           Padding="10 0"
-                           />
+                           Padding="10 0"/>
 
-
+                    <!--current date DD/MM/YYYY-->
                     <Label x:Name="CurrentDate"
                            Foreground="White"
                            Content="{Binding CurrentDate}"
@@ -62,7 +62,7 @@
                            />
 
 
-
+                    <!--weather type -> ex. cloudy, sunndy, etc.-->
                     <Label x:Name="CurrentWeatherType" 
                            Foreground="White"
                            Content="{Binding CurrentType}"
@@ -82,15 +82,15 @@
                            Content="{Binding CurrentTemperature}"
                            FontSize="45"
                            Padding="0 0">
-                        
+
+                        <!--display information on mouse hover-->
                         <Label.ToolTip>
                             <ToolTip>Maximum temperature for the current day</ToolTip>
                         </Label.ToolTip>
-                        
+
                     </Label>
-                    
-                    
-                    
+
+                    <!--selected location-->
                     <Label x:Name="CurrentPlace" 
                            Foreground="White"
                            Content="{Binding CurrentLocation}"
@@ -100,16 +100,14 @@
                             <ToolTip>Current place and country code</ToolTip>
                         </Label.ToolTip>
                     </Label>
-                    
+
                 </StackPanel>
-                
-                
-                
             </Grid>
         </Border>
 
         <DockPanel Grid.Column="1"
                    LastChildFill="True">
+
             <StackPanel DockPanel.Dock="Top"
                         Height="20"
                         FlowDirection="RightToLeft"
@@ -119,19 +117,21 @@
                         Height="20" Width="20"
                         Command="{Binding CloseButtonCommand}"/>
 
+                <!--switch to settings view-->
                 <Button Content="⚙"
                         Height="20" Width="20"
                         Command="{Binding SettingsButtonCommand}"
                         />
 
-                
+
             </StackPanel>
-            
+
+            <!--weather forecast-->
             <ListView ItemsSource="{Binding ForecastList}"
                       Background="Transparent" 
                       Foreground="White" 
                       BorderBrush="Transparent">
-                
+
                 <ListView.View>
                     <GridView AllowsColumnReorder="true">
                         <GridViewColumn DisplayMemberBinding="{Binding Path=WeatherDescription}" Header="Des"/>
@@ -142,14 +142,5 @@
                 </ListView.View>
             </ListView>
         </DockPanel>
-
-        
-        
-        
-        
-
-
-
-
     </Grid>
 </UserControl>
