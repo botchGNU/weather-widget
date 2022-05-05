@@ -14,12 +14,14 @@ namespace weather_widget.ViewModel
         {
             BackToDashboardButtonCommand = new NavigateCommand(navigationStore, createDashboardViewModel);
             CloseButtonCommand = new ExitApplicationCommand();
+            ConfirmButtonCommand = new UpdateCityCommand(this);
         }
         #endregion
 
         #region commands
         public ICommand BackToDashboardButtonCommand { get; }    //Command in order to switch to Dashboard-View
         public ICommand CloseButtonCommand { get; } //command in order to close window
+        public ICommand ConfirmButtonCommand { get; } //confirm choosen city -> update 
         #endregion
 
         #region properties

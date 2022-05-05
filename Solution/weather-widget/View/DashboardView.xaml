@@ -41,20 +41,25 @@
                     <RowDefinition/>
                 </Grid.RowDefinitions>
 
-                <StackPanel Grid.Row="0"
+                <Grid>
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+                    <StackPanel Grid.Row="0"
                             x:Name="TopPanel"
                             VerticalAlignment="Top"
                             HorizontalAlignment="Left">
 
-                    <!--current day of the week -> fullname -->
-                    <Label x:Name="CurrentDayOfWeek"
+                        <!--current day of the week -> fullname -->
+                        <Label x:Name="CurrentDayOfWeek"
                            Foreground="White"
                            Content="{Binding CurrentDay}"
                            FontSize="18px"
                            Padding="10 0"/>
 
-                    <!--current date DD/MM/YYYY-->
-                    <Label x:Name="CurrentDate"
+                        <!--current date DD/MM/YYYY-->
+                        <Label x:Name="CurrentDate"
                            Foreground="White"
                            Content="{Binding CurrentDate}"
                            FontSize="20px"
@@ -62,15 +67,22 @@
                            />
 
 
-                    <!--weather type -> ex. cloudy, sunndy, etc.-->
-                    <Label x:Name="CurrentWeatherType" 
+                        <!--weather type -> ex. cloudy, sunndy, etc.-->
+                        <Label x:Name="CurrentWeatherType" 
                            Foreground="White"
                            Content="{Binding CurrentType}"
                            FontSize="22"
                            Padding="10"
                            />
-                    
-                </StackPanel>
+
+                    </StackPanel>
+
+                    <Image Grid.Column="1" 
+                           Source="{Binding WeatherImageSource}" 
+                           Stretch="Uniform"/>
+
+
+                </Grid>
 
                 <StackPanel Grid.Row="1"
                             x:Name="BottomPanel"

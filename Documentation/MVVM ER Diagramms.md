@@ -1,7 +1,3 @@
-
-
-
-
 # MVVM class diagram
 
 
@@ -40,6 +36,7 @@ class CommandBase{
 class ExitApplicationCommand{
 	Execute()
 }
+class UpdateCityCommand
 class NavigateCommand{
 	NavigationStore _navigationStore
 	Func<ViewModelBase> _createViewModel
@@ -69,6 +66,7 @@ NavigateCommand <|-- DashBoardViewModel
 ExitApplicationCommand <|-- DashBoardViewModel
 NavigateCommand <|-- SettingsViewModel
 ExitApplicationCommand <|-- SettingsViewModel
+UpdateCityCommand <|-- SettingsViewModel
 NavigationStore <|-- AppXamlCs
 NavigationStore <|-- MainWindowXaml
 SettingsView <|-- MainWindowXaml

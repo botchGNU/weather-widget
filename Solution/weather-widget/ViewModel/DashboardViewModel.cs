@@ -1,5 +1,7 @@
 ﻿using System;
+using System.IO;
 using System.Windows.Input;
+using System.Windows.Media.Imaging;
 using weather_widget.Command;
 using weather_widget.Model;
 using weather_widget.Store;
@@ -15,7 +17,8 @@ namespace weather_widget.ViewModel
         {
             for (int i = 0; i < 5; i++)
             {
-                var weatherNew = new WeatherInfoModel("Cloudy","N.A.",DateTime.Now,i+10,i,22, "NNW",i+5,50);
+                var weatherNew = new WeatherInfoModel("Cloudy","01d",DateTime.Now,i+10,i,22, "NNW",i+5,50);
+                weatherNew.WeatherIcon = "02n";
                 _testingList.Add(weatherNew);
             }
             OnPropertyChanged(nameof(ForecastList));
@@ -63,6 +66,17 @@ namespace weather_widget.ViewModel
         public string CurrentTemperature { get => "22 C"; } //placeholder
         public string CurrentType { get => "Cloudy"; }  //placeholder
         public WeatherInfoListModel ForecastList { get => _testingList; }
+        public BitmapImage WeatherImageSource
+        {
+            get
+            {
+                BitmapImage bi3 = new BitmapImage();
+                bi3.BeginInit();
+                bi3.UriSource = new Uri(@"..\Resources\Icons\" + ForecastList[0].WeatherIcon + ".png", UriKind.Relative);
+                bi3.EndInit();
+                return bi3;
+            }
+        }
 
         #endregion
     }

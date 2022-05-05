@@ -18,10 +18,7 @@ namespace weather_widget.ViewModel
             OnPropertyChanged(nameof(CurrentViewModel));
         }
 
-
-
         public ViewModelBase CurrentViewModel { get => _navigationStore.CurrentViewModel; } //currently used viewmodel -> Mainwindow chooses view depending on VM
-
 
     }
 }

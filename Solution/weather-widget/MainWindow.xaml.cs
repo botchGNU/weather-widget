@@ -30,7 +30,7 @@ namespace weather_widget
 
 
             InitializeComponent();
-
+            /*
             //List<WeatherInfoModel> weatherInfo = await APIManagerModel.GetWeather("Rankweil");
 
             //Task<WeatherInfoListModel> weatherInfos = APIManagerModel.GetWeather("Rankweil");
@@ -49,8 +49,9 @@ namespace weather_widget
             Debug.WriteLine("Do Other stuff");
             Debug.WriteLine("Do Other stuff");
             
-
+            */
         }
+        /*
         private async void GetWeather(string cityname)
         {
             APIManagerModel apimanagerModel = new APIManagerModel();
@@ -63,8 +64,9 @@ namespace weather_widget
             Task<string> s = api.GetWeather("Rankweil");
             string ss = await s;
             Debug.WriteLine(ss);
-            */
+            
         } 
+    */
     }
 
 
