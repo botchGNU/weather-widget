@@ -6,9 +6,10 @@
 
 - [ ] Start with `Database-Manager`
   - [ ] Create database for weather info
+    - [x] Try to Create
   - [ ] Save weather info into database
   - [ ] ??Helper Class, `WeatherToDisplay` (needs to be discussed with Tim)??
-
+  
 - [ ] Finish `API-Manager` (should be static, but for now its not a static class)
   - [x] Exceptions for different errors
 
@@ -49,4 +50,5 @@ till 02.05 --> per E-Mail
 - [Organisation] documentation: ER-Diagram, Class-Diagram --> \2h
 - [API-Manager] work on exceptions for different errors --> \2h
   - Try and Catch
-- [DataBaseManager] new Branch
+- [DataBaseManager] new Branch, new Class -->\1/4h
+  - [DataBaseManager] Save into DataBase (try, not final) --> \1,5h

@@ -34,6 +34,7 @@ namespace weather_widget
             //List<WeatherInfoModel> weatherInfo = await APIManagerModel.GetWeather("Rankweil");
 
             //Task<WeatherInfoListModel> weatherInfos = APIManagerModel.GetWeather("Rankweil");
+            /*
             try
             {
                 GetWeather("Rankweil");
@@ -48,6 +49,13 @@ namespace weather_widget
             Debug.WriteLine("Do Other stuff");
             Debug.WriteLine("Do Other stuff");
             Debug.WriteLine("Do Other stuff");
+            */
+            DataBaseManagerModel dataBaseManagerModel = new DataBaseManagerModel();
+            dataBaseManagerModel.GetDataFromOpenWeather("Rankweil");
+
+            Debug.WriteLine("Do other stuff");
+            Debug.WriteLine("Do other stuff");
+            Debug.WriteLine("Do other stuff");
             
             */
         }
