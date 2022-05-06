@@ -22,6 +22,7 @@ namespace weather_widget.Model
         public WeatherInfoListModel()
         {}
 
+        /*
         public void SaveToSqlite(string fileName)
         {
             // Info zu SQLite:
@@ -35,7 +36,6 @@ namespace weather_widget.Model
             // Kommando erzeugen, das mit der DB kommuniziert
             SqliteCommand cmd = new SqliteCommand("DROP TABLE IF EXISTS adressdata", conn);
             cmd.ExecuteNonQuery();
-            */
 
             
             // .NET Framework
@@ -87,6 +87,7 @@ namespace weather_widget.Model
 
             return conn;
         }
+        */
 
         /*
         /// <summary>
