@@ -63,9 +63,11 @@ namespace weather_widget.ViewModel
                 OnPropertyChanged(nameof(CurrentLocation));    
             }
         }
-        public string CurrentTemperature { get => "22 C"; } //placeholder
-        public string CurrentType { get => "Cloudy"; }  //placeholder
-        public WeatherInfoListModel ForecastList { get => _testingList; }
+        public string Humidity { get => "Watery"; }
+        public string MinTemp { get => "10" + "°C"; }
+        public string MaxTemp { get => "14" + "°C"; }
+        public string AvTemp { get => "12" + "°C"; }
+        public WeatherInfoListModel ForecastList { get => _testingList; }   
         public BitmapImage WeatherImageSource
         {
             get

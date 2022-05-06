@@ -61,6 +61,7 @@ namespace weather_widget.Model
         /// Humidity in %
         /// </summary>
         public double Humidity { get; set; }
+
         #endregion
 
         public WeatherInfoModel(string weatherdesc, string weathericon, DateTime weatherdaytime, double maxtemp, double mintemp, double winddir, string winddirasstring, double windspeed, double humidity)

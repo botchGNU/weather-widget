@@ -1,8 +1,8 @@
 # Bugs
-- [ ] 2nd MainWindow 
+- [x] 2nd MainWindow 
 
 # ToDo
-- [ ] [GUI] Design ListView
+- [ ] [GUI] Design ListView	(in progress)
 
 # Log
 ## 13-04-2022 
@@ -49,4 +49,8 @@
 - [GUI] Allign lociation text (settings)
 - [MVVM] Adding comments
 
-  
+
+## 05-05-2022
+
+- [General] fixed duplicate window bug
+- [GUI] replaced ListView with ListBox

@@ -21,99 +21,118 @@
             <Setter Property="Foreground" Value="White"/>
             <Setter Property="Background" Value="Transparent"/>
             <Setter Property="BorderBrush" Value="Transparent"/>
+            <Setter Property="Template">
+                <Setter.Value>
+                    <ControlTemplate TargetType="{x:Type Button}">
+                        <Border Background="{TemplateBinding Background}">
+                            <ContentPresenter HorizontalAlignment="Center" VerticalAlignment="Center"/>
+                        </Border>
+                    </ControlTemplate>
+                </Setter.Value>
+            </Setter>
+            <Style.Triggers>
+                <Trigger Property="IsMouseOver" Value="True">
+                    <Setter Property="Background" Value="#0b54b7a8"/>
+                </Trigger>
+            </Style.Triggers>
         </Style>
 
     </UserControl.Resources>
 
-
     <Grid Margin="0">
 
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="3*"/>
-            <ColumnDefinition Width="2.5*"/>
+            <ColumnDefinition Width="2*"/>
+            <ColumnDefinition Width="1.5*"/>
         </Grid.ColumnDefinitions>
 
         <Border Grid.Column="0"
                 Padding="10px">
             <Grid>
                 <Grid.RowDefinitions>
-                    <RowDefinition/>
-                    <RowDefinition/>
+                    <RowDefinition Height="3*"/>
+                    <RowDefinition Height="2*"/>
                 </Grid.RowDefinitions>
 
                 <Grid>
+
                     <Grid.ColumnDefinitions>
-                        <ColumnDefinition Width="3*"/>
+                        <ColumnDefinition Width="2*"/>
                         <ColumnDefinition/>
                     </Grid.ColumnDefinitions>
-                    <StackPanel Grid.Row="0"
-                            x:Name="TopPanel"
-                            VerticalAlignment="Top"
-                            HorizontalAlignment="Left">
+                    <Grid.RowDefinitions>
+                        <RowDefinition Height="1.5*"/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                        <RowDefinition/>
+                    </Grid.RowDefinitions>
+                    
 
-                        <!--current day of the week -> fullname -->
-                        <Label x:Name="CurrentDayOfWeek"
+                    <!--current day of the week -> fullname -->
+                    <Label x:Name="CurrentDayOfWeek"
                            Foreground="White"
                            Content="{Binding CurrentDay}"
-                           FontSize="18px"
-                           Padding="10 0"/>
+                           FontSize="23px"
+                           FontWeight="Bold"
+                           Grid.Column="0"
+                           Grid.Row="0"
+                           Grid.ColumnSpan="2"/>
 
-                        <!--current date DD/MM/YYYY-->
-                        <Label x:Name="CurrentDate"
-                           Foreground="White"
-                           Content="{Binding CurrentDate}"
-                           FontSize="20px"
-                           Padding="10 0"
-                           />
+                    <!--max. Temp-->
+                    <Label Content="Maximum" Grid.Row="1" FontSize="15"/>
+                    <Label Foreground="White"
+                           Content="{Binding MaxTemp}"
+                           FontSize="15"
+                           Grid.Column="1"
+                           Grid.Row="1"/>
+
+                    <!--min. temp-->
+                    <Label Content="Minimum" Grid.Row="2" FontSize="15"/>
+                    <Label Foreground="White"
+                               Content="{Binding MinTemp}"
+                               FontSize="15"
+                               Grid.Column="1"
+                               Grid.Row="2"/>
 
 
-                        <!--weather type -> ex. cloudy, sunndy, etc.-->
-                        <Label x:Name="CurrentWeatherType" 
-                           Foreground="White"
-                           Content="{Binding CurrentType}"
-                           FontSize="22"
-                           Padding="10"
-                           />
-
-                    </StackPanel>
-
-                    <Image Grid.Column="1" 
-                           Source="{Binding WeatherImageSource}" 
-                           Stretch="Uniform"/>
-
+                    <!--humidity-->
+                    <Label Content="Humidity" Grid.Row="3" FontSize="15"/>
+                    <Label Foreground="White"
+                               Content="{Binding Humidity}"
+                               FontSize="15"
+                               Grid.Column="1"
+                               Grid.Row="3"/>
 
                 </Grid>
 
-                <StackPanel Grid.Row="1"
+                <DockPanel Grid.Row="1"
                             x:Name="BottomPanel"
                             VerticalAlignment="Bottom" 
-                            HorizontalAlignment="Left">
-
-                    <Label x:Name="CurrentMaxTemperature" 
-                           Foreground="White"
-                           Content="{Binding CurrentTemperature}"
-                           FontSize="45"
-                           Padding="0 0">
-
-                        <!--display information on mouse hover-->
-                        <Label.ToolTip>
-                            <ToolTip>Maximum temperature for the current day</ToolTip>
-                        </Label.ToolTip>
-
-                    </Label>
+                            HorizontalAlignment="Left"
+                            LastChildFill="True">
 
                     <!--selected location-->
                     <Label x:Name="CurrentPlace" 
                            Foreground="White"
                            Content="{Binding CurrentLocation}"
                            FontSize="18"
-                           Padding="0 0">
+                           Padding="0 0"
+                           DockPanel.Dock="Bottom">
                         <Label.ToolTip>
                             <ToolTip>Current place and country code</ToolTip>
                         </Label.ToolTip>
                     </Label>
 
-                </StackPanel>
+                    <Label Content="{Binding AvTemp}" 
+                           DockPanel.Dock="Left"
+                           FontSize="35"/>
+
+                    <Image Source="{Binding WeatherImageSource}"
+                           Stretch="UniformToFill"
+                           Width="50" 
+                           HorizontalAlignment="Left"/>
+
+                </DockPanel>
             </Grid>
         </Border>
 
@@ -138,21 +157,28 @@
 
             </StackPanel>
 
-            <!--weather forecast-->
-            <ListView ItemsSource="{Binding ForecastList}"
-                      Background="Transparent" 
-                      Foreground="White" 
-                      BorderBrush="Transparent">
+            <Label Content="Forecast"
+                   DockPanel.Dock="Top"
+                   Height="30"
+                   FontSize="20"
+                   FontWeight="Bold"/>
 
-                <ListView.View>
-                    <GridView AllowsColumnReorder="true">
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=WeatherDescription}" Header="Des"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=MaxTemperature}" Header="Max"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=MinTemperature}" Header="Min"/>
-                        <GridViewColumn DisplayMemberBinding="{Binding Path=Humidity}" Header="Hum"/>
-                    </GridView>
-                </ListView.View>
-            </ListView>
+            <!--weather forecast-->
+            <ListBox ItemsSource="{Binding ForecastList}"
+                     Background="Transparent"
+                     BorderBrush="Transparent">
+                <ListBox.ItemTemplate>
+                    <DataTemplate>
+                        <StackPanel Orientation="Horizontal">
+                            <TextBlock Foreground="White" Text="{Binding Path=Weekday}" Margin="5,0,5,0"/>
+                            <TextBlock Foreground="White" Text="{Binding Path=MaxTemperature}" Margin="5,0,5,0"/>
+                            <TextBlock Foreground="White" Text="{Binding Path=MinTemperature}" Margin="5,0,5,0"/>
+                            <TextBlock Foreground="White" Text="{Binding Path=Humidity}" Margin="5,0,5,0"/>
+                            <Image Source="{Binding Path=WeatherImage}"/>
+                        </StackPanel>
+                    </DataTemplate>
+                </ListBox.ItemTemplate>
+            </ListBox>
         </DockPanel>
     </Grid>
 </UserControl>
