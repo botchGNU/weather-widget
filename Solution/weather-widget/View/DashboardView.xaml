@@ -138,30 +138,43 @@
 
         <DockPanel Grid.Column="1"
                    LastChildFill="True">
+            
+            <Grid Height="50" DockPanel.Dock="Top">
+                <Grid.RowDefinitions>
+                    <RowDefinition Height="20"/>
+                    <RowDefinition Height="30"/>
+                </Grid.RowDefinitions>
 
-            <StackPanel DockPanel.Dock="Top"
+                <StackPanel DockPanel.Dock="Top"
                         Height="20"
                         FlowDirection="RightToLeft"
                         Orientation="Horizontal">
 
-                <Button Content="✕"
+                    <Button Content="✕"
                         Height="20" Width="20"
                         Command="{Binding CloseButtonCommand}"/>
 
-                <!--switch to settings view-->
-                <Button Content="⚙"
+                    <!--switch to settings view-->
+                    <Button Content="⚙"
                         Height="20" Width="20"
                         Command="{Binding SettingsButtonCommand}"
                         />
 
 
-            </StackPanel>
+                </StackPanel>
 
-            <Label Content="Forecast"
+                <Label Content="Forecast"
                    DockPanel.Dock="Top"
                    Height="30"
-                   FontSize="20"
-                   FontWeight="Bold"/>
+                   FontSize="23"
+                   FontWeight="Bold"
+                   Grid.RowSpan="2"/>
+
+            </Grid>
+
+            
+
+            
 
             <!--weather forecast-->
             <ListBox ItemsSource="{Binding ForecastList}"
@@ -174,7 +187,7 @@
                             <TextBlock Foreground="White" Text="{Binding Path=MaxTemperature}" Margin="5,0,5,0"/>
                             <TextBlock Foreground="White" Text="{Binding Path=MinTemperature}" Margin="5,0,5,0"/>
                             <TextBlock Foreground="White" Text="{Binding Path=Humidity}" Margin="5,0,5,0"/>
-                            <Image Source="{Binding Path=WeatherImage}"/>
+                            <Image Source="{Binding Path=WeatherImage}" Height="5" Width="5"/>
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

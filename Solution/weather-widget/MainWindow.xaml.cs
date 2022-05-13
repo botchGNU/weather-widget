@@ -50,14 +50,15 @@ namespace weather_widget
             Debug.WriteLine("Do Other stuff");
             Debug.WriteLine("Do Other stuff");
             */
+            /*
             DataBaseManagerModel dataBaseManagerModel = new DataBaseManagerModel();
             dataBaseManagerModel.GetDataFromOpenWeather("Rankweil");
 
             Debug.WriteLine("Do other stuff");
             Debug.WriteLine("Do other stuff");
             Debug.WriteLine("Do other stuff");
-            
             */
+            
         }
         /*
         private async void GetWeather(string cityname)

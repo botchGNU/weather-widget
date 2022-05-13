@@ -54,3 +54,11 @@
 
 - [General] fixed duplicate window bug
 - [GUI] replaced ListView with ListBox
+
+## 06-05-2022
+
+- [GUI] UI Overhaul
+  - Removed Info, Wind, etc.
+  - Added headers
+  - Realligned items
+  - Removed button background color on mouse hover
