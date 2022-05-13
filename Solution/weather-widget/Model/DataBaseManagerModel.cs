@@ -5,17 +5,18 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.Data;
+using System.Globalization;
 
 namespace weather_widget.Model
 {
     public class DataBaseManagerModel
     {
         private WeatherInfoListModel weatherInfos;
-        private string FilePath = @"..\\..\\..\\..\\..\\WeatherInfo.db";
+        private string FilePath = @"..\\..\\..\\..\\..\\weatherwidget.db";
         private bool receivedJSON = false;
 
         /// <summary>
-        /// 
+        /// This method gets forecasts from openweather
         /// </summary>
         /// <param name="cityname"></param>
         public void GetDataFromOpenWeather(string cityname)
@@ -27,6 +28,7 @@ namespace weather_widget.Model
             catch (Exception ex)
             { Debug.WriteLine(ex.Message); }
         }
+
         private async void GetWeather(string cityname)
         {
             APIManagerModel apimanagerModel = new APIManagerModel();
@@ -39,31 +41,94 @@ namespace weather_widget.Model
             SaveIntoDatabase(cityname, weatherInfos.cityid, weatherInfos.countryzip);
         }
 
-        private void SaveIntoDatabase(string CityName, int CityId, string CountryZip)
+        public void SaveIntoDatabase(string CityName, int CityId, string CountryZip)
         {
 
-            /*
-            if (weatherInfos != null)
-            {
-                // TODO: Check if Cityname exists in Database Citylist!!
-                weatherInfos.cityid = CityId;
-                weatherInfos.countryzip = CountryZip;
-                weatherInfos.cityname = CityName;
+            // .NET Framework
+            SQLiteConnection connection = CreateSQLiteConnection(FilePath);
 
-                weatherInfos.SaveToSqlite(FilePath);
+            // create command, which will communicate with DB
+            SQLiteCommand cmd = new SQLiteCommand(connection);
+
+            cmd.CommandText = "DROP TABLE IF EXISTS weatherinfo";
+
+            cmd.ExecuteNonQuery();
+
+            // TODO: cityid, cityname, coutryzip --> FOREIGN KEYS
+            cmd.CommandText = @"CREATE TABLE weatherinfo(id INTEGER PRIMARY KEY,
+                              cityid INTEGER, cityname TEXT, countryzip TEXT,
+                              weatherdescription TEXT, weathericon TEXT, weatherdaytime TEXT, maxtemperature DOUBLE, 
+                              mintemperature DOUBLE, winddirection DOUBLE, winddirectionasstring TEXT, windspeed DOUBLE, humidity DOUBLE)";
+            cmd.ExecuteNonQuery();
+
+            foreach (WeatherInfoModel item in weatherInfos)
+            {
+                // CRUD ... Create Read Update Delete
+
+                // neue Datensätze -> INSERT ("create")
+                cmd.CommandText = $"INSERT INTO " +
+                    $"weatherinfo(cityid, cityname, countryzip, weatherdescription, weathericon, weatherdaytime, maxtemperature, mintemperature, winddirection, winddirectionasstring, windspeed, humidity)" +
+                    $"VALUES({(CityId)},'{CityName}','{CountryZip}','{item.WeatherDescription}','{item.WeatherIcon}','{item.WeatherDayTime.ToString("yyyy-MM-dd HH:mm:ss")}','{item.MaxTemperature.ToString(new CultureInfo("en-US"))}','{item.MinTemperature.ToString(new CultureInfo("en-US"))}','{item.WindDirection.ToString(new CultureInfo("en-US"))}','{item.WindDirectionAsString}', '{item.WindSpeed.ToString(new CultureInfo("en-US"))}', '{item.Humidity.ToString(new CultureInfo("en-US"))}')";
+                cmd.ExecuteNonQuery();
+
+                // geänderte Datensätze -> UPDATE 
+
             }
-            */
+
+            connection.Close();
         }
 
-        // CRUD
+        private void LoadFromDataBase(string query)
+        {
+            SQLiteDataReader sQLiteDataReader = null; // see our project
+        }
 
+        private void UpdateDataBase(string query)
+        {
+
+        }
+
+        private void InsertIntoDataBase(string query)
+        {
+
+        }
+
+        private SQLiteConnection CreateSQLiteConnection(string fileName)
+        {
+            SQLiteConnection conn = new SQLiteConnection($"Data Source={fileName}");
+            try
+            {
+                conn.Open();
+            }
+            catch (Exception exp)
+            {
+                throw exp;
+            }
+
+            return conn;
+        }
+        /*
+        if (weatherInfos != null)
+        {
+            // TODO: Check if Cityname exists in Database Citylist!!
+            weatherInfos.cityid = CityId;
+            weatherInfos.countryzip = CountryZip;
+            weatherInfos.cityname = CityName;
+
+            weatherInfos.SaveToSqlite(FilePath);
+        }
+        */
+    }
+
+        // CRUD
+        /*
         // TODO: Edit code to my needs
         /// <summary>
-        /// This method is for inserting, updating or removing from Database
+        /// This method is for inserting, updating or removing from database
         /// </summary>
         /// <param name="query"></param>
         /// <param name="args"></param>
-        /// <returns></returns>
+        /// <returns>number of affected elements in database</returns>
         private int ExecuteWrite(string query, Dictionary<string, object> args)
         {
             int numberOfRowsAffected;
@@ -85,19 +150,17 @@ namespace weather_widget.Model
                     //execute the query and get the number of row affected
                     numberOfRowsAffected = cmd.ExecuteNonQuery();
                 }
-
                 return numberOfRowsAffected;
             }
         }
 
-
         // TODO: Edit code to my needs
         /// <summary>
-        /// Reading DataBase
+        /// Method for reading content from database
         /// </summary>
         /// <param name="query"></param>
         /// <returns></returns>
-        private DataTable Execute(string query)
+        private DataTable ReadDatabase(string query)
         {
             if (string.IsNullOrEmpty(query.Trim()))
                 return null;
@@ -107,12 +170,10 @@ namespace weather_widget.Model
                 con.Open();
                 using (var cmd = new SQLiteCommand(query, con))
                 {
-                    /*
                     foreach (KeyValuePair<string, object> entry in args)
                     {
                         cmd.Parameters.AddWithValue(entry.Key, entry.Value);
                     }
-                    */
 
                     var da = new SQLiteDataAdapter(cmd);
 
@@ -134,7 +195,7 @@ namespace weather_widget.Model
         /// <returns></returns>
         private int AddWeatherInfo(WeatherInfoModel weatherInfo)
         {
-            const string query = "INSERT INTO User(XXX, XX) VALUES(@XXX, @XX)";
+            const string query = "INSERT INTO weatherinfo(XXX, XX) VALUES(@XXX, @XX)";
 
             //here we are setting the parameter values that will be actually 
             //replaced in the query in Execute method
@@ -150,7 +211,7 @@ namespace weather_widget.Model
         // TODO: Edit code to my needs
         private int EditWeatherInfo(WeatherInfoModel weatherInfo)
         {
-            const string query = "UPDATE WeatherInfoList SET WeatherDescription = @weatherdesc, WeatherIcon = @weathericon WHERE Id = @id";
+            const string query = "UPDATE weatherinfo SET WeatherDescription = @weatherdesc, WeatherIcon = @weathericon WHERE Id = @id";
 
             //here we are setting the parameter values that will be actually 
             //replaced in the query in Execute method
@@ -169,7 +230,7 @@ namespace weather_widget.Model
         // TODO: Edit code to my needs
         private int DeleteWeatherInfo(WeatherInfoModel weatherInfo)
         {
-            const string query = "DELETE from WeatherInfoList WHERE Id = @id";
+            const string query = "DELETE from weatherinfo WHERE Id = @id";
 
             //here we are setting the parameter values that will be actually 
             //replaced in the query in Execute method
@@ -180,36 +241,34 @@ namespace weather_widget.Model
             return ExecuteWrite(query, args);
         }
 
-        /*
-        public void SaveToSqlite(string fileName)
+        private void SaveIntoDB(WeatherInfoListModel weatherInfos, string fileName)
         {
-            // Info zu SQLite:
-            // https://SQLite.org
-           
-            // Install-Package system.data.sqlite
-
             // .NET Core (using Microsoft.Data.SQLite)
             SQLiteConnection conn = CreateSQLiteConnection(fileName);
 
-            // Kommando erzeugen, das mit der DB kommuniziert
-            SQLiteCommand cmd = new SQLiteCommand("DROP TABLE IF EXISTS adressdata", conn);
-            cmd.ExecuteNonQuery();
+            // TODO: Check if it exists
 
- 
+            /*
             cmd.CommandText = "DROP TABLE IF EXISTS weatherinfo";
 
             cmd.ExecuteNonQuery();
+            */
+
+            // IF IT DOESN'T EXIST --> CREATE TABLE weatherinfo
 
             // TODO: cityid, cityname, coutryzip --> FOREIGN KEYS
+            /*
             cmd.CommandText = @"CREATE TABLE weatherinfo(id INTEGER PRIMARY KEY,
                               cityid INTEGER, cityname TEXT, countryzip TEXT,
                               weatherdescription TEXT, weathericon TEXT, weatherdaytime TEXT, maxtemperature DOUBLE, 
                               mintemperature DOUBLE, winddirection DOUBLE, winddirectionasstring TEXT, windspeed DOUBLE, humidity DOUBLE)";
             cmd.ExecuteNonQuery();
 
-            foreach (WeatherInfoModel item in this)
+
+            foreach (WeatherInfoModel weatherInfo in weatherInfos)
             {
                 // CRUD ... Create Read Update Delete
+
 
                 // neue Datensätze -> INSERT ("create")
                 cmd.CommandText = $"INSERT INTO " +
@@ -239,6 +298,5 @@ namespace weather_widget.Model
 
             return conn;
         }
-        */
-    }
+            */
 }

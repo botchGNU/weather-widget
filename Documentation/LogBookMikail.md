@@ -8,8 +8,18 @@
   - [ ] Create database for weather info
     - [x] Try to Create
   - [ ] Save weather info into database
-  - [ ] ??Helper Class, `WeatherToDisplay` (needs to be discussed with Tim)??
-  
+    - [x] change the format of datetime to `yyyy-MM-dd HH:mm:ss`
+    - [x] change all `,` with `.` while saving, because DB is working with `.` !
+  - [ ] Helper Class, `WeatherToDisplay`
+  - [ ] try out SELECT, INSERT, UPDATE, ... commands
+    - [x] get MAXIMUM from maxtemperature
+    - [x] get MINIMUM temperature from mintemperature
+    - [x] get AVERAGE temperature of a day
+    - [x] get MOST FREQUENT weathertype `weatherdescription`
+    - [ ] delete duplicate cities (just leave the first one) `citylist`  (duplicate, )
+    - [ ] Foreign Keys (citylist) (how to CREATE TABLE `)
+    - [ ] how to read SELECTed content in C# `DataType`
+    - [ ] UPDATE if exists in DataBase, HOW TO?
 - [ ] Finish `API-Manager` (should be static, but for now its not a static class)
   - [x] Exceptions for different errors
 
@@ -52,3 +62,25 @@ till 02.05 --> per E-Mail
   - Try and Catch
 - [DataBaseManager] new Branch, new Class -->\1/4h
   - [DataBaseManager] Save into DataBase (try, not final) --> \1,5h
+
+## 06-05-2022 - Friday
+
+- [DataBaseManager]
+  - first steps for CRUD (Remove, Insert, Update, ...) --> \2h
+
+## 08-05-2022 - Saturday
+
+- Merged DataBase (citylist and weatherinfo) together --> \ 1/2h
+
+## 12-05-2022 - Thursday
+
+- [DataBaseManager]
+  - got MIN, MAX, AVERAGE, MOST FREQUENT weather--> \ 2 h
+
+## 13-05-2022 - Friday
+
+- ill (visiting the doctor) --> 1h
+- [Organisation] asked few questions about the project --> 1/2h
+- 
+
+ 
