@@ -20,17 +20,20 @@ namespace weather_widget.Model
         /// WeatherInfoListModel constructor
         /// </summary>
         public WeatherInfoListModel()
-        {}
+        {
 
-        /*
+        }
+
+        
         public void SaveToSqlite(string fileName)
         {
+            /*
             // Info zu SQLite:
             // https://SQLite.org
            
             // Install-Package system.data.sqlite
 
-            /* .NET Core (using Microsoft.Data.SQLite)
+            //.NET Core (using Microsoft.Data.SQLite)
             SqliteConnection conn = CreateSQLiteConnection(fileName);
 
             // Kommando erzeugen, das mit der DB kommuniziert
@@ -72,6 +75,7 @@ namespace weather_widget.Model
             }
 
             connection.Close();
+            */
         }
         private SQLiteConnection CreateSQLiteConnection(string fileName)
         {
@@ -87,9 +91,9 @@ namespace weather_widget.Model
 
             return conn;
         }
-        */
+        
 
-        /*
+        
         /// <summary>
         /// Get the average temperature for the day
         /// </summary>
@@ -186,12 +190,14 @@ namespace weather_widget.Model
             
         }
         */
+        
 
-        /*
+        
         /// <summary>
         /// Get the frequently recurring weather type for the day
         /// </summary>
         /// <returns></returns>
+        /*
         public string GetFrequentDescription()
         {
             var uniqueWeatherStatess = EveryDayWeatherStates.OrderByDescending(i => i.WeatherDescription).Distinct(j => j.WeatherDescription).ToList();
@@ -204,6 +210,7 @@ namespace weather_widget.Model
 
         }
         */
+        
     }
 
 }

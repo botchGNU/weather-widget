@@ -1,20 +1,21 @@
 ﻿using System;
 using System.Windows.Input;
 using weather_widget.Command;
+using weather_widget.Model;
 using weather_widget.Store;
 
 namespace weather_widget.ViewModel
 {
     class SettingsViewModel : ViewModelBase
     {
-        private string _currentLocation;    //currently selected Location in Settings-View
-
+        private DataBaseUpdateManager _updateMan;
         #region ctor
-        public SettingsViewModel(NavigationStore navigationStore, Func<DashboardViewModel> createDashboardViewModel)
+        public SettingsViewModel(NavigationStore navigationStore, Func<DashboardViewModel> createDashboardViewModel, DataBaseUpdateManager updateManager)
         {
+            _updateMan = updateManager;
             BackToDashboardButtonCommand = new NavigateCommand(navigationStore, createDashboardViewModel);
             CloseButtonCommand = new ExitApplicationCommand();
-            ConfirmButtonCommand = new UpdateCityCommand(this);
+            ConfirmButtonCommand = new UpdateCityCommand(_updateMan);
         }
         #endregion
 
@@ -25,7 +26,7 @@ namespace weather_widget.ViewModel
         #endregion
 
         #region properties
-        public string CurrentLocation { get => _currentLocation; set => _currentLocation = value; }    //Binding for View -> gets/sets location for weather api
+        public string CurrentLocation { get => _updateMan.CurrentCity; set => _updateMan.CurrentCity = value; }    //Binding for View -> gets/sets location for weather api
         #endregion
     }
 }

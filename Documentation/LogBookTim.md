@@ -62,3 +62,13 @@
   - Added headers
   - Realligned items
   - Removed button background color on mouse hover
+
+## 13-05-2022
+
+- [API/Database] create update manager
+  - update on startup
+  - update every 3h (timer)
+- [GUI / MVVM] update manager binding
+  - pass updatemanager into ViewModels
+  - bind settingsviewmodel
+  - create command to call update method on confirm-button press

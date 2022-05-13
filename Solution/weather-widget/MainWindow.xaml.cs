@@ -27,8 +27,6 @@ namespace weather_widget
         public MainWindow()
         {
 
-
-
             InitializeComponent();
             /*
             //List<WeatherInfoModel> weatherInfo = await APIManagerModel.GetWeather("Rankweil");

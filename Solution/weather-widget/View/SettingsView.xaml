@@ -89,7 +89,8 @@
                      TextAlignment="Center"
                      Background="Transparent"
                      Foreground="White"
-                     SelectionBrush="LightBlue"/>
+                     SelectionBrush="LightBlue"
+                     Text="{Binding CurrentLocation}"/>
             
             <Button Grid.Row="2"
                     Content="Confirm"

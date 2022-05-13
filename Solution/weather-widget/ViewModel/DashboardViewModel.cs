@@ -10,8 +10,9 @@ namespace weather_widget.ViewModel
 {
     class DashboardViewModel : ViewModelBase
     {
+        private DataBaseUpdateManager _updateMan;
         #region testing purpuse
-        private WeatherInfoListModel _testingList = new WeatherInfoListModel();
+        private WeatherInfoListModel _testingList;
 
         private void FillTestingList()
         {
@@ -26,8 +27,10 @@ namespace weather_widget.ViewModel
         #endregion
 
         #region ctor
-        public DashboardViewModel(NavigationStore navigationStore, Func<SettingsViewModel> createSettingsViewModel)
+        public DashboardViewModel(NavigationStore navigationStore, Func<SettingsViewModel> createSettingsViewModel, DataBaseUpdateManager updateManager)
         {
+            _updateMan = updateManager;
+            _testingList = new WeatherInfoListModel();
             SettingsButtonCommand = new NavigateCommand(navigationStore, createSettingsViewModel);
             CloseButtonCommand = new ExitApplicationCommand();
             FillTestingList();  //testing purpose
@@ -63,10 +66,10 @@ namespace weather_widget.ViewModel
                 OnPropertyChanged(nameof(CurrentLocation));    
             }
         }
-        public string Humidity { get => "Watery"; }
-        public string MinTemp { get => "10" + "°C"; }
-        public string MaxTemp { get => "14" + "°C"; }
-        public string AvTemp { get => "12" + "°C"; }
+        public string Humidity { get => Convert.ToString(ForecastList[0].Humidity); }
+        public string MinTemp { get => ForecastList[0].MinTemperature + " °C"; }
+        public string MaxTemp { get => ForecastList[0].MaxTemperature + " °C"; }
+        public string AvTemp { get => "12" + " °C"; }
         public WeatherInfoListModel ForecastList { get => _testingList; }   
         public BitmapImage WeatherImageSource
         {

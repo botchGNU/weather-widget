@@ -1,18 +1,20 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using weather_widget.Model;
 using weather_widget.ViewModel;
 
 namespace weather_widget.Command
 {
     internal class UpdateCityCommand : CommandBase
     {
-        private SettingsViewModel _viewModel;
-        public UpdateCityCommand(SettingsViewModel viewModel){ _viewModel = viewModel; }
+        private DataBaseUpdateManager _updateMan;
+        public UpdateCityCommand(DataBaseUpdateManager updateManager){_updateMan = updateManager; }
+
 
         public override void Execute(object parameter)
         {
-            //not implemented yet
+            _updateMan.UpdateWeather();
         }
     }
 }
