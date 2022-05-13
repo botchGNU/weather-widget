@@ -36,7 +36,7 @@ namespace weather_widget.Model
 
             weatherInfos = await TaskweatherInfos;
             Debug.WriteLine(weatherInfos.Count);
-            weatherInfos.cityid = 0;
+            weatherInfos.cityid = 2767974;
             weatherInfos.countryzip = "AT";
             SaveIntoDatabase(cityname, weatherInfos.cityid, weatherInfos.countryzip);
         }
@@ -55,10 +55,12 @@ namespace weather_widget.Model
             cmd.ExecuteNonQuery();
 
             // TODO: cityid, cityname, coutryzip --> FOREIGN KEYS
-            cmd.CommandText = @"CREATE TABLE weatherinfo(id INTEGER PRIMARY KEY,
-                              cityid INTEGER, cityname TEXT, countryzip TEXT,
-                              weatherdescription TEXT, weathericon TEXT, weatherdaytime TEXT, maxtemperature DOUBLE, 
-                              mintemperature DOUBLE, winddirection DOUBLE, winddirectionasstring TEXT, windspeed DOUBLE, humidity DOUBLE)";
+            cmd.CommandText = @"CREATE TABLE IF NOT EXISTS weatherinfo(
+                              id INTEGER PRIMARY KEY, 
+                              cityid INTEGER, cityname TEXT, countryzip TEXT, 
+                              weatherdescription TEXT, weathericon TEXT, weatherdaytime TEXT, maxtemperature DOUBLE, mintemperature DOUBLE, winddirection DOUBLE, winddirectionasstring TEXT, windspeed DOUBLE, humidity DOUBLE,
+                              FOREIGN KEY(cityid) REFERENCES citylist(id), FOREIGN KEY(cityname) REFERENCES citylist(cityname), FOREIGN KEY(countryzip) REFERENCES citylist(countryzip)
+                              )";
             cmd.ExecuteNonQuery();
 
             foreach (WeatherInfoModel item in weatherInfos)

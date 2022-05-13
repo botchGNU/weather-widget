@@ -16,10 +16,10 @@
     - [x] get MINIMUM temperature from mintemperature
     - [x] get AVERAGE temperature of a day
     - [x] get MOST FREQUENT weathertype `weatherdescription`
-    - [ ] delete duplicate cities (just leave the first one) `citylist`  (duplicate, )
-    - [ ] Foreign Keys (citylist) (how to CREATE TABLE `)
-    - [ ] how to read SELECTed content in C# `DataType`
-    - [ ] UPDATE if exists in DataBase, HOW TO?
+    - [x] delete duplicate cities (just leave the first one) `citylist`  
+    - [x] Foreign Keys (citylist) (how to CREATE TABLE  ... FOREIGN KEY ... as ...`)
+    - [ ] how to read SELECTed content in C# `DataType` (see previous WFFST-Project)
+    - [ ] UPDATE if exists in DataBase
 - [ ] Finish `API-Manager` (should be static, but for now its not a static class)
   - [x] Exceptions for different errors
 
@@ -80,7 +80,8 @@ till 02.05 --> per E-Mail
 ## 13-05-2022 - Friday
 
 - ill (visiting the doctor) --> 1h
-- [Organisation] asked few questions about the project --> 1/2h
-- 
+- [Organisation] asked few questions about the project --> \1/2h
+- [DataBase] deleted duplicate cities --> \1/2h
+- [DataBaseManagerModel] changed FOREIGN KEYS --> \1/2h
 
  

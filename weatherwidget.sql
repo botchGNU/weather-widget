@@ -1,12 +1,30 @@
--- SELECT * FROM citylist
--- where    rowid not in
---          (
---          select  min(rowid)
---          from    citylist
---          group by
---                  countryzip
---          ,       cityname
---          );
+-- following lines was used to create new table without duplicates
+-- SELECT id, cityname, countryzip FROM citylist 
+-- 	GROUP BY cityname 
+-- 	ORDER BY cityname ASC;
+-- 
+-- -- create new citytable without duplicates
+-- CREATE TABLE citylistNEW AS
+-- 	SELECT id, cityname, countryzip FROM citylist 
+-- 	GROUP BY cityname 
+-- 	ORDER BY cityname ASC;
+-- 
+-- -- drop old citylist table	
+-- DROP TABLE citylist;
+-- 
+-- -- create the new table as citylist
+-- CREATE TABLE citylist AS
+-- 	SELECT id, cityname, countryzip FROM citylistNEW 
+-- 	GROUP BY cityname 
+-- 	ORDER BY cityname ASC;
+-- 	
+-- --drop citylistNEW TABLE
+-- DROP TABLE citylistNEW;
+
+
+--LIKE "%" GROUP BY cityname;
+
+
 -- Maximale Temperatur:
 SELECT MAX(maxtemperature) as maxtemp FROM weatherinfo WHERE weatherdaytime BETWEEN '2022-05-13 00:00:00' AND '2022-05-14 00:00:00';
 -- Minimale Temperatur:
@@ -44,15 +62,9 @@ SELECT weatherdescription, COUNT(weatherdescription) AS frequency
 	GROUP BY weatherdescription
 	ORDER BY frequency DESC
 	LIMIT 2;
-	
-SELECT cityid, cityname, countryzip FROM citylist GROUP BY cityid, cityname, countryzip;--LIKE "%" GROUP BY cityname;
 
-SELECT * FROM citylist
-where    rowid not in
-          (
-          select  min(rowid)
-          from    citylist
-          group by
-                  countryzip
-          ,       cityname
-          );
+-- following query demonstrates the query for search citynames
+SELECT cityname FROM citylist 
+	WHERE upper(cityname) LIKE 'RA%';
+	
+SELECT cityname FROM citylist
