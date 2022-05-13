@@ -32,35 +32,7 @@ Each city can have 0 or more forecasts. Average/min./max. temperature is going t
 
 
 
-Example for ER-Diagram:
-
-
-
-
-```mermaid
-erDiagram
-DOG {
-         int age
-         string breed
-         string pedigree
-       }
-       OWNER ||..|{ DOG : owns
-       OWNER {
-         string name
-         string address
-         string homePhoneNumber
-         string mobilePhoneNumber
-       }
-       TRAINER }|..|{ DOG : trains
-       PROGRAMME }|--|| TRAINER : "operated by"
-       DOG ||--|{ PROGRAMME : attends
-       PROGRAMME {
-         float costPerSession
-       }
-```
-
-
-Information for creating an ER-Diagram
+# Information for creating an ER-Diagram
 
 | Value (left) | Value (right) | Meaning                       |
 | ------------ | ------------- | ----------------------------- |
