@@ -67,4 +67,5 @@ SELECT weatherdescription, COUNT(weatherdescription) AS frequency
 SELECT cityname FROM citylist 
 	WHERE upper(cityname) LIKE 'RA%';
 	
-SELECT cityname FROM citylist
+SELECT weatherdaytime FROM weatherinfo
+	WHERE weatherdaytime <= '2022-05-13 08:00:00';

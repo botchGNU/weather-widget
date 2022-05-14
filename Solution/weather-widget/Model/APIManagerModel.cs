@@ -14,14 +14,6 @@ namespace weather_widget.Model
         private static string API_KEY = File.ReadAllText(@"..\\..\\..\\..\\..\\API.key"); //=> ".\weather-widget\API.key"
         //private static string API_KEY = "11"; //=> ".\weather-widget\API.key"
 
-        // TO DO: Do this in DataBase Manager
-        /*
-        private const string unitWinSpeed = "m/s";
-        private const string unitIcon = ".png";
-        private const string unitTemp = "°C";
-        private const string unitHumidity = "%";
-        */
-
         public async Task<WeatherInfoListModel> GetWeather(string location)
         {
             string url = $"https://api.openweathermap.org/data/2.5/forecast?q={location}&mode=json&units=metric&appid={API_KEY}";

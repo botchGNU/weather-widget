@@ -19,7 +19,7 @@
     - [x] delete duplicate cities (just leave the first one) `citylist`  
     - [x] Foreign Keys (citylist) (how to CREATE TABLE  ... FOREIGN KEY ... as ...`)
     - [ ] how to read SELECTed content in C# `DataType` (see previous WFFST-Project)
-    - [ ] UPDATE if exists in DataBase
+    - [x] UPDATE if exists in DataBase
 - [ ] Finish `API-Manager` (should be static, but for now its not a static class)
   - [x] Exceptions for different errors
 
@@ -84,4 +84,8 @@ till 02.05 --> per E-Mail
 - [DataBase] deleted duplicate cities --> \1/2h
 - [DataBaseManagerModel] changed FOREIGN KEYS --> \1/2h
 
- 
+##  14-05-2022 - Saturday
+
+- new Classes [WeatherToDisplayListModel, WeatherToDisplayModel] --> 1/2h
+- [DataBaseManagerModel] UPDATE and INSERT INTO --> \2 1/2h
+
