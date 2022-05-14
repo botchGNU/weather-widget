@@ -72,3 +72,7 @@
   - pass updatemanager into ViewModels
   - bind settingsviewmodel
   - create command to call update method on confirm-button press
+
+## 14-05-2022
+
+- [API / Database] check connection to api before request
