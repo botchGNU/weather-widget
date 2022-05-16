@@ -13,11 +13,11 @@ namespace weather_widget
     public partial class App : Application
     {
         private readonly NavigationStore _navStore;
-        private DataBaseUpdateManager _updateManager;
+        private DataBaseUpdateManagerModel _updateManager;
         public App()
         {
             _navStore = new NavigationStore();
-            _updateManager = new DataBaseUpdateManager();
+            _updateManager = new DataBaseUpdateManagerModel();
         }
 
         protected override void OnStartup(StartupEventArgs e)

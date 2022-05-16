@@ -90,6 +90,7 @@
                      Background="Transparent"
                      Foreground="White"
                      SelectionBrush="LightBlue"
+                     FontSize="22"
                      Text="{Binding CurrentLocation}"/>
             
             <Button Grid.Row="2"

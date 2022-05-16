@@ -5,14 +5,16 @@ using System.Timers;
 
 namespace weather_widget.Model
 {
-    public class DataBaseUpdateManager
+    public class DataBaseUpdateManagerModel
     {
+        #region fields
         private string _currentCity;
         private DataBaseManagerModel _manager = new DataBaseManagerModel();
         private Timer _threeHourTimer;
+        #endregion
 
         #region ctor
-        public DataBaseUpdateManager()
+        public DataBaseUpdateManagerModel()
         {
             CurrentCity = "Rankweil";   //current default value
             UpdateWeather();      //uncommented unless api key is in repo

@@ -10,7 +10,27 @@ namespace weather_widget.ViewModel
 {
     class DashboardViewModel : ViewModelBase
     {
-        private DataBaseUpdateManager _updateMan;
+        #region fields
+        private DataBaseUpdateManagerModel _updateMan;
+        #endregion
+
+        #region ctor
+        public DashboardViewModel(NavigationStore navigationStore, Func<SettingsViewModel> createSettingsViewModel, DataBaseUpdateManagerModel updateManager)
+        {
+            _updateMan = updateManager;
+            _testingList = new WeatherInfoListModel();
+            SettingsButtonCommand = new NavigateCommand(navigationStore, createSettingsViewModel);
+            CloseButtonCommand = new ExitApplicationCommand();
+            FillTestingList();  //testing purpose
+        }
+        #endregion
+
+        #region commands
+        public ICommand SettingsButtonCommand { get; } //Command in order to switch to Settings-View
+        public ICommand CloseButtonCommand { get; } //Command in order to terminate entire application
+        #endregion
+
+        #region methods
         #region testing purpuse
         private WeatherInfoListModel _testingList;
 
@@ -25,20 +45,6 @@ namespace weather_widget.ViewModel
             OnPropertyChanged(nameof(ForecastList));
         }
         #endregion
-
-        #region ctor
-        public DashboardViewModel(NavigationStore navigationStore, Func<SettingsViewModel> createSettingsViewModel, DataBaseUpdateManager updateManager)
-        {
-            _updateMan = updateManager;
-            _testingList = new WeatherInfoListModel();
-            SettingsButtonCommand = new NavigateCommand(navigationStore, createSettingsViewModel);
-            CloseButtonCommand = new ExitApplicationCommand();
-            FillTestingList();  //testing purpose
-        }
-        #endregion
-        #region commands
-        public ICommand SettingsButtonCommand { get; } //Command in order to switch to Settings-View
-        public ICommand CloseButtonCommand { get; } //Command in order to terminate entire application
         #endregion
 
         #region properties  

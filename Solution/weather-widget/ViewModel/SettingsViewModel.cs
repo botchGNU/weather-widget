@@ -8,9 +8,12 @@ namespace weather_widget.ViewModel
 {
     class SettingsViewModel : ViewModelBase
     {
-        private DataBaseUpdateManager _updateMan;
+        #region fields
+        private DataBaseUpdateManagerModel _updateMan;
+        #endregion
+
         #region ctor
-        public SettingsViewModel(NavigationStore navigationStore, Func<DashboardViewModel> createDashboardViewModel, DataBaseUpdateManager updateManager)
+        public SettingsViewModel(NavigationStore navigationStore, Func<DashboardViewModel> createDashboardViewModel, DataBaseUpdateManagerModel updateManager)
         {
             _updateMan = updateManager;
             BackToDashboardButtonCommand = new NavigateCommand(navigationStore, createDashboardViewModel);

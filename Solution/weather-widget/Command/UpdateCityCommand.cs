@@ -8,8 +8,8 @@ namespace weather_widget.Command
 {
     internal class UpdateCityCommand : CommandBase
     {
-        private DataBaseUpdateManager _updateMan;
-        public UpdateCityCommand(DataBaseUpdateManager updateManager){_updateMan = updateManager; }
+        private DataBaseUpdateManagerModel _updateMan;
+        public UpdateCityCommand(DataBaseUpdateManagerModel updateManager){_updateMan = updateManager; }
 
 
         public override void Execute(object parameter)
