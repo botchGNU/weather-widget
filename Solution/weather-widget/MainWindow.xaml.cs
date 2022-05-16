@@ -14,7 +14,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using weather_widget.Model;
-﻿using System.Windows;
 
 namespace weather_widget
 {

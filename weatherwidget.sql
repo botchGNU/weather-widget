@@ -68,4 +68,6 @@ SELECT cityname FROM citylist
 	WHERE upper(cityname) LIKE 'RA%';
 	
 SELECT weatherdaytime FROM weatherinfo
-	WHERE weatherdaytime <= '2022-05-13 08:00:00';
+	WHERE weatherdaytime == '2022-05-13 08:00:00';
+	
+	UPDATE weatherinfoSET weatherdescription = 'light rain',weathericon = '10d.png',maxtemperature = '22.62',mintemperature = '18.37',winddirection = '7',winddirectionasstring = 'N', windspeed = '0.85', humidity = '58')WHERE cityid = 2767974 AND cityname = 'Rankweil' AND countryzip = 'AT' AND weatherdaytime = '2022-05-14 18:00:00
