@@ -40,18 +40,18 @@ namespace weather_widget.Model
             }
         }
 
-        private async void GetWeather(string CityName)
+        private async void GetWeather(string cityName)
         {
             try
             {
                 APIManagerModel apimanagerModel = new APIManagerModel();
-                Task<WeatherInfoListModel> TaskweatherInfos = apimanagerModel.GetWeather(cityname);
+                Task<WeatherInfoListModel> TaskweatherInfos = apimanagerModel.GetWeather(cityName);
 
                 weatherInfos = await TaskweatherInfos;
                 Debug.WriteLine(weatherInfos.Count);
                 weatherInfos.cityid = 0;
                 weatherInfos.countryzip = "AT";
-                SaveIntoDatabase(cityname, weatherInfos.cityid, weatherInfos.countryzip);
+                SaveIntoDatabase(cityName, weatherInfos.cityid, weatherInfos.countryzip);
             }
             catch (Exception)
             {
