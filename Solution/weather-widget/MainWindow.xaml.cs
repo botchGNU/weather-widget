@@ -14,7 +14,6 @@ using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
 using weather_widget.Model;
-﻿using System.Windows;
 
 namespace weather_widget
 {
@@ -30,27 +29,7 @@ namespace weather_widget
 
 
             InitializeComponent();
-
-            //List<WeatherInfoModel> weatherInfo = await APIManagerModel.GetWeather("Rankweil");
-
-            //Task<WeatherInfoListModel> weatherInfos = APIManagerModel.GetWeather("Rankweil");
-            /*
-            try
-            {
-                GetWeather("Rankweil");
-            }
-            catch (Exception ex)
-            {
-                MessageBox.Show(ex.Message);
-            }
-
-
-            Debug.WriteLine("Do Other stuff");
-            Debug.WriteLine("Do Other stuff");
-            Debug.WriteLine("Do Other stuff");
-            Debug.WriteLine("Do Other stuff");
-            */
-
+            weatherInfos = new WeatherInfoListModel();
             DataBaseManagerModel dataBaseManagerModel = new DataBaseManagerModel();
             List<string> cities = dataBaseManagerModel.GetCitiesByLetters("Rankwe");
             foreach (string item in cities)
@@ -59,13 +38,13 @@ namespace weather_widget
             }
 
 
-            dataBaseManagerModel.GetDataFromOpenWeather("Rankweil");
-
-            Debug.WriteLine("Do other stuff");
-            Debug.WriteLine("Do other stuff");
-            Debug.WriteLine("Do other stuff");
+            //dataBaseManagerModel.GetDataFromOpenWeather("Rankweil");
             
+            dataBaseManagerModel.GetDataFromOpenWeather("London");
 
+            Debug.WriteLine("Do other stuff");
+            Debug.WriteLine("Do other stuff");
+            Debug.WriteLine("Do other stuff");
         }
 
         /*

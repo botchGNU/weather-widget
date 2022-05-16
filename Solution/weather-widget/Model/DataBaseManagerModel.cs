@@ -9,20 +9,26 @@ using System.Globalization;
 
 namespace weather_widget.Model
 {
-    public class DataBaseManagerModel
+    class DataBaseManagerModel
     {
-        private WeatherInfoListModel weatherInfos;
-        private WeatherToDisplay weatherToDisplay;
-        private const string FilePath = @"..\\..\\..\\..\\..\\weatherwidget.db";
-        private bool receivedJSON = false;
+        public WeatherToDisplayListModel WeatherToDisplays { get; private set; }
 
-        // TO DO: Do this in DataBase Manager
-        /*
-        private const string unitWinSpeed = "m/s";
-        private const string unitIcon = ".png";
-        private const string unitTemp = "°C";
-        private const string unitHumidity = "%";
-        */
+        private WeatherInfoListModel weatherInfos;
+
+        private const string FilePath = @"..\\..\\..\\..\\..\\weatherwidget.db";
+
+        private void UpdateWeatherToDisplay()
+        {
+            // TO DO: UPDATE WEATHERTODISPLAY after Reading and Saving!!!+
+
+            // TO DO: Do this in DataBase Manager
+            /*
+            private const string unitWinSpeed = "m/s";
+            private const string unitIcon = ".png";
+            private const string unitTemp = "°C";
+            private const string unitHumidity = "%";
+            */
+        }
 
         /// <summary>
         /// This method gets forecasts from openweather
@@ -47,9 +53,23 @@ namespace weather_widget.Model
 
             weatherInfos = await TaskweatherInfos;
 
-            weatherInfos.cityid = 2767974;
-            weatherInfos.countryzip = "AT";
+            // Rankweil
+            //weatherInfos.cityid = 2767974;
+            //weatherInfos.countryzip = "AT";
+
+            // London
+            weatherInfos.cityname = CityName;
+            weatherInfos.cityid = 2643743;
+            weatherInfos.countryzip = "GB";
+            
             SaveIntoDatabase(CityName, weatherInfos.cityid, weatherInfos.countryzip);
+        }
+        public void LoadFromDatabase(string CityName, int CityId, string CountryZip)
+        {
+            SQLiteDataReader SQLiteDataReader = null; // see our project
+
+
+            //return new WeatherInfoListModel(); // TO DO: reading
         }
 
         public void SaveIntoDatabase(string CityName, int CityId, string CountryZip)
@@ -60,9 +80,6 @@ namespace weather_widget.Model
 
             // create command, which will communicate with DB
             SQLiteCommand cmd = new SQLiteCommand(connection);
-
-            //cmd.CommandText = "DROP TABLE IF EXISTS weatherinfo";
-            //cmd.ExecuteNonQuery();
 
             cmd.CommandText = @"CREATE TABLE IF NOT EXISTS weatherinfo(
                               id INTEGER PRIMARY KEY, 
@@ -79,7 +96,7 @@ namespace weather_widget.Model
                 // TO DO: Use DateTime from DataBaseUpdateManager!!
                 // TO DO: CityName, CityId & co. should be prettier coded
                 string cmdtext = "";
-                if(CheckIfCurrentDataExist(item) == false)
+                if(CheckIfCurrentDataExist(item, CityName) == false)
                 {
                     cmdtext = InsertIntoDataBase(item, CityName, CityId, CountryZip); // ->INSERT
                 }
@@ -133,14 +150,6 @@ namespace weather_widget.Model
             }
         }
 
-        private WeatherInfoListModel LoadFromDataBase(string query)
-        {
-            SQLiteDataReader SQLiteDataReader = null; // see our project
-
-
-            return new WeatherInfoListModel(); // TO DO: reading
-        }
-
         private string InsertIntoDataBase(WeatherInfoModel weatherInfo, string CityName, int CityId, string CountryZip)
         {
             string sqlitecmd = $"INSERT INTO " +
@@ -152,13 +161,14 @@ namespace weather_widget.Model
             return sqlitecmd;
         }
 
-        private bool CheckIfCurrentDataExist(WeatherInfoModel weatherinfo)
+        private bool CheckIfCurrentDataExist(WeatherInfoModel weatherinfo, string CityName)
         {
             SQLiteConnection connection = CreateSQLiteConnection(FilePath);
 
             SQLiteCommand command = connection.CreateCommand();
             command.CommandText = $"SELECT weatherdaytime FROM weatherinfo " +
-                                        $"WHERE weatherdaytime == '{weatherinfo.WeatherDayTime.ToString("yyyy-MM-dd HH:mm:ss")}'";
+                                        $"WHERE weatherdaytime == '{weatherinfo.WeatherDayTime.ToString("yyyy-MM-dd HH:mm:ss")}' " +
+                                        $"AND cityname == '{CityName}'";
 
             SQLiteDataReader reader = command.ExecuteReader();
 
@@ -191,14 +201,6 @@ namespace weather_widget.Model
 
             return sqlitecmd;
         }
-
-
-        private void UpdateWeatherToDisplay()
-        {
-            // TO DO, UPDATE WEATHERTODISPLAY after Reading and Saving!!!
-        }
-
-
 
         private SQLiteConnection CreateSQLiteConnection(string fileName)
         {
