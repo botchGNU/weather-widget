@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -50,6 +50,13 @@ namespace weather_widget
             */
             /*
             DataBaseManagerModel dataBaseManagerModel = new DataBaseManagerModel();
+            List<string> cities = dataBaseManagerModel.GetCitiesByLetters("Rankwe");
+            foreach (string item in cities)
+            {
+                Debug.WriteLine(item);
+            }
+
+
             dataBaseManagerModel.GetDataFromOpenWeather("Rankweil");
 
             Debug.WriteLine("Do other stuff");
