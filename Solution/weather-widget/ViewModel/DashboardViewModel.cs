@@ -12,13 +12,15 @@ namespace weather_widget.ViewModel
     {
         #region fields
         private DataBaseUpdateManagerModel _updateMan;
+        private WeatherToDisplayListModel _weatherList;
         #endregion
 
         #region ctor
         public DashboardViewModel(NavigationStore navigationStore, Func<SettingsViewModel> createSettingsViewModel, DataBaseUpdateManagerModel updateManager)
         {
             _updateMan = updateManager;
-            _testingList = new WeatherInfoListModel();
+            _weatherList = updateManager.WeatherList;
+            //_testingList = new WeatherInfoListModel();
             SettingsButtonCommand = new NavigateCommand(navigationStore, createSettingsViewModel);
             CloseButtonCommand = new ExitApplicationCommand();
             FillTestingList();  //testing purpose
@@ -32,18 +34,19 @@ namespace weather_widget.ViewModel
 
         #region methods
         #region testing purpuse
-        private WeatherInfoListModel _testingList;
 
+        
         private void FillTestingList()
         {
             for (int i = 0; i < 5; i++)
             {
-                var weatherNew = new WeatherInfoModel("Cloudy","01d",DateTime.Now,i+10,i,22, "NNW",i+5,50);
+                var weatherNew = new WeatherToDisplay("Cloudy","01d", Convert.ToString(i+10), Convert.ToString(i), Convert.ToString(22), Convert.ToString(i + 5), Convert.ToString(50));
                 weatherNew.WeatherIcon = "02n";
-                _testingList.Add(weatherNew);
+                _weatherList.Add(weatherNew);
             }
             OnPropertyChanged(nameof(ForecastList));
         }
+        
         #endregion
         #endregion
 
@@ -65,7 +68,7 @@ namespace weather_widget.ViewModel
         public string CurrentDay { get => DateTime.Now.DayOfWeek.ToString(); }
         public string CurrentLocation 
         { 
-            get => "Entenhausen DE"; 
+            get => _updateMan.CurrentCity; 
             set 
             {
                  // = value;
@@ -75,8 +78,8 @@ namespace weather_widget.ViewModel
         public string Humidity { get => Convert.ToString(ForecastList[0].Humidity); }
         public string MinTemp { get => ForecastList[0].MinTemperature + " °C"; }
         public string MaxTemp { get => ForecastList[0].MaxTemperature + " °C"; }
-        public string AvTemp { get => "12" + " °C"; }
-        public WeatherInfoListModel ForecastList { get => _testingList; }   
+        public string AvTemp { get => ForecastList[0].AvgTemperature + " °C"; }
+        public WeatherToDisplayListModel ForecastList { get => _weatherList; }   
         public BitmapImage WeatherImageSource
         {
             get

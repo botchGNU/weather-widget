@@ -8,7 +8,7 @@ namespace weather_widget.Model
     /// <Zusammenfassung>
     /// Weather status (each object should have weather data in 3 hour intervals)
     /// </summary>
-    class WeatherInfoModel
+    public class WeatherInfoModel
     {
         #region properties
         /// <summary>

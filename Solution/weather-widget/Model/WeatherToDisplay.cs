@@ -4,7 +4,7 @@ using System.Text;
 
 namespace weather_widget.Model
 {
-    class WeatherToDisplay
+    public class WeatherToDisplay
     {
         #region properties
         /// <summary>
@@ -45,7 +45,7 @@ namespace weather_widget.Model
         public string Humidity { get; set; }
         #endregion properties
 
-        WeatherToDisplay(string weatherdesc, string weathericon, string maxtemperature, string mintemperature,
+        public WeatherToDisplay(string weatherdesc, string weathericon, string maxtemperature, string mintemperature,
                 string avgtemperature, string winddirection, string humidity)
         {
             WeatherDescription = weatherdesc;

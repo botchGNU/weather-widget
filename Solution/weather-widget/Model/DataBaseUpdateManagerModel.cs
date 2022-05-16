@@ -71,6 +71,7 @@ namespace weather_widget.Model
 
         #region properties
         public string CurrentCity { get => _currentCity; set => _currentCity = value; }
+        public WeatherToDisplayListModel WeatherList { get => _manager.WeatherToDisplays; }
         #endregion 
     }
 }

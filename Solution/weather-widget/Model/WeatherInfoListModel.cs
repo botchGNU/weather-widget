@@ -8,7 +8,7 @@ namespace weather_widget.Model
     /// <summary>
     /// Weather data for each day, 3h forecasts
     /// </summary>
-    class WeatherInfoListModel : List<WeatherInfoModel>
+    public class WeatherInfoListModel : List<WeatherInfoModel>
     {
         #region properties for saving to DB
         public string cityname { get; set; } = string.Empty;

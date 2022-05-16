@@ -5,7 +5,7 @@ using System.Text;
 
 namespace weather_widget.Model
 {
-    class WeatherToDisplayListModel : ObservableCollection<WeatherToDisplay>
+    public class WeatherToDisplayListModel : ObservableCollection<WeatherToDisplay>
     {
 
     }
