@@ -1,8 +1,8 @@
 # Bugs
-- [x] 2nd MainWindow 
+- [ ] 2nd MainWindow 
 
 # ToDo
-- [ ] [GUI] Design ListView	(in progress)
+- [ ] [GUI] Design ListView
 
 # Log
 ## 13-04-2022 
@@ -47,32 +47,6 @@
 ## 30-04-2022
 
 - [GUI] Allign lociation text (settings)
-- [MVVM] Adding comments
+- 
 
-
-## 05-05-2022
-
-- [General] fixed duplicate window bug
-- [GUI] replaced ListView with ListBox
-
-## 06-05-2022
-
-- [GUI] UI Overhaul
-  - Removed Info, Wind, etc.
-  - Added headers
-  - Realligned items
-  - Removed button background color on mouse hover
-
-## 13-05-2022
-
-- [API/Database] create update manager
-  - update on startup
-  - update every 3h (timer)
-- [GUI / MVVM] update manager binding
-  - pass updatemanager into ViewModels
-  - bind settingsviewmodel
-  - create command to call update method on confirm-button press
-
-## 14-05-2022
-
-- [API / Database] check connection to api before request
+  

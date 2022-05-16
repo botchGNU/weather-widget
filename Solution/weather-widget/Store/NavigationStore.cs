@@ -20,14 +20,11 @@ namespace weather_widget.Store
             }
         }
 
-
         public event Action CurrentViewModelChanged;
 
         private void OnCurrentViewModelChanged()
         {
             CurrentViewModelChanged?.Invoke();
         }
-
-
     }
 }

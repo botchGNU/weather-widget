@@ -17,12 +17,12 @@
        		string CityName FK "Foreign Key: The name of the city from Citylist"
             string CountryZip FK "The zipped name of the country from Citylist"
             string WeatherDescription "Description of current weather"
-            string WeatherIcon "Weathericon path --> Weathericon; for displaying the icon e.g. xxxFOLDERxxx/icons/04d.png"
+            string WeatherIcon "Weathericon e.g. 04d.png"
             DateTime WeatherDayTime "Datetime"
             double MaxTemperature "within 3h"
             double MinTemperature "within 3h"
             double WindDirection "as value"
-            double WindDirectionAsString "as string e.g. N, NW,..."
+            string WindDirectionAsString "as string e.g. N, NW,..."
             double WindSpeed "in m/s"
             double Humidity "in %"       		
        }
@@ -32,35 +32,7 @@ Each city can have 0 or more forecasts. Average/min./max. temperature is going t
 
 
 
-Example for ER-Diagram:
-
-
-
-
-```mermaid
-erDiagram
-DOG {
-         int age
-         string breed
-         string pedigree
-       }
-       OWNER ||..|{ DOG : owns
-       OWNER {
-         string name
-         string address
-         string homePhoneNumber
-         string mobilePhoneNumber
-       }
-       TRAINER }|..|{ DOG : trains
-       PROGRAMME }|--|| TRAINER : "operated by"
-       DOG ||--|{ PROGRAMME : attends
-       PROGRAMME {
-         float costPerSession
-       }
-```
-
-
-Information for creating an ER-Diagram
+# Information for creating an ER-Diagram
 
 | Value (left) | Value (right) | Meaning                       |
 | ------------ | ------------- | ----------------------------- |

@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
@@ -26,10 +26,29 @@ namespace weather_widget
         public MainWindow()
         {
 
-
-
             InitializeComponent();
             weatherInfos = new WeatherInfoListModel();
+            /*
+            //List<WeatherInfoModel> weatherInfo = await APIManagerModel.GetWeather("Rankweil");
+
+            //Task<WeatherInfoListModel> weatherInfos = APIManagerModel.GetWeather("Rankweil");
+            /*
+            try
+            {
+                GetWeather("Rankweil");
+            }
+            catch (Exception ex)
+            {
+                MessageBox.Show(ex.Message);
+            }
+
+
+            Debug.WriteLine("Do Other stuff");
+            Debug.WriteLine("Do Other stuff");
+            Debug.WriteLine("Do Other stuff");
+            Debug.WriteLine("Do Other stuff");
+            */
+            /*
             DataBaseManagerModel dataBaseManagerModel = new DataBaseManagerModel();
             List<string> cities = dataBaseManagerModel.GetCitiesByLetters("Rankwe");
             foreach (string item in cities)
@@ -45,8 +64,12 @@ namespace weather_widget
             Debug.WriteLine("Do other stuff");
             Debug.WriteLine("Do other stuff");
             Debug.WriteLine("Do other stuff");
+            Debug.WriteLine("Do other stuff");
+            Debug.WriteLine("Do other stuff");
+            Debug.WriteLine("Do other stuff");
+            */
+            
         }
-
         /*
         private async void GetWeather(string cityname)
         {
@@ -60,7 +83,9 @@ namespace weather_widget
             Task<string> s = api.GetWeather("Rankweil");
             string ss = await s;
             Debug.WriteLine(ss);
-        } */
+            
+        } 
+    */
     }
 
 

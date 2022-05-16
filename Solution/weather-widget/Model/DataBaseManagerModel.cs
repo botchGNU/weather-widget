@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
@@ -18,6 +18,40 @@ namespace weather_widget.Model
         private const string FilePath = @"..\\..\\..\\..\\..\\weatherwidget.db";
 
         private void UpdateWeatherToDisplay()
+        /// <summary>
+        /// 
+        /// </summary>
+        /// <param name="cityname"></param>
+        public void GetDataFromOpenWeather(string cityname)
+        {
+            try
+            {
+                GetWeather(cityname);
+            }
+            catch (Exception ex)
+            { Debug.WriteLine(ex.Message); }
+        }
+        private async void GetWeather(string cityname)
+        {
+            try
+            {
+                APIManagerModel apimanagerModel = new APIManagerModel();
+                Task<WeatherInfoListModel> TaskweatherInfos = apimanagerModel.GetWeather(cityname);
+
+                weatherInfos = await TaskweatherInfos;
+                Debug.WriteLine(weatherInfos.Count);
+                weatherInfos.cityid = 0;
+                weatherInfos.countryzip = "AT";
+                SaveIntoDatabase(cityname, weatherInfos.cityid, weatherInfos.countryzip);
+            }
+            catch (Exception)
+            {
+
+            }
+            
+        }
+
+        private void SaveIntoDatabase(string CityName, int CityId, string CountryZip)
         {
             // TO DO: UPDATE WEATHERTODISPLAY after Reading and Saving!!!+
 

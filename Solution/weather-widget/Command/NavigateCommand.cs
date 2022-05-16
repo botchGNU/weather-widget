@@ -18,9 +18,10 @@ namespace weather_widget.Command
             this._createViewModel = createViewModel;
         }
 
+
         public override void Execute(object parameter)
         {
-            _navigationStore.CurrentViewModel = _createViewModel();
+            _navigationStore.CurrentViewModel = _createViewModel(); //run createVM method (MainWindow switches automatically)
         }
     }
 }
