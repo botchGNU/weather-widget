@@ -2,7 +2,8 @@
 - [x] 2nd MainWindow 
 
 # ToDo
-- [ ] [GUI] Design ListView	(in progress)
+- [X] [GUI] Design ListView
+- [X] [Database] DatabaseUpdateManger -> Update on 10:10, 11:10, 12:10, ... 
 
 # Log
 ## 13-04-2022 
@@ -76,3 +77,9 @@
 ## 14-05-2022
 
 - [API / Database] check connection to api before request
+
+## 18-05-2022
+
+- [Database] Database Update manager update every 3hours
+- [GUI] fix image binding
+- [API] imported api key
