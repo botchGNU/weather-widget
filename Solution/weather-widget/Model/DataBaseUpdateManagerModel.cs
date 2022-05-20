@@ -17,10 +17,14 @@ namespace weather_widget.Model
         #region ctor
         public DataBaseUpdateManagerModel()
         {
+            
             _manager = new DataBaseManagerModel();
             CurrentCity = "Rankweil";   //current default value
             UpdateWeather();      //uncommented unless api key is in repo
-            SetTimer();
+            SetTimerInitial();
+
+            //TESTING PURPOSE! : Fill list while api not working
+            //FillListTest(); 
         }
         #endregion
 
@@ -34,14 +38,35 @@ namespace weather_widget.Model
             }
             else
             {
-                Debug.WriteLine("No connection available");
+                Debug.WriteLine("[ERROR]: No internet connection");
             }
         }
-        // set 3h timer for updating weatherlist
-        private void SetTimer()
+
+        // set timer on HH:10 updating weatherlist
+        private void SetTimerInitial()
         {
-            
-            _threeHourTimer = new System.Timers.Timer(10800000);    // Create a timer with a 3h interval.
+            int minutesLeft;    //minutest left till (HH + 1) : 10
+            if (DateTime.Now.Minute > 10)   // is HH:10 already in the past for current hour?
+            {
+                minutesLeft = 10 + 60 - DateTime.Now.Minute;    //... minutes left for NEXT hours :10
+            }
+            else
+            {
+                minutesLeft = 10 - DateTime.Now.Minute; //... minutes left for THIS hours :10
+            }
+
+            int millisecondsLeft = minutesLeft * 60 * 1000; 
+
+            _threeHourTimer = new System.Timers.Timer(millisecondsLeft);    // Create a timer 
+            _threeHourTimer.Elapsed += OnTimedEvent;    // Hook up the Elapsed event for the timer. 
+            _threeHourTimer.AutoReset = true;
+            _threeHourTimer.Enabled = true;
+        }
+
+        // set timer for 1h updating weatherlist
+        private void SetTimerContinious()
+        {
+            _threeHourTimer = new System.Timers.Timer(3600000);    // Create a timer with a 1h interval. 
             _threeHourTimer.Elapsed += OnTimedEvent;    // Hook up the Elapsed event for the timer. 
             _threeHourTimer.AutoReset = true;
             _threeHourTimer.Enabled = true;
@@ -60,11 +85,24 @@ namespace weather_widget.Model
                 return false;
             }
         }
+
+        #region testing purpose
+        private void FillListTest()
+        {
+            for (int i = 0; i < 5; i++)
+            {
+                var weatherNew = new WeatherToDisplay("Cloudy", "02n.png", Convert.ToString(i + 10), Convert.ToString(i), Convert.ToString(22), Convert.ToString(i + 5), Convert.ToString(50));
+                WeatherList.Add(weatherNew);
+            }
+        }
+        #endregion
+
         #endregion
 
         #region events
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
+            SetTimerContinious();
             UpdateWeather();
         }
         #endregion

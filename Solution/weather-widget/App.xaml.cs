@@ -12,16 +12,22 @@ namespace weather_widget
 
     public partial class App : Application
     {
+        #region fields
         private readonly NavigationStore _navStore;
         private DataBaseUpdateManagerModel _updateManager;
+        #endregion properties
+
+        #region ctor
         public App()
         {
             _navStore = new NavigationStore();
             _updateManager = new DataBaseUpdateManagerModel();
         }
+        #endregion
 
         protected override void OnStartup(StartupEventArgs e)
         {
+            //Show dashboard on startup
             _navStore.CurrentViewModel = new DashboardViewModel(_navStore, CreateSettingsViewModel, _updateManager);    //Dashboard -> startup window
 
             MainWindow = new MainWindow()
