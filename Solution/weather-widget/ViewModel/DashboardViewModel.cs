@@ -20,10 +20,9 @@ namespace weather_widget.ViewModel
         {
             _updateMan = updateManager;
             _weatherList = updateManager.WeatherList;
-            //_testingList = new WeatherInfoListModel();
+            _weatherList.CollectionChanged += _weatherList_CollectionChanged;   //subscribe to collectionchanged event
             SettingsButtonCommand = new NavigateCommand(navigationStore, createSettingsViewModel);
             CloseButtonCommand = new ExitApplicationCommand();
-            FillTestingList();  //testing purpose
         }
         #endregion
 
@@ -33,21 +32,26 @@ namespace weather_widget.ViewModel
         #endregion
 
         #region methods
-        #region testing purpuse
-
-        
-        private void FillTestingList()
+        // update all bindings
+        public void WeatherPropertyChanged()
         {
-            for (int i = 0; i < 5; i++)
-            {
-                var weatherNew = new WeatherToDisplay("Cloudy","01d", Convert.ToString(i+10), Convert.ToString(i), Convert.ToString(22), Convert.ToString(i + 5), Convert.ToString(50));
-                weatherNew.WeatherIcon = "02n";
-                _weatherList.Add(weatherNew);
-            }
+            OnPropertyChanged(nameof(CurrentLocation));
+            OnPropertyChanged(nameof(CurrentDate));
+            OnPropertyChanged(nameof(CurrentDay));
+            OnPropertyChanged(nameof(Humidity));
+            OnPropertyChanged(nameof(MinTemp));
+            OnPropertyChanged(nameof(MaxTemp));
+            OnPropertyChanged(nameof(AvTemp));
             OnPropertyChanged(nameof(ForecastList));
+            OnPropertyChanged(nameof(WeatherImageSource));
         }
-        
         #endregion
+
+        #region events
+        private void _weatherList_CollectionChanged(object sender, System.Collections.Specialized.NotifyCollectionChangedEventArgs e)
+        {
+            WeatherPropertyChanged();   //update bindings
+        }
         #endregion
 
         #region properties  
@@ -71,14 +75,65 @@ namespace weather_widget.ViewModel
             get => _updateMan.CurrentCity; 
             set 
             {
-                 // = value;
                 OnPropertyChanged(nameof(CurrentLocation));    
             }
         }
-        public string Humidity { get => Convert.ToString(ForecastList[0].Humidity); }
-        public string MinTemp { get => ForecastList[0].MinTemperature + " °C"; }
-        public string MaxTemp { get => ForecastList[0].MaxTemperature + " °C"; }
-        public string AvTemp { get => ForecastList[0].AvgTemperature + " °C"; }
+        public string Humidity 
+        { 
+            get 
+            { 
+                if (ForecastList.Count == 0)
+                {
+                    return "X";
+                }
+                else
+                {
+                    return Convert.ToString(ForecastList[0]?.Humidity);
+                }
+            } 
+        }
+        public string MinTemp 
+        {
+            get
+            {
+                if (ForecastList.Count == 0)
+                {
+                    return "X";
+                }
+                else
+                {
+                    return ForecastList[0]?.MinTemperature + " °C";
+                }
+            }
+        }
+        public string MaxTemp 
+        {
+            get
+            {
+                if (ForecastList.Count == 0)
+                {
+                    return "X";
+                }
+                else
+                {
+                    return ForecastList[0]?.MaxTemperature + " °C";
+                }
+            }
+        }
+        public string AvTemp 
+        {
+            get
+            {
+                if (ForecastList.Count == 0)
+                {
+                    return "X";
+                }
+                else
+                {
+                    return ForecastList[0]?.AvgTemperature + " °C";
+                }
+            }
+        }
         public WeatherToDisplayListModel ForecastList { get => _weatherList; }   
         public BitmapImage WeatherImageSource
         {
@@ -86,8 +141,15 @@ namespace weather_widget.ViewModel
             {
                 BitmapImage bi3 = new BitmapImage();
                 bi3.BeginInit();
-                bi3.UriSource = new Uri(@"..\Resources\Icons\" + ForecastList[0].WeatherIcon + ".png", UriKind.Relative);
-                bi3.EndInit();
+
+                if (ForecastList.Count == 0)
+                {
+
+                }
+                else
+                {
+                    bi3.UriSource = new Uri(@"..\Resources\Icons\" + ForecastList[0].WeatherIcon, UriKind.Relative);
+                }
                 return bi3;
             }
         }

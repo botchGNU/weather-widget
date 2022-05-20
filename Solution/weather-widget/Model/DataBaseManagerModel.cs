@@ -6,13 +6,16 @@ using System.Threading.Tasks;
 using System.Data.SQLite;
 using System.Data;
 using System.Globalization;
+using System.ComponentModel;
 
 namespace weather_widget.Model
 {
-    public class DataBaseManagerModel
+    public class DataBaseManagerModel : INotifyPropertyChanged
     {
         #region fields
         public WeatherToDisplayListModel WeatherToDisplays { get; private set; }
+
+
 
         private WeatherInfoListModel weatherInfos;
 
@@ -44,7 +47,7 @@ namespace weather_widget.Model
             }
             catch (Exception)
             {
-
+               
             }
             
         }
@@ -75,7 +78,7 @@ namespace weather_widget.Model
             catch (Exception ex)
             { 
                 // Inform user that it failed
-                Debug.WriteLine(ex.Message); 
+                Debug.WriteLine("[ERROR]: Getting weather failed: " + ex.Message); 
             }
         }
 
@@ -232,7 +235,20 @@ namespace weather_widget.Model
             return conn;
         }
         #endregion
+
+        #region propertychanged
+        public event PropertyChangedEventHandler PropertyChanged;
+        protected void OnPropertyChanged(string propertyName)
+        {
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+        }
+        #endregion
     }
+}
+
+
+    
+
 
     // CRUD
     /*
@@ -413,4 +429,4 @@ private SQLiteConnection CreateSQLiteConnection(string fileName)
     return conn;
 }
     */
-}
+

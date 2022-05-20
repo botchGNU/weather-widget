@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using weather_widget.Model;
 
 namespace weather_widget.Command
 {

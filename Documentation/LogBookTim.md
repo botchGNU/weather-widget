@@ -3,6 +3,7 @@
 
 # ToDo
 - [ ] [GUI] Design ListView	(in progress)
+- [ ] Onpropertychanged!
 
 # Log
 ## 13-04-2022 
@@ -76,3 +77,12 @@
 ## 14-05-2022
 
 - [API / Database] check connection to api before request
+
+## 18-05-2022
+
+- [UI] Show "X" Value if List is empty
+
+## 20-05-2022
+
+- [API/Database] Update on HH:10 via Timer
+- [MVVM] Automate binding update via event on weather collection changed
