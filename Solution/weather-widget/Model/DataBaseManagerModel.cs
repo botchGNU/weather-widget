@@ -62,9 +62,14 @@ namespace weather_widget.Model
             weatherInfos = await TaskweatherInfos;
 
             // Rankweil
-
-
             this.CityName = CityName;
+
+            // TODO: get id, countryzip
+
+            //SQLiteConnection connection = CreateSQLiteConnection(FilePath);
+
+            //SQLiteCommand command = connection.CreateCommand();
+
             CityId = 2767974;
             CountryZip = "AT";
 
@@ -318,58 +323,3 @@ namespace weather_widget.Model
         #endregion
     }
 }
-
-
-    
-
-
-    // CRUD
-    /*
-    // TODO: Edit code to my needs
-    /// <summary>
-    /// This method is for inserting, updating or removing from database
-    /// </summary>
-    /// <param name="query"></param>
-    /// <param name="args"></param>
-    /// <returns>number of affected elements in database</returns>
-    private int ExecuteWrite(string query, Dictionary<string, object> args)
-    {
-        int numberOfRowsAffected;
-
-        //setup the connection to the database
-        using (var con = new SQLiteConnection(FilePath))
-        {
-            con.Open();
-
-            //open a new command
-            using (SQLiteCommand cmd = new SQLiteCommand(query, con))
-            {
-                //set the arguments given in the query
-                foreach (var pair in args)
-                {
-                    cmd.Parameters.AddWithValue(pair.Key, pair.Value);
-                }
-
-                //execute the query and get the number of row affected
-                numberOfRowsAffected = cmd.ExecuteNonQuery();
-            }
-            return numberOfRowsAffected;
-        }
-    }
-}
-private SQLiteConnection CreateSQLiteConnection(string fileName)
-{
-    SQLiteConnection conn = new SQLiteConnection($"Data Source={fileName}");
-    try
-    {
-        conn.Open();
-    }
-    catch (Exception exp)
-    {
-        throw exp;
-    }
-
-    return conn;
-}
-    */
-
