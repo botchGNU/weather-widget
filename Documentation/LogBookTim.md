@@ -90,3 +90,13 @@
 
 - [API/Database] Update on HH:10 via Timer
 - [MVVM] Automate binding update via event on weather collection changed
+
+## 21-05-2022
+
+- [UI] UI Overhaul
+  - Backgroud color
+  - Rearrange elements
+  - Show icons in forecast
+- [BUG] Bugfixing
+  - fix showing icon
+  - fix crash on HH:10
