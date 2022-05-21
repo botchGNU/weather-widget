@@ -13,8 +13,7 @@
         AllowsTransparency="True"
         Background="#99292929"
         ShowInTaskbar="False"
-        ResizeMode="CanResize"
-        Loaded="WindowLoaded">
+        ResizeMode="CanResize">
 
     <Grid>
         
