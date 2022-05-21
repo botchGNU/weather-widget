@@ -56,7 +56,7 @@ namespace weather_widget.Model
                 minutesLeft = 10 - DateTime.Now.Minute; //... minutes left for THIS hours :10
             }
 
-            int millisecondsLeft = minutesLeft * 60 * 1000; 
+            int millisecondsLeft = minutesLeft * 60 * 1000 + 1; // + 1 ms if current time is exactly HH:10 
 
             _threeHourTimer = new System.Timers.Timer(millisecondsLeft);    // Create a timer 
             _threeHourTimer.Elapsed += OnTimedEvent;    // Hook up the Elapsed event for the timer. 
