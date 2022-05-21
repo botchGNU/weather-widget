@@ -29,7 +29,8 @@ namespace weather_widget.ViewModel
         #endregion
 
         #region properties
-        public string CurrentLocation { get => _updateMan.CurrentCity; set => _updateMan.CurrentCity = value; }    //Binding for View -> gets/sets location for weather api
+        public string CurrentLocation { get => _updateMan.CurrentCity; 
+            set => _updateMan.CurrentCity = value; }    //Binding for View -> gets/sets location for weather api
         #endregion
     }
 }

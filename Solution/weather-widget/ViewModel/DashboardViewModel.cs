@@ -75,7 +75,7 @@ namespace weather_widget.ViewModel
             get => _updateMan.CurrentCity; 
             set 
             {
-                OnPropertyChanged(nameof(CurrentLocation));    
+                OnPropertyChanged(nameof(CurrentLocation));
             }
         }
         public string Humidity 

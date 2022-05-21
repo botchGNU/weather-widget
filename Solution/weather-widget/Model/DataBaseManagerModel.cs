@@ -14,30 +14,29 @@ namespace weather_widget.Model
     {
         #region fields
         public WeatherToDisplayListModel WeatherToDisplays { get; private set; }
+        public string CityName; // TODO: get default value from 
+        #endregion
+
+        #region privateValues
         private WeatherInfoListModel weatherInfos;
 
-        private string CityName;
+
         private string CountryZip;
         private int CityId;
 
         private const string MS = "m/s";
         private const string CELSIUS = "°C";
         private const string HUM = "%";
-
-
         private const string FilePath = @"..\\..\\..\\..\\..\\weatherwidget.db";
-
+        #endregion privateValues
         public DataBaseManagerModel()
         {
             WeatherToDisplays = new WeatherToDisplayListModel();
             weatherInfos = new WeatherInfoListModel();
 
-            //this.CityName = "Rankweil";
-            //CityId = 2767974;
-            //CountryZip = "AT";
-
         }
 
+        #region DownloadSaveData
         /// <summary>
         /// This method gets forecasts from openweather
         /// </summary>
@@ -61,7 +60,6 @@ namespace weather_widget.Model
 
             weatherInfos = await TaskweatherInfos;
 
-            // Rankweil
             this.CityName = CityName;
 
             // TODO: get id, countryzip
@@ -86,9 +84,81 @@ namespace weather_widget.Model
 
             SaveIntoDatabase();
         }
-
-        public void LoadFromDatabase()
+        public void SaveIntoDatabase() // TO DO: CityId, CountryZip --> get them from DataBase and private safe
         {
+            // .NET Framework
+            SQLiteConnection connection = CreateSQLiteConnection(FilePath);
+
+            // create command, which will communicate with DB
+            SQLiteCommand cmd = new SQLiteCommand(connection);
+
+            cmd.CommandText = @"CREATE TABLE IF NOT EXISTS weatherinfo(
+                              id INTEGER PRIMARY KEY, 
+                              cityid INTEGER, cityname TEXT, countryzip TEXT, 
+                              weatherdescription TEXT, weathericon TEXT, weatherdaytime TEXT, maxtemperature DOUBLE, mintemperature DOUBLE, winddirection DOUBLE, winddirectionasstring TEXT, windspeed DOUBLE, humidity DOUBLE,
+                              FOREIGN KEY(cityid) REFERENCES citylist(id), FOREIGN KEY(cityname) REFERENCES citylist(cityname), FOREIGN KEY(countryzip) REFERENCES citylist(countryzip)
+                              )";
+            cmd.ExecuteNonQuery();
+
+            foreach (WeatherInfoModel item in weatherInfos)
+            {
+                // CRUD ... Create Read Update
+
+                // TO DO: Use DateTime from DataBaseUpdateManager!!
+                // TO DO: CityName, CityId & co. should be prettier coded
+                string cmdtext = "";
+                if (CheckIfCurrentDataExist(item) == false)
+                {
+                    cmdtext = InsertIntoDataBase(item); // ->INSERT
+                }
+                else
+                {
+                    cmdtext = UpdateDataBase(item); // -> UPDATE 
+                }
+
+                cmd.CommandText = cmdtext;
+
+                /*cmd.commandtext = $"insert into " +
+                     $"weatherinfo(cityid, cityname, countryzip, weatherdescription, weathericon, weatherdaytime, maxtemperature, mintemperature, winddirection, winddirectionasstring, windspeed, humidity)" +
+                     $"values({(cityid)},'{cityname}','{countryzip}','{item.weatherdescription}','{item.weathericon}','{item.weatherdaytime.tostring("yyyy-mm-dd hh:mm:ss")}','{item.maxtemperature.tostring(new cultureinfo("en-us"))}','{item.mintemperature.tostring(new cultureinfo("en-us"))}','{item.winddirection.tostring(new cultureinfo("en-us"))}','{item.winddirectionasstring}', '{item.windspeed.tostring(new cultureinfo("en-us"))}', '{item.humidity.tostring(new cultureinfo("en-us"))}')";
+                */
+                cmd.ExecuteNonQuery();
+            }
+
+            connection.Close();
+        }
+        #endregion DownloadSaveData
+
+
+        public void LoadFromDatabase(string CityName)
+        {
+            this.CityName = CityName;
+
+            if (CityName == null || CityName == String.Empty)
+            {
+                return;
+            }
+            else
+            {
+                SQLiteConnection connectionf = CreateSQLiteConnection(FilePath);
+
+                SQLiteCommand commandf = connectionf.CreateCommand();
+
+                commandf.CommandText = $"SELECT id, countryzip FROM citylist WHERE upper(cityname) = upper('{CityName}')";
+
+                SQLiteDataReader readerf = commandf.ExecuteReader();
+
+                while (readerf.Read())
+                {
+                    CityId = readerf.GetInt32("id");
+                    CountryZip = readerf.GetString("countryzip");
+                    break; // only one city
+                }
+
+                readerf.Close();
+                connectionf.Close();
+            }
+
             WeatherToDisplays.Clear();
 
             SQLiteConnection connection = CreateSQLiteConnection(FilePath);
@@ -102,8 +172,12 @@ namespace weather_widget.Model
             dtlist.Add(DateTime.Now.AddDays(3));
             dtlist.Add(DateTime.Now.AddDays(4));
 
+            // CityName valid ? --> try/catch
             try
             {
+                
+
+
                 for (int i = 0; i < dtlist.Count; i++)
                 {
                     // get Min, Max, AVG, winddir, humidity, weathericon, weatherdesc for each day
@@ -172,60 +246,16 @@ namespace weather_widget.Model
                     }
                     reader.Close();
                 }
+                connection.Close();
             }
             catch (Exception)
             {
                 // TODO: if table not exist, inform user no data available
                 connection.Close();
                 return;
-
             }
-
         }
 
-        public void SaveIntoDatabase() // TO DO: CityId, CountryZip --> get them from DataBase and private safe
-        {
-            // .NET Framework
-            SQLiteConnection connection = CreateSQLiteConnection(FilePath);
-
-            // create command, which will communicate with DB
-            SQLiteCommand cmd = new SQLiteCommand(connection);
-
-            cmd.CommandText = @"CREATE TABLE IF NOT EXISTS weatherinfo(
-                              id INTEGER PRIMARY KEY, 
-                              cityid INTEGER, cityname TEXT, countryzip TEXT, 
-                              weatherdescription TEXT, weathericon TEXT, weatherdaytime TEXT, maxtemperature DOUBLE, mintemperature DOUBLE, winddirection DOUBLE, winddirectionasstring TEXT, windspeed DOUBLE, humidity DOUBLE,
-                              FOREIGN KEY(cityid) REFERENCES citylist(id), FOREIGN KEY(cityname) REFERENCES citylist(cityname), FOREIGN KEY(countryzip) REFERENCES citylist(countryzip)
-                              )";
-            cmd.ExecuteNonQuery();
-
-            foreach (WeatherInfoModel item in weatherInfos)
-            {
-                // CRUD ... Create Read Update
-
-                // TO DO: Use DateTime from DataBaseUpdateManager!!
-                // TO DO: CityName, CityId & co. should be prettier coded
-                string cmdtext = "";
-                if(CheckIfCurrentDataExist(item) == false)
-                {
-                    cmdtext = InsertIntoDataBase(item); // ->INSERT
-                }
-                else
-                {
-                    cmdtext = UpdateDataBase(item); // -> UPDATE 
-                }
-
-                cmd.CommandText = cmdtext;
-
-               /*cmd.commandtext = $"insert into " +
-                    $"weatherinfo(cityid, cityname, countryzip, weatherdescription, weathericon, weatherdaytime, maxtemperature, mintemperature, winddirection, winddirectionasstring, windspeed, humidity)" +
-                    $"values({(cityid)},'{cityname}','{countryzip}','{item.weatherdescription}','{item.weathericon}','{item.weatherdaytime.tostring("yyyy-mm-dd hh:mm:ss")}','{item.maxtemperature.tostring(new cultureinfo("en-us"))}','{item.mintemperature.tostring(new cultureinfo("en-us"))}','{item.winddirection.tostring(new cultureinfo("en-us"))}','{item.winddirectionasstring}', '{item.windspeed.tostring(new cultureinfo("en-us"))}', '{item.humidity.tostring(new cultureinfo("en-us"))}')";
-               */
-                cmd.ExecuteNonQuery();
-            }
-
-            connection.Close();
-        }
 
         /// <summary>
         /// Gives you a list of string, depending on the letters of a city
@@ -261,6 +291,7 @@ namespace weather_widget.Model
             }
         }
 
+        #region private HelperMethods
         private string InsertIntoDataBase(WeatherInfoModel weatherInfo)
         {
             string sqlitecmd = $"INSERT INTO " +
@@ -327,7 +358,7 @@ namespace weather_widget.Model
 
             return conn;
         }
-        #endregion
+        #endregion private HelperMethods
 
         #region propertychanged
         public event PropertyChangedEventHandler PropertyChanged;

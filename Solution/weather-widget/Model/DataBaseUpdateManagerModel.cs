@@ -20,9 +20,10 @@ namespace weather_widget.Model
             
             _manager = new DataBaseManagerModel();
             CurrentCity = "Rankweil";   //current default value
+            _manager.CityName = CurrentCity; // NEW: inform default city to databasemanager
             UpdateWeather();      //uncommented unless api key is in repo
             SetTimerInitial();
-            _manager.LoadFromDatabase();
+            _manager.LoadFromDatabase(CurrentCity);
 
             //TESTING PURPOSE! : Fill list while api not working
             //FillListTest(); 
@@ -36,6 +37,7 @@ namespace weather_widget.Model
             if (IsConnectionAvailable())
             {
                 _manager.GetDataFromOpenWeather(CurrentCity);
+                _manager.LoadFromDatabase(CurrentCity);
             }
             else
             {
@@ -109,7 +111,8 @@ namespace weather_widget.Model
         #endregion
 
         #region properties
-        public string CurrentCity { get => _currentCity; set => _currentCity = value; }
+        public string CurrentCity { get => _currentCity; 
+            set => _currentCity = value; }
         public WeatherToDisplayListModel WeatherList { get => _manager.WeatherToDisplays; }
         #endregion 
     }
