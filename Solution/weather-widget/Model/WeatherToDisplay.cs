@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Text;
+using System.Windows.Media.Imaging;
 
 namespace weather_widget.Model
 {
@@ -53,6 +54,21 @@ namespace weather_widget.Model
         /// Humidity in %
         /// </summary>
         public string Humidity { get; set; }
+
+        public BitmapImage WeatherImageSource
+        {
+            get
+            {
+                BitmapImage bi3 = new BitmapImage();
+                bi3.BeginInit();
+
+                bi3.UriSource = new Uri(@"..\Resources\Icons\" + this.WeatherIcon, UriKind.RelativeOrAbsolute);
+                bi3.EndInit();
+
+                return bi3;
+            }
+        }
+
         #endregion properties
 
         public WeatherToDisplay(string weatherdesc, string weathericon, string maxtemperature, string mintemperature,

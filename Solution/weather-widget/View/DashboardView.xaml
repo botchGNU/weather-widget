@@ -5,7 +5,7 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
              xmlns:local="clr-namespace:weather_widget.View"
              mc:Ignorable="d" 
-             d:DesignHeight="200" d:DesignWidth="310">
+             d:DesignHeight="200" d:DesignWidth="440">
 
     <!--View for Dashboard (Display forecast)-->
 
@@ -43,7 +43,7 @@
 
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="2*"/>
-            <ColumnDefinition Width="1.5*"/>
+            <ColumnDefinition Width="2.9*"/>
         </Grid.ColumnDefinitions>
 
         <Border Grid.Column="0"
@@ -105,34 +105,49 @@
 
                 </Grid>
 
-                <DockPanel Grid.Row="1"
+                <Grid Grid.Row="1">
+                    <Grid.ColumnDefinitions>
+                        <ColumnDefinition Width="3.8*"/>
+                        <ColumnDefinition/>
+                    </Grid.ColumnDefinitions>
+
+                    <StackPanel Grid.Row="1"
                             x:Name="BottomPanel"
                             VerticalAlignment="Bottom" 
                             HorizontalAlignment="Left"
-                            LastChildFill="True">
+                            Orientation="Vertical"
+                            Width="140">
 
-                    <!--selected location-->
-                    <Label x:Name="CurrentPlace" 
+                        <Label Content="{Binding AvTemp}" 
+                           DockPanel.Dock="Top"
+                           FontSize="35"/>
+
+                        <DockPanel DockPanel.Dock="Bottom" Height="30">
+                            <!--selected location-->
+                            <Label x:Name="CurrentPlace" 
                            Foreground="White"
                            Content="{Binding CurrentLocation}"
                            FontSize="18"
-                           Padding="0 0"
-                           DockPanel.Dock="Bottom">
-                        <Label.ToolTip>
-                            <ToolTip>Current place and country code</ToolTip>
-                        </Label.ToolTip>
-                    </Label>
+                           Padding="0 0">
+                                <Label.ToolTip>
+                                    <ToolTip>Current place and country code</ToolTip>
+                                </Label.ToolTip>
+                            </Label>
 
-                    <Label Content="{Binding AvTemp}" 
-                           DockPanel.Dock="Left"
-                           FontSize="35"/>
-
-                    <Image Source="{Binding WeatherImageSource}"
+                            <Image Source="{Binding WeatherImageSource}"
                            Stretch="UniformToFill"
-                           Width="50" 
-                           HorizontalAlignment="Left"/>
+                           Width="70"
+                           HorizontalAlignment="Left" Margin="1,-17,0,0"/>
 
-                </DockPanel>
+                        </DockPanel>
+
+                    </StackPanel>
+
+
+
+                </Grid>
+                
+                
             </Grid>
         </Border>
 
@@ -175,8 +190,6 @@
 
             
 
-            
-
             <!--weather forecast-->
             <ListBox ItemsSource="{Binding ForecastList}"
                      Background="Transparent"
@@ -184,11 +197,12 @@
                 <ListBox.ItemTemplate>
                     <DataTemplate>
                         <StackPanel Orientation="Horizontal">
-                            <TextBlock Foreground="White" Text="{Binding Path=Weekday}" Margin="5,0,5,0"/>
-                            <TextBlock Foreground="White" Text="{Binding Path=MaxTemperature}" Margin="5,0,5,0"/>
-                            <TextBlock Foreground="White" Text="{Binding Path=MinTemperature}" Margin="5,0,5,0"/>
-                            <TextBlock Foreground="White" Text="{Binding Path=Humidity}" Margin="5,0,5,0"/>
-                            <Image Source="{Binding Path=WeatherImage}" Height="5" Width="5"/>
+                            <TextBlock Foreground="White" Text="{Binding Path=Weekday}" Width="24" Margin="5,0,5,0"/>
+                            <Image Source="{Binding Path=WeatherImageSource}" Height="30" Width="30" Margin="0,-5,-5,-5"/>
+                            <TextBlock Foreground="White" Text="{Binding Path=MaxTemperature}" Width="40" Margin="5,0,5,0"/>
+                            <TextBlock Foreground="White" Text="{Binding Path=MinTemperature}" Width="40" Margin="5,0,5,0"/>
+                            <TextBlock Foreground="White" Text="{Binding Path=Humidity}" Width="25" Margin="5,0,5,0"/>
+                            <TextBlock Foreground="White" Text="{Binding Path=WindSpeed}" Margin="5,0,5,0"/> 
                         </StackPanel>
                     </DataTemplate>
                 </ListBox.ItemTemplate>

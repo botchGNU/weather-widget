@@ -148,7 +148,8 @@ namespace weather_widget.ViewModel
                 }
                 else
                 {
-                    bi3.UriSource = new Uri(@"..\Resources\Icons\" + ForecastList[0].WeatherIcon, UriKind.Relative);
+                    bi3.UriSource = new Uri(@"..\Resources\Icons\" + ForecastList[0].WeatherIcon, UriKind.RelativeOrAbsolute);
+                    bi3.EndInit();
                 }
                 return bi3;
             }
