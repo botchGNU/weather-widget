@@ -92,7 +92,7 @@ namespace weather_widget.Model
         {
             for (int i = 0; i < 5; i++)
             {
-                var weatherNew = new WeatherToDisplay("Cloudy", "02n.png", Convert.ToString(i + 10), Convert.ToString(i), Convert.ToString(22), Convert.ToString(i + 5), "NEWW", Convert.ToString(50));
+                var weatherNew = new WeatherToDisplay("Cloudy", "02n.png", Convert.ToString(i + 10), Convert.ToString(i), Convert.ToString(22), Convert.ToString(i + 5), "NEWW", Convert.ToString(50), "NEWWW");
                 WeatherList.Add(weatherNew);
             }
         }

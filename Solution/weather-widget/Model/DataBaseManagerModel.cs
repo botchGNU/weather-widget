@@ -63,6 +63,13 @@ namespace weather_widget.Model
 
             // Rankweil
             this.CityName = CityName;
+
+            // TODO: get id, countryzip
+
+            //SQLiteConnection connection = CreateSQLiteConnection(FilePath);
+
+            //SQLiteCommand command = connection.CreateCommand();
+
             CityId = 2767974;
             CountryZip = "AT";
 
@@ -100,7 +107,7 @@ namespace weather_widget.Model
                                               $" round((SUM(maxtemperature)+SUM(mintemperature))/(COUNT(maxtemperature)+COUNT(mintemperature)),2) as 'averagetemp'," +
                                               $" MAX(windspeed) as 'maxwind'," +
                                               $" winddirectionasstring as 'winddir'," +
-                                              $" MAX(humidity) as humidity" +
+                                              $" MAX(humidity) as 'humidity'" +
                                               $" FROM weatherinfo" +
                                               $" WHERE weatherdaytime BETWEEN '{DateTime.Now.AddDays(i).ToString("yyyy-MM-dd")} 00:00:00' AND '{DateTime.Now.AddDays(i+1).ToString("yyyy-MM-dd")} 00:00:00' AND upper(cityname) LIKE '{CityName}'" +
                                               $" ) as t1," +
@@ -132,6 +139,17 @@ namespace weather_widget.Model
                         }
 
                     }
+                    else
+                    {
+                        try
+                        {
+                            icon = icon.Split('.')[0].Replace('n', 'd') + "." + icon.Split('.')[1]; // replace icon e.g. 10n.png 
+                        }
+                        catch (Exception)
+                        {
+                            continue; // continue if already contains e.g. 10d.png
+                        }
+                    }
                     string desc = reader.GetString("description");
                     string maxtemp = reader.GetDouble("maxtemp").ToString();
                     string mintemp = reader.GetDouble("mintemp").ToString();
@@ -141,7 +159,7 @@ namespace weather_widget.Model
                     string humidity = reader.GetDouble("humidity").ToString();
 
                     WeatherToDisplay item = new WeatherToDisplay(desc, icon, maxtemp + CELSIUS, mintemp + CELSIUS,
-                        averagetemp + CELSIUS, winddir, maxwind + MS, humidity + HUM);
+                        averagetemp + CELSIUS, winddir, maxwind + MS, humidity + HUM, DateTime.Now.AddDays(i).ToString("ddd", new CultureInfo("en-EN")));
                     WeatherToDisplays.Add(item);
                 }
                 reader.Close();
@@ -305,58 +323,3 @@ namespace weather_widget.Model
         #endregion
     }
 }
-
-
-    
-
-
-    // CRUD
-    /*
-    // TODO: Edit code to my needs
-    /// <summary>
-    /// This method is for inserting, updating or removing from database
-    /// </summary>
-    /// <param name="query"></param>
-    /// <param name="args"></param>
-    /// <returns>number of affected elements in database</returns>
-    private int ExecuteWrite(string query, Dictionary<string, object> args)
-    {
-        int numberOfRowsAffected;
-
-        //setup the connection to the database
-        using (var con = new SQLiteConnection(FilePath))
-        {
-            con.Open();
-
-            //open a new command
-            using (SQLiteCommand cmd = new SQLiteCommand(query, con))
-            {
-                //set the arguments given in the query
-                foreach (var pair in args)
-                {
-                    cmd.Parameters.AddWithValue(pair.Key, pair.Value);
-                }
-
-                //execute the query and get the number of row affected
-                numberOfRowsAffected = cmd.ExecuteNonQuery();
-            }
-            return numberOfRowsAffected;
-        }
-    }
-}
-private SQLiteConnection CreateSQLiteConnection(string fileName)
-{
-    SQLiteConnection conn = new SQLiteConnection($"Data Source={fileName}");
-    try
-    {
-        conn.Open();
-    }
-    catch (Exception exp)
-    {
-        throw exp;
-    }
-
-    return conn;
-}
-    */
-
