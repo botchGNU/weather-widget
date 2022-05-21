@@ -137,6 +137,7 @@
                             <Image Source="{Binding WeatherImageSource}"
                            Stretch="UniformToFill"
                            Width="70"
+                           Height="auto"
                            HorizontalAlignment="Left" Margin="1,-17,0,0"/>
 
                         </DockPanel>
