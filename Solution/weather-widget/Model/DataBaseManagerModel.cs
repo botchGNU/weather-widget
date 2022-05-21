@@ -62,6 +62,8 @@ namespace weather_widget.Model
             weatherInfos = await TaskweatherInfos;
 
             // Rankweil
+
+
             this.CityName = CityName;
             CityId = 2767974;
             CountryZip = "AT";
@@ -131,6 +133,17 @@ namespace weather_widget.Model
                             continue; // continue if already contains e.g. 10n.png
                         }
 
+                    }
+                    else
+                    {
+                        try
+                        {
+                            icon = icon.Split('.')[0].Replace('n', 'd') + "." + icon.Split('.')[1]; // replace icon e.g. 10n.png 
+                        }
+                        catch (Exception)
+                        {
+                            continue; // continue if already contains e.g. 10d.png
+                        }
                     }
                     string desc = reader.GetString("description");
                     string maxtemp = reader.GetDouble("maxtemp").ToString();
