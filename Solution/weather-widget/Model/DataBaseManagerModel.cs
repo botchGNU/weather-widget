@@ -32,9 +32,9 @@ namespace weather_widget.Model
             WeatherToDisplays = new WeatherToDisplayListModel();
             weatherInfos = new WeatherInfoListModel();
 
-            this.CityName = "Rankweil";
-            CityId = 2767974;
-            CountryZip = "AT";
+            //this.CityName = "Rankweil";
+            //CityId = 2767974;
+            //CountryZip = "AT";
 
         }
 
@@ -66,17 +66,23 @@ namespace weather_widget.Model
 
             // TODO: get id, countryzip
 
-            //SQLiteConnection connection = CreateSQLiteConnection(FilePath);
+            SQLiteConnection connection = CreateSQLiteConnection(FilePath);
 
-            //SQLiteCommand command = connection.CreateCommand();
+            SQLiteCommand command = connection.CreateCommand();
 
-            CityId = 2767974;
-            CountryZip = "AT";
+            command.CommandText = $"SELECT id, countryzip FROM citylist WHERE upper(cityname) = upper('{CityName}')";
 
-            // London
-            //weatherInfos.cityname = CityName;
-            //weatherInfos.cityid = 2643743;
-            //weatherInfos.countryzip = "GB"; // TO DO get CityId, Countryzip from DB
+            SQLiteDataReader reader =  command.ExecuteReader();
+
+            while (reader.Read())
+            {
+                CityId = reader.GetInt32("id");
+                CountryZip = reader.GetString("countryzip");
+                break; // only one city
+            }
+
+            reader.Close();
+            connection.Close();
 
             SaveIntoDatabase();
         }

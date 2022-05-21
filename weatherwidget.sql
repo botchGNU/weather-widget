@@ -24,6 +24,24 @@
 
 --LIKE "%" GROUP BY cityname;
 
+SELECT id, countryzip FROM citylist	WHERE upper(cityname) = upper('Rankweil');
+
+
+
+SELECT t1.maxtemp, t1. mintemp, t1.averagetemp, t1.maxwind, t1.winddir
+FROM (
+	  SELECT 
+	  MAX(maxtemperature) as 'maxtemp', 
+	  MIN(mintemperature) as 'mintemp', 
+	  round((SUM(maxtemperature)+SUM(mintemperature))/(COUNT(maxtemperature)+COUNT(mintemperature)),2) as 'averagetemp', 
+	  MAX(windspeed) as 'maxwind', 
+	  winddirectionasstring as 'winddir'
+	  FROM weatherinfo
+	  WHERE weatherdaytime BETWEEN '2022-05-21 00:00:00' AND '2022-05-22 00:00:00' AND upper(cityname) LIKE 'RANKWEIL'
+	  ) as t1;	
+
+
+
 -- C# query
 SELECT t1.maxtemp, t1. mintemp, t1.averagetemp, t1.maxwind, t1.winddir, t2.description, t2.icon, t2.frequency
 FROM (
@@ -34,12 +52,12 @@ FROM (
 	  MAX(windspeed) as 'maxwind', 
 	  winddirectionasstring as 'winddir'
 	  FROM weatherinfo
-	  WHERE weatherdaytime BETWEEN '2022-05-16 00:00:00' AND '2022-05-17 00:00:00' AND upper(cityname) LIKE 'RANKWEIL'
+	  WHERE weatherdaytime BETWEEN '2022-05-21 00:00:00' AND '2022-05-22 00:00:00' AND upper(cityname) LIKE 'RANKWEIL'
 	  ) as t1,	  
 	 (
 	  SELECT weatherdescription as description, weathericon as icon, COUNT(weatherdescription) as frequency
 	  FROM weatherinfo
-	  WHERE weatherdaytime BETWEEN '2022-05-16 00:00:00' AND '2022-05-17 00:00:00' AND upper(cityname) LIKE 'RANKWEIL'
+	  WHERE weatherdaytime BETWEEN '2022-05-21 00:00:00' AND '2022-05-22 00:00:00' AND upper(cityname) LIKE 'RANKWEIL'
 	  GROUP BY weatherdescription 
 	  ORDER BY frequency DESC
 	  LIMIT 1
