@@ -22,6 +22,7 @@ namespace weather_widget.Model
             CurrentCity = "Rankweil";   //current default value
             UpdateWeather();      //uncommented unless api key is in repo
             SetTimerInitial();
+            _manager.LoadFromDatabase();
 
             //TESTING PURPOSE! : Fill list while api not working
             //FillListTest(); 
@@ -91,7 +92,7 @@ namespace weather_widget.Model
         {
             for (int i = 0; i < 5; i++)
             {
-                var weatherNew = new WeatherToDisplay("Cloudy", "02n.png", Convert.ToString(i + 10), Convert.ToString(i), Convert.ToString(22), Convert.ToString(i + 5), Convert.ToString(50));
+                var weatherNew = new WeatherToDisplay("Cloudy", "02n.png", Convert.ToString(i + 10), Convert.ToString(i), Convert.ToString(22), Convert.ToString(i + 5), "NEWW", Convert.ToString(50));
                 WeatherList.Add(weatherNew);
             }
         }

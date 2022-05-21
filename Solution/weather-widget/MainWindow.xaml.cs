@@ -22,13 +22,10 @@ namespace weather_widget
     /// </summary>
     public partial class MainWindow : Window
     {
-        WeatherInfoListModel weatherInfos;
-        DataBaseManagerModel dataBaseManagerModel;
         public MainWindow()
         {
 
             InitializeComponent();
-            weatherInfos = new WeatherInfoListModel();
         }
     }
 

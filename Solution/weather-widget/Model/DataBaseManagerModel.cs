@@ -21,7 +21,7 @@ namespace weather_widget.Model
         private int CityId;
 
         private const string MS = "m/s";
-        private const string CELSIUS = "�C";
+        private const string CELSIUS = "°C";
         private const string HUM = "%";
 
 
