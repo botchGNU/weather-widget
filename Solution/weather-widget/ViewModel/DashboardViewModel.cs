@@ -102,7 +102,7 @@ namespace weather_widget.ViewModel
                 }
                 else
                 {
-                    return ForecastList[0]?.MinTemperature + " °C";
+                    return ForecastList[0]?.MinTemperature;
                 }
             }
         }
@@ -116,7 +116,7 @@ namespace weather_widget.ViewModel
                 }
                 else
                 {
-                    return ForecastList[0]?.MaxTemperature + " °C";
+                    return ForecastList[0]?.MaxTemperature;
                 }
             }
         }
@@ -130,7 +130,7 @@ namespace weather_widget.ViewModel
                 }
                 else
                 {
-                    return ForecastList[0]?.AvgTemperature + " °C";
+                    return ForecastList[0]?.AvgTemperature;
                 }
             }
         }

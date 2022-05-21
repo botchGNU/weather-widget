@@ -100,14 +100,14 @@ namespace weather_widget.Model
                                               $" round((SUM(maxtemperature)+SUM(mintemperature))/(COUNT(maxtemperature)+COUNT(mintemperature)),2) as 'averagetemp'," +
                                               $" MAX(windspeed) as 'maxwind'," +
                                               $" winddirectionasstring as 'winddir'," +
-                                              $" humidity" +
+                                              $" MAX(humidity) as humidity" +
                                               $" FROM weatherinfo" +
-                                              $" WHERE weatherdaytime BETWEEN '{DateTime.Now.ToString("yyyy-MM-dd")} 00:00:00' AND '{DateTime.Now.AddDays(i+1).ToString("yyyy-MM-dd")} 00:00:00' AND upper(cityname) LIKE '{CityName}'" +
+                                              $" WHERE weatherdaytime BETWEEN '{DateTime.Now.AddDays(i).ToString("yyyy-MM-dd")} 00:00:00' AND '{DateTime.Now.AddDays(i+1).ToString("yyyy-MM-dd")} 00:00:00' AND upper(cityname) LIKE '{CityName}'" +
                                               $" ) as t1," +
                                              $" (" +
                                               $" SELECT weatherdescription as description, weathericon as icon, COUNT(weatherdescription) as frequency" +
                                               $" FROM weatherinfo" +
-                                              $" WHERE weatherdaytime BETWEEN '{DateTime.Now.ToString("yyyy-MM-dd")} 00:00:00' AND '{DateTime.Now.AddDays(i+1).ToString("yyyy-MM-dd")} 00:00:00' AND upper(cityname) LIKE '{CityName}'" +
+                                              $" WHERE weatherdaytime BETWEEN '{DateTime.Now.AddDays(i).ToString("yyyy-MM-dd")} 00:00:00' AND '{DateTime.Now.AddDays(i+1).ToString("yyyy-MM-dd")} 00:00:00' AND upper(cityname) LIKE '{CityName}'" +
                                               $" GROUP BY weatherdescription" +
                                               $" ORDER BY frequency DESC" +
                                               $" LIMIT 1" +
