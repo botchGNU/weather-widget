@@ -14,56 +14,28 @@ namespace weather_widget.Model
     {
         #region fields
         public WeatherToDisplayListModel WeatherToDisplays { get; private set; }
-
-
-
         private WeatherInfoListModel weatherInfos;
 
-        private const string FilePath = @"..\\..\\..\\..\\..\\weatherwidget.db";
-        #endregion
+        private string CityName;
+        private string CountryZip;
+        private int CityId;
 
-        #region ctor
+        private const string MS = "m/s";
+        private const string CELSIUS = "�C";
+        private const string HUM = "%";
+
+
+        private const string FilePath = @"..\\..\\..\\..\\..\\weatherwidget.db";
+
         public DataBaseManagerModel()
         {
             WeatherToDisplays = new WeatherToDisplayListModel();
-        }
-        #endregion
+            weatherInfos = new WeatherInfoListModel();
 
-        #region methods
+            this.CityName = "Rankweil";
+            CityId = 2767974;
+            CountryZip = "AT";
 
-        #region async 
-        private async void GetWeather(string cityName)
-        {
-            try
-            {
-                APIManagerModel apimanagerModel = new APIManagerModel();
-                Task<WeatherInfoListModel> TaskweatherInfos = apimanagerModel.GetWeather(cityName);
-
-                weatherInfos = await TaskweatherInfos;
-                Debug.WriteLine(weatherInfos.Count);
-                weatherInfos.cityid = 0;
-                weatherInfos.countryzip = "AT";
-                SaveIntoDatabase(cityName, weatherInfos.cityid, weatherInfos.countryzip);
-            }
-            catch (Exception)
-            {
-               
-            }
-            
-        }
-
-        #endregion
-        private void UpdateWeatherToDisplay()
-        {
-            // TO DO: UPDATE WEATHERTODISPLAY after Reading and Saving!!!+
-
-            // TO DO: Do this in DataBase Manager
-            /*
-            private const string unitWinSpeed = "m/s";
-            private const string unitIcon = ".png";
-            private const string unitTemp = "°C";
-            private const string unitHumidity = "%";
-            */
         }
 
         /// <summary>
@@ -82,17 +54,104 @@ namespace weather_widget.Model
             }
         }
 
-        public void LoadFromDatabase(string CityName, int CityId, string CountryZip)
+        private async void GetWeather(string CityName)
         {
-            SQLiteDataReader SQLiteDataReader = null; // see our project
+            APIManagerModel apimanagerModel = new APIManagerModel();
+            Task<WeatherInfoListModel> TaskweatherInfos = apimanagerModel.GetWeather(CityName);
 
+            weatherInfos = await TaskweatherInfos;
 
-            //return new WeatherInfoListModel(); // TO DO: reading
+            // Rankweil
+            this.CityName = CityName;
+            CityId = 2767974;
+            CountryZip = "AT";
+
+            // London
+            //weatherInfos.cityname = CityName;
+            //weatherInfos.cityid = 2643743;
+            //weatherInfos.countryzip = "GB"; // TO DO get CityId, Countryzip from DB
+
+            SaveIntoDatabase();
         }
 
-        public void SaveIntoDatabase(string CityName, int CityId, string CountryZip)
+        public void LoadFromDatabase()
         {
+            WeatherToDisplays.Clear();
 
+            SQLiteConnection connection = CreateSQLiteConnection(FilePath);
+
+            SQLiteCommand command = connection.CreateCommand();
+
+            List<DateTime> dtlist = new List<DateTime>();
+            dtlist.Add(DateTime.Now);
+            dtlist.Add(DateTime.Now.AddDays(1));
+            dtlist.Add(DateTime.Now.AddDays(2));
+            dtlist.Add(DateTime.Now.AddDays(3));
+            dtlist.Add(DateTime.Now.AddDays(4));
+
+            for (int i = 0; i < dtlist.Count; i++)
+            {
+                // get Min, Max, AVG, winddir, humidity, weathericon, weatherdesc for each day
+                command.CommandText = $"SELECT t1.maxtemp, t1.mintemp, t1.averagetemp, t1.maxwind, t1.winddir, t1.humidity, t2.description, t2.icon, t2.frequency" +
+                                      $" FROM (" +
+                                              $" SELECT" +
+                                              $" MAX(maxtemperature) as 'maxtemp'," +
+                                              $" MIN(mintemperature) as 'mintemp'," +
+                                              $" round((SUM(maxtemperature)+SUM(mintemperature))/(COUNT(maxtemperature)+COUNT(mintemperature)),2) as 'averagetemp'," +
+                                              $" MAX(windspeed) as 'maxwind'," +
+                                              $" winddirectionasstring as 'winddir'," +
+                                              $" humidity" +
+                                              $" FROM weatherinfo" +
+                                              $" WHERE weatherdaytime BETWEEN '{DateTime.Now.ToString("yyyy-MM-dd")} 00:00:00' AND '{DateTime.Now.AddDays(i+1).ToString("yyyy-MM-dd")} 00:00:00' AND upper(cityname) LIKE '{CityName}'" +
+                                              $" ) as t1," +
+                                             $" (" +
+                                              $" SELECT weatherdescription as description, weathericon as icon, COUNT(weatherdescription) as frequency" +
+                                              $" FROM weatherinfo" +
+                                              $" WHERE weatherdaytime BETWEEN '{DateTime.Now.ToString("yyyy-MM-dd")} 00:00:00' AND '{DateTime.Now.AddDays(i+1).ToString("yyyy-MM-dd")} 00:00:00' AND upper(cityname) LIKE '{CityName}'" +
+                                              $" GROUP BY weatherdescription" +
+                                              $" ORDER BY frequency DESC" +
+                                              $" LIMIT 1" +
+                                              $" ) as t2";
+
+
+                SQLiteDataReader reader = command.ExecuteReader();
+
+                while (reader.Read())
+                {
+                    // save into the list
+                    string icon = reader.GetString("icon");
+                    if (DateTime.Now.TimeOfDay > Convert.ToDateTime("19:00:00").TimeOfDay)
+                    {
+                        try
+                        {
+                            icon = icon.Split('.')[0].Replace('d', 'n') + "." + icon.Split('.')[1]; // replace icon e.g. 10d.png 
+                        }
+                        catch (Exception)
+                        {
+                            continue; // continue if already contains e.g. 10n.png
+                        }
+
+                    }
+                    string desc = reader.GetString("description");
+                    string maxtemp = reader.GetDouble("maxtemp").ToString();
+                    string mintemp = reader.GetDouble("mintemp").ToString();
+                    string averagetemp = reader.GetDouble("averagetemp").ToString();
+                    string winddir = reader.GetString("winddir");
+                    string maxwind = reader.GetDouble("maxwind").ToString();
+                    string humidity = reader.GetDouble("humidity").ToString();
+
+                    WeatherToDisplay item = new WeatherToDisplay(desc, icon, maxtemp + CELSIUS, mintemp + CELSIUS,
+                        averagetemp + CELSIUS, winddir, maxwind + MS, humidity + HUM);
+                    WeatherToDisplays.Add(item);
+                }
+                reader.Close();
+            }
+
+            connection.Close();
+        }
+
+        public void SaveIntoDatabase() // TO DO: CityId, CountryZip --> get them from DataBase and private safe
+        {
             // .NET Framework
             SQLiteConnection connection = CreateSQLiteConnection(FilePath);
 
@@ -114,13 +173,13 @@ namespace weather_widget.Model
                 // TO DO: Use DateTime from DataBaseUpdateManager!!
                 // TO DO: CityName, CityId & co. should be prettier coded
                 string cmdtext = "";
-                if(CheckIfCurrentDataExist(item, CityName) == false)
+                if(CheckIfCurrentDataExist(item) == false)
                 {
-                    cmdtext = InsertIntoDataBase(item, CityName, CityId, CountryZip); // ->INSERT
+                    cmdtext = InsertIntoDataBase(item); // ->INSERT
                 }
                 else
                 {
-                    cmdtext = UpdateDataBase(item, CityName, CityId, CountryZip); // -> UPDATE 
+                    cmdtext = UpdateDataBase(item); // -> UPDATE 
                 }
 
                 cmd.CommandText = cmdtext;
@@ -134,6 +193,7 @@ namespace weather_widget.Model
 
             connection.Close();
         }
+
         /// <summary>
         /// Gives you a list of string, depending on the letters of a city
         /// </summary>
@@ -168,7 +228,7 @@ namespace weather_widget.Model
             }
         }
 
-        private string InsertIntoDataBase(WeatherInfoModel weatherInfo, string CityName, int CityId, string CountryZip)
+        private string InsertIntoDataBase(WeatherInfoModel weatherInfo)
         {
             string sqlitecmd = $"INSERT INTO " +
                     $"weatherinfo(cityid, cityname, countryzip, weatherdescription, weathericon, weatherdaytime, maxtemperature, mintemperature, winddirection, winddirectionasstring, windspeed, humidity)" +
@@ -179,7 +239,7 @@ namespace weather_widget.Model
             return sqlitecmd;
         }
 
-        private bool CheckIfCurrentDataExist(WeatherInfoModel weatherinfo, string CityName)
+        private bool CheckIfCurrentDataExist(WeatherInfoModel weatherinfo)
         {
             SQLiteConnection connection = CreateSQLiteConnection(FilePath);
 
@@ -203,7 +263,7 @@ namespace weather_widget.Model
             }
             return false;
         }
-        private string UpdateDataBase(WeatherInfoModel weatherInfo, string CityName, int CityId, string CountryZip)
+        private string UpdateDataBase(WeatherInfoModel weatherInfo)
         {
             string sqlitecmd = sqlitecmd = $"UPDATE weatherinfo" +
                     $" SET weatherdescription = '{weatherInfo.WeatherDescription}'," +
@@ -283,136 +343,6 @@ namespace weather_widget.Model
             return numberOfRowsAffected;
         }
     }
-
-    // TODO: Edit code to my needs
-    /// <summary>
-    /// Method for reading content from database
-    /// </summary>
-    /// <param name="query"></param>
-    /// <returns></returns>
-    private DataTable ReadDatabase(string query)
-    {
-        if (string.IsNullOrEmpty(query.Trim()))
-            return null;
-
-        using (var con = new SQLiteConnection(FilePath))
-        {
-            con.Open();
-            using (var cmd = new SQLiteCommand(query, con))
-            {
-                foreach (KeyValuePair<string, object> entry in args)
-                {
-                    cmd.Parameters.AddWithValue(entry.Key, entry.Value);
-                }
-
-                var da = new SQLiteDataAdapter(cmd);
-
-                var dt = new DataTable();
-                da.Fill(dt);
-
-                da.Dispose();
-                return dt;
-            }
-        }
-    }
-
-
-    // TODO: Edit code to my needs
-    /// <summary>
-    /// Adding weather forecasts to database
-    /// </summary>
-    /// <param name="weatherInfo"></param>
-    /// <returns></returns>
-    private int AddWeatherInfo(WeatherInfoModel weatherInfo)
-    {
-        const string query = "INSERT INTO weatherinfo(XXX, XX) VALUES(@XXX, @XX)";
-
-        //here we are setting the parameter values that will be actually 
-        //replaced in the query in Execute method
-        var args = new Dictionary<string, object>
-        {
-            {"@XXX", weatherInfo.WeatherIcon},
-            {"@XX", weatherInfo.WeatherDayTime.ToString()}
-        };
-
-        return ExecuteWrite(query, args);
-    }
-
-    // TODO: Edit code to my needs
-    private int EditWeatherInfo(WeatherInfoModel weatherInfo)
-    {
-        const string query = "UPDATE weatherinfo SET WeatherDescription = @weatherdesc, WeatherIcon = @weathericon WHERE Id = @id";
-
-        //here we are setting the parameter values that will be actually 
-        //replaced in the query in Execute method
-        var args = new Dictionary<string, object>
-        {
-            //{"@id", user.Id}, ???
-            {"@weatherdesc", weatherInfo.WeatherDescription},
-            {"@weathericon", weatherInfo.WeatherIcon}
-        };
-
-        return ExecuteWrite(query, args);
-
-    }
-
-
-    // TODO: Edit code to my needs
-    private int DeleteWeatherInfo(WeatherInfoModel weatherInfo)
-    {
-        const string query = "DELETE from weatherinfo WHERE Id = @id";
-
-        //here we are setting the parameter values that will be actually 
-        //replaced in the query in Execute method
-        var args = new Dictionary<string, object>
-        {
-            {"@id", 1} // ???? how to do ???
-        };
-        return ExecuteWrite(query, args);
-    }
-
-    private void SaveIntoDB(WeatherInfoListModel weatherInfos, string fileName)
-    {
-        // .NET Core (using Microsoft.Data.SQLite)
-        SQLiteConnection conn = CreateSQLiteConnection(fileName);
-
-        // TODO: Check if it exists
-
-        /*
-        cmd.CommandText = "DROP TABLE IF EXISTS weatherinfo";
-
-        cmd.ExecuteNonQuery();
-        */
-
-    // IF IT DOESN'T EXIST --> CREATE TABLE weatherinfo
-
-    // TODO: cityid, cityname, coutryzip --> FOREIGN KEYS
-    /*
-    cmd.CommandText = @"CREATE TABLE weatherinfo(id INTEGER PRIMARY KEY,
-                      cityid INTEGER, cityname TEXT, countryzip TEXT,
-                      weatherdescription TEXT, weathericon TEXT, weatherdaytime TEXT, maxtemperature DOUBLE, 
-                      mintemperature DOUBLE, winddirection DOUBLE, winddirectionasstring TEXT, windspeed DOUBLE, humidity DOUBLE)";
-    cmd.ExecuteNonQuery();
-
-
-    foreach (WeatherInfoModel weatherInfo in weatherInfos)
-    {
-        // CRUD ... Create Read Update Delete
-
-
-        // neue Datensätze -> INSERT ("create")
-        cmd.CommandText = $"INSERT INTO " +
-            $"weatherinfo(cityid, cityname, countryzip, weatherdescription, weathericon, weatherdaytime, maxtemperature, mintemperature, winddirection, winddirectionasstring, windspeed, humidity)" +
-            $"VALUES({(cityid)},'{cityname}','{countryzip}','{item.WeatherDescription}','{item.WeatherIcon}','{item.WeatherDayTime.ToString()}','{item.MaxTemperature}','{item.MinTemperature}','{item.WindDirection}','{item.WindDirectionAsString}', '{item.WindSpeed}', '{item.Humidity}')";
-        cmd.ExecuteNonQuery();
-
-        // geänderte Datensätze -> UPDATE 
-
-        // gelöschte Datensätze -> DELETE
-
-    }
-
-    conn.Close();
 }
 private SQLiteConnection CreateSQLiteConnection(string fileName)
 {

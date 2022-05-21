@@ -35,6 +35,11 @@ namespace weather_widget.Model
         public string AvgTemperature { get; set; }
 
         /// <summary>
+        /// Max wind speed as string in m/s
+        /// </summary>
+        public string WindSpeed { get; set; }
+
+        /// <summary>
         /// Wind direction as string (NN, ...), this value depends on max windspeed of a day
         /// </summary>
         public string Winddirection { get; set; }
@@ -46,7 +51,7 @@ namespace weather_widget.Model
         #endregion properties
 
         public WeatherToDisplay(string weatherdesc, string weathericon, string maxtemperature, string mintemperature,
-                string avgtemperature, string winddirection, string humidity)
+                string avgtemperature, string winddirection, string windspeed, string humidity)
         {
             WeatherDescription = weatherdesc;
             WeatherIcon = weathericon;
@@ -54,6 +59,7 @@ namespace weather_widget.Model
             MinTemperature = mintemperature;
             AvgTemperature = avgtemperature;
             Winddirection = winddirection;
+            WindSpeed = windspeed;
             Humidity = humidity;
         }
 
