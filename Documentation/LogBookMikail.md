@@ -1,24 +1,24 @@
 # Bugs
 
-- [ ] 
+- [ ] Binding problems (pictures)
 
 # ToDo
 
 - [ ] Start with `Database-Manager`
-  - [ ] Create database for weather info
+  - [x] Create database for weather info
     - [x] Try to Create
-  - [ ] Save weather info into database
+  - [x] Save weather info into database
     - [x] change the format of datetime to `yyyy-MM-dd HH:mm:ss`
     - [x] change all `,` with `.` while saving, because DB is working with `.` !
-  - [ ] Helper Class, `WeatherToDisplay`
-  - [ ] try out SELECT, INSERT, UPDATE, ... commands
+  - [x] Helper Class, `WeatherToDisplay`
+  - [x] try out SELECT, INSERT, UPDATE, ... commands
     - [x] get MAXIMUM from maxtemperature
     - [x] get MINIMUM temperature from mintemperature
     - [x] get AVERAGE temperature of a day
     - [x] get MOST FREQUENT weathertype `weatherdescription`
     - [x] delete duplicate cities (just leave the first one) `citylist`  
     - [x] Foreign Keys (citylist) (how to CREATE TABLE  ... FOREIGN KEY ... as ...`)
-    - [ ] how to read SELECTed content in C# `DataType` (see previous WFFST-Project)
+    - [x] how to read SELECTed content in C# `DataType` (see previous WFFST-Project)
     - [x] UPDATE if exists in DataBase
 - [ ] Finish `API-Manager` (should be static, but for now its not a static class)
   - [x] Exceptions for different errors
@@ -28,8 +28,8 @@
 
 ## 08-04-2022 - Friday
 
-- [Organisation] organising project folder/files/ ... on gitlab
-- [Organisation] https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2 ... Icons for different weather
+- [Organizational] organising project folder/files/ ... on gitlab
+- [Organizational] https://openweathermap.org/weather-conditions#Weather-Condition-Codes-2 ... Icons for different weather
 
 ## 13-04-2022 - Wednesday (Easter Holidays)
 - [Python Script] Installed Pycharm -> Convert Cities (JSON-File) to SQLite-File -> Try to req.
@@ -52,7 +52,7 @@ till 02.05 --> per E-Mail
 - [API-Manager, JSONModel] Working on API-Manager, JSON-Converter
 
 ## 29-04-2022 - Friday
-- [Organisation] finishing `Pflichtenheft.md`, documentation `LogBookMikail.md` --> \2h
+- [Organizational] finishing `Pflichtenheft.md`, documentation `LogBookMikail.md` --> \2h
 - [WeatherInfoModel] update on `WeatherInfoModel` --> \1/4h (String for wind direction)
 
 ## 30-04-2022 - Saturday
@@ -80,12 +80,33 @@ till 02.05 --> per E-Mail
 ## 13-05-2022 - Friday
 
 - ill (visiting the doctor) --> 1h
-- [Organisation] asked few questions about the project --> \1/2h
+- [Organizational] asked a few questions about the project --> \1/2h
 - [DataBase] deleted duplicate cities --> \1/2h
 - [DataBaseManagerModel] changed FOREIGN KEYS --> \1/2h
 
 ##  14-05-2022 - Saturday
 
 - new Classes [WeatherToDisplayListModel, WeatherToDisplayModel] --> 1/2h
-- [DataBaseManagerModel] UPDATE and INSERT INTO --> \2 1/2h
+  - is going to be binded by UI
 
+- [DataBaseManagerModel] UPDATE and INSERT INTO --> \2 1/2h
+  - Add new values and update present values
+    - check if exits -> update
+    - if not --> insert
+
+  - Added new feature for receiving a list of cities, which starts with specific letters
+
+
+## 20-05-2022 - Friday
+
+- normal lesson --> \0h
+
+## 21-05-2022 - Saturday
+
+- [DataBaseManagerModel] Load,  Code improvements
+  - Load data from DB --> \4h
+  - prettied some code --> \1/2h
+- [WeatherToDisplayList] save loaded data into this list --> \1/2h
+- [WeatherToDisplay] added windspeed (forgotten to add it)
+- [main] merged
+- [Organizational] documentation
