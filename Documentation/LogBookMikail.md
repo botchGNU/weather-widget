@@ -1,10 +1,11 @@
 # Bugs
 
-- [ ] Binding problems (pictures)
+- [x] Binding problems (pictures)
+- [x] Location changed bug --> List didn't update
 
 # ToDo
 
-- [ ] Start with `Database-Manager`
+- [x] Start with `Database-Manager`
   - [x] Create database for weather info
     - [x] Try to Create
   - [x] Save weather info into database
@@ -109,4 +110,5 @@ till 02.05 --> per E-Mail
 - [WeatherToDisplayList] save loaded data into this list --> \1/2h
 - [WeatherToDisplay] added windspeed (forgotten to add it)
 - [main] merged
-- [Organizational] documentation
+- [Organizational] documentation --> \1/2h
+- [Bugfix] Icons on UI, Location problems --> \1/2h
