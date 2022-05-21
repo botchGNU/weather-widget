@@ -11,7 +11,7 @@
         Height="200" Width="440"
         WindowStyle="None"
         AllowsTransparency="True"
-        Background="#CC2e4a99"
+        Background="#CC080E22"
         ShowInTaskbar="False"
         ResizeMode="CanResize">
 

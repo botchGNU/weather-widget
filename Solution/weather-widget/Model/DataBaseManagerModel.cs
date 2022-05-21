@@ -96,76 +96,85 @@ namespace weather_widget.Model
             dtlist.Add(DateTime.Now.AddDays(3));
             dtlist.Add(DateTime.Now.AddDays(4));
 
-            for (int i = 0; i < dtlist.Count; i++)
+            try
             {
-                // get Min, Max, AVG, winddir, humidity, weathericon, weatherdesc for each day
-                command.CommandText = $"SELECT t1.maxtemp, t1.mintemp, t1.averagetemp, t1.maxwind, t1.winddir, t1.humidity, t2.description, t2.icon, t2.frequency" +
-                                      $" FROM (" +
-                                              $" SELECT" +
-                                              $" MAX(maxtemperature) as 'maxtemp'," +
-                                              $" MIN(mintemperature) as 'mintemp'," +
-                                              $" round((SUM(maxtemperature)+SUM(mintemperature))/(COUNT(maxtemperature)+COUNT(mintemperature)),2) as 'averagetemp'," +
-                                              $" MAX(windspeed) as 'maxwind'," +
-                                              $" winddirectionasstring as 'winddir'," +
-                                              $" MAX(humidity) as 'humidity'" +
-                                              $" FROM weatherinfo" +
-                                              $" WHERE weatherdaytime BETWEEN '{DateTime.Now.AddDays(i).ToString("yyyy-MM-dd")} 00:00:00' AND '{DateTime.Now.AddDays(i+1).ToString("yyyy-MM-dd")} 00:00:00' AND upper(cityname) LIKE '{CityName}'" +
-                                              $" ) as t1," +
-                                             $" (" +
-                                              $" SELECT weatherdescription as description, weathericon as icon, COUNT(weatherdescription) as frequency" +
-                                              $" FROM weatherinfo" +
-                                              $" WHERE weatherdaytime BETWEEN '{DateTime.Now.AddDays(i).ToString("yyyy-MM-dd")} 00:00:00' AND '{DateTime.Now.AddDays(i+1).ToString("yyyy-MM-dd")} 00:00:00' AND upper(cityname) LIKE '{CityName}'" +
-                                              $" GROUP BY weatherdescription" +
-                                              $" ORDER BY frequency DESC" +
-                                              $" LIMIT 1" +
-                                              $" ) as t2";
-
-
-                SQLiteDataReader reader = command.ExecuteReader();
-
-                while (reader.Read())
+                for (int i = 0; i < dtlist.Count; i++)
                 {
-                    // save into the list
-                    string icon = reader.GetString("icon");
-                    if (DateTime.Now.TimeOfDay > Convert.ToDateTime("19:00:00").TimeOfDay)
-                    {
-                        try
-                        {
-                            icon = icon.Split('.')[0].Replace('d', 'n') + "." + icon.Split('.')[1]; // replace icon e.g. 10d.png 
-                        }
-                        catch (Exception)
-                        {
-                            continue; // continue if already contains e.g. 10n.png
-                        }
+                    // get Min, Max, AVG, winddir, humidity, weathericon, weatherdesc for each day
+                    command.CommandText = $"SELECT t1.maxtemp, t1.mintemp, t1.averagetemp, t1.maxwind, t1.winddir, t1.humidity, t2.description, t2.icon, t2.frequency" +
+                                          $" FROM (" +
+                                                  $" SELECT" +
+                                                  $" MAX(maxtemperature) as 'maxtemp'," +
+                                                  $" MIN(mintemperature) as 'mintemp'," +
+                                                  $" round((SUM(maxtemperature)+SUM(mintemperature))/(COUNT(maxtemperature)+COUNT(mintemperature)),2) as 'averagetemp'," +
+                                                  $" MAX(windspeed) as 'maxwind'," +
+                                                  $" winddirectionasstring as 'winddir'," +
+                                                  $" MAX(humidity) as 'humidity'" +
+                                                  $" FROM weatherinfo" +
+                                                  $" WHERE weatherdaytime BETWEEN '{DateTime.Now.AddDays(i).ToString("yyyy-MM-dd")} 00:00:00' AND '{DateTime.Now.AddDays(i + 1).ToString("yyyy-MM-dd")} 00:00:00' AND upper(cityname) LIKE '{CityName}'" +
+                                                  $" ) as t1," +
+                                                 $" (" +
+                                                  $" SELECT weatherdescription as description, weathericon as icon, COUNT(weatherdescription) as frequency" +
+                                                  $" FROM weatherinfo" +
+                                                  $" WHERE weatherdaytime BETWEEN '{DateTime.Now.AddDays(i).ToString("yyyy-MM-dd")} 00:00:00' AND '{DateTime.Now.AddDays(i + 1).ToString("yyyy-MM-dd")} 00:00:00' AND upper(cityname) LIKE '{CityName}'" +
+                                                  $" GROUP BY weatherdescription" +
+                                                  $" ORDER BY frequency DESC" +
+                                                  $" LIMIT 1" +
+                                                  $" ) as t2";
 
-                    }
-                    else
-                    {
-                        try
-                        {
-                            icon = icon.Split('.')[0].Replace('n', 'd') + "." + icon.Split('.')[1]; // replace icon e.g. 10n.png 
-                        }
-                        catch (Exception)
-                        {
-                            continue; // continue if already contains e.g. 10d.png
-                        }
-                    }
-                    string desc = reader.GetString("description");
-                    string maxtemp = reader.GetDouble("maxtemp").ToString();
-                    string mintemp = reader.GetDouble("mintemp").ToString();
-                    string averagetemp = reader.GetDouble("averagetemp").ToString();
-                    string winddir = reader.GetString("winddir");
-                    string maxwind = reader.GetDouble("maxwind").ToString();
-                    string humidity = reader.GetDouble("humidity").ToString();
 
-                    WeatherToDisplay item = new WeatherToDisplay(desc, icon, maxtemp + CELSIUS, mintemp + CELSIUS,
-                        averagetemp + CELSIUS, winddir, maxwind + MS, humidity + HUM, DateTime.Now.AddDays(i).ToString("ddd", new CultureInfo("en-EN")));
-                    WeatherToDisplays.Add(item);
+                    SQLiteDataReader reader = command.ExecuteReader();
+
+                    while (reader.Read())
+                    {
+                        // save into the list
+                        string icon = reader.GetString("icon");
+                        if (DateTime.Now.TimeOfDay > Convert.ToDateTime("19:00:00").TimeOfDay)
+                        {
+                            try
+                            {
+                                icon = icon.Split('.')[0].Replace('d', 'n') + "." + icon.Split('.')[1]; // replace icon e.g. 10d.png 
+                            }
+                            catch (Exception)
+                            {
+                                continue; // continue if already contains e.g. 10n.png
+                            }
+
+                        }
+                        else
+                        {
+                            try
+                            {
+                                icon = icon.Split('.')[0].Replace('n', 'd') + "." + icon.Split('.')[1]; // replace icon e.g. 10n.png 
+                            }
+                            catch (Exception)
+                            {
+                                continue; // continue if already contains e.g. 10d.png
+                            }
+                        }
+                        string desc = reader.GetString("description");
+                        string maxtemp = reader.GetDouble("maxtemp").ToString();
+                        string mintemp = reader.GetDouble("mintemp").ToString();
+                        string averagetemp = reader.GetDouble("averagetemp").ToString();
+                        string winddir = reader.GetString("winddir");
+                        string maxwind = reader.GetDouble("maxwind").ToString();
+                        string humidity = reader.GetDouble("humidity").ToString();
+
+                        WeatherToDisplay item = new WeatherToDisplay(desc, icon, maxtemp + CELSIUS, mintemp + CELSIUS,
+                            averagetemp + CELSIUS, winddir, maxwind + MS, humidity + HUM, DateTime.Now.AddDays(i).ToString("ddd", new CultureInfo("en-EN")));
+                        WeatherToDisplays.Add(item);
+                    }
+                    reader.Close();
                 }
-                reader.Close();
+            }
+            catch (Exception)
+            {
+                // TODO: if table not exist, inform user no data available
+                connection.Close();
+                return;
+
             }
 
-            connection.Close();
         }
 
         public void SaveIntoDatabase() // TO DO: CityId, CountryZip --> get them from DataBase and private safe
