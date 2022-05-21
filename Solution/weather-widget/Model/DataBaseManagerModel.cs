@@ -241,7 +241,7 @@ namespace weather_widget.Model
                         string maxwind = reader.GetDouble("maxwind").ToString();
                         string humidity = reader.GetDouble("humidity").ToString();
 
-                        WeatherToDisplay item = new WeatherToDisplay(desc, icon, maxtemp + CELSIUS, mintemp + CELSIUS,
+                        WeatherToDisplayModel item = new WeatherToDisplayModel(desc, icon, maxtemp + CELSIUS, mintemp + CELSIUS,
                             averagetemp + CELSIUS, winddir, maxwind + MS, humidity + HUM, DateTime.Now.AddDays(i).ToString("ddd", new CultureInfo("en-EN")));
                         WeatherToDisplays.Add(item);
                     }

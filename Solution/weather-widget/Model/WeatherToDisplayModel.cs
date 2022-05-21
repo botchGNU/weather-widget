@@ -5,7 +5,7 @@ using System.Windows.Media.Imaging;
 
 namespace weather_widget.Model
 {
-    public class WeatherToDisplay
+    public class WeatherToDisplayModel
     {
         #region properties
         /// <summary>
@@ -71,7 +71,7 @@ namespace weather_widget.Model
 
         #endregion properties
 
-        public WeatherToDisplay(string weatherdesc, string weathericon, string maxtemperature, string mintemperature,
+        public WeatherToDisplayModel(string weatherdesc, string weathericon, string maxtemperature, string mintemperature,
                 string avgtemperature, string winddirection, string windspeed, string humidity, string weekday)
         {
             WeatherDescription = weatherdesc;
