@@ -10,13 +10,6 @@ namespace weather_widget.Model
     /// </summary>
     public class WeatherInfoListModel : List<WeatherInfoModel>
     {
-        #region properties for saving to DB
-        public string cityname { get; set; } = string.Empty;
-        public int cityid { get; set; } = 0;
-        public string countryzip { get; set; } = string.Empty;
-        public int id { get; set; } = -1;
-        #endregion
-
         /// <summary>
         /// WeatherInfoListModel constructor
         /// </summary>
