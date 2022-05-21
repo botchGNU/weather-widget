@@ -23,6 +23,7 @@ namespace weather_widget
     public partial class MainWindow : Window
     {
         WeatherInfoListModel weatherInfos;
+        DataBaseManagerModel dataBaseManagerModel;
         public MainWindow()
         {
 
@@ -68,8 +69,18 @@ namespace weather_widget
             Debug.WriteLine("Do other stuff");
             Debug.WriteLine("Do other stuff");
             */
-            
+            dataBaseManagerModel = new DataBaseManagerModel();
+            //dataBaseManagerModel.GetDataFromOpenWeather("Rankweil");
+
+            string s = "halleo";
         }
+
+        private void WindowLoaded(object sender, RoutedEventArgs e)
+        {
+            dataBaseManagerModel.LoadFromDatabase();
+        }
+
+
         /*
         private async void GetWeather(string cityname)
         {

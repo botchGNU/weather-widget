@@ -24,6 +24,26 @@
 
 --LIKE "%" GROUP BY cityname;
 
+-- C# query
+SELECT t1.maxtemp, t1. mintemp, t1.averagetemp, t1.maxwind, t1.winddir, t2.description, t2.icon, t2.frequency
+FROM (
+	  SELECT 
+	  MAX(maxtemperature) as 'maxtemp', 
+	  MIN(mintemperature) as 'mintemp', 
+	  round((SUM(maxtemperature)+SUM(mintemperature))/(COUNT(maxtemperature)+COUNT(mintemperature)),2) as 'averagetemp', 
+	  MAX(windspeed) as 'maxwind', 
+	  winddirectionasstring as 'winddir'
+	  FROM weatherinfo
+	  WHERE weatherdaytime BETWEEN '2022-05-16 00:00:00' AND '2022-05-17 00:00:00' AND upper(cityname) LIKE 'RANKWEIL'
+	  ) as t1,	  
+	 (
+	  SELECT weatherdescription as description, weathericon as icon, COUNT(weatherdescription) as frequency
+	  FROM weatherinfo
+	  WHERE weatherdaytime BETWEEN '2022-05-16 00:00:00' AND '2022-05-17 00:00:00' AND upper(cityname) LIKE 'RANKWEIL'
+	  GROUP BY weatherdescription 
+	  ORDER BY frequency DESC
+	  LIMIT 1
+	  ) as t2;  
 
 -- Maximale Temperatur:
 SELECT MAX(maxtemperature) as maxtemp FROM weatherinfo WHERE weatherdaytime BETWEEN '2022-05-13 00:00:00' AND '2022-05-14 00:00:00';
