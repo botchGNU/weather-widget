@@ -13,6 +13,11 @@ namespace weather_widget.Model
         public string WeatherDescription { get; set; }
 
         /// <summary>
+        /// Weekday (abbreviation) e.g. Mon
+        /// </summary>
+        public string Weekday { get; set; }
+
+        /// <summary>
         /// Weathericon --> Weathericon e.g. 04d.png
         /// </summary>
         public string WeatherIcon { get; set; }
@@ -51,7 +56,7 @@ namespace weather_widget.Model
         #endregion properties
 
         public WeatherToDisplay(string weatherdesc, string weathericon, string maxtemperature, string mintemperature,
-                string avgtemperature, string winddirection, string windspeed, string humidity)
+                string avgtemperature, string winddirection, string windspeed, string humidity, string weekday)
         {
             WeatherDescription = weatherdesc;
             WeatherIcon = weathericon;
@@ -61,6 +66,7 @@ namespace weather_widget.Model
             Winddirection = winddirection;
             WindSpeed = windspeed;
             Humidity = humidity;
+            Weekday = weekday;
         }
 
     }

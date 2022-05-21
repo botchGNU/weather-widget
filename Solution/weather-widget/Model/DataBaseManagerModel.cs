@@ -100,7 +100,7 @@ namespace weather_widget.Model
                                               $" round((SUM(maxtemperature)+SUM(mintemperature))/(COUNT(maxtemperature)+COUNT(mintemperature)),2) as 'averagetemp'," +
                                               $" MAX(windspeed) as 'maxwind'," +
                                               $" winddirectionasstring as 'winddir'," +
-                                              $" MAX(humidity) as humidity" +
+                                              $" MAX(humidity) as 'humidity'" +
                                               $" FROM weatherinfo" +
                                               $" WHERE weatherdaytime BETWEEN '{DateTime.Now.AddDays(i).ToString("yyyy-MM-dd")} 00:00:00' AND '{DateTime.Now.AddDays(i+1).ToString("yyyy-MM-dd")} 00:00:00' AND upper(cityname) LIKE '{CityName}'" +
                                               $" ) as t1," +
@@ -141,7 +141,7 @@ namespace weather_widget.Model
                     string humidity = reader.GetDouble("humidity").ToString();
 
                     WeatherToDisplay item = new WeatherToDisplay(desc, icon, maxtemp + CELSIUS, mintemp + CELSIUS,
-                        averagetemp + CELSIUS, winddir, maxwind + MS, humidity + HUM);
+                        averagetemp + CELSIUS, winddir, maxwind + MS, humidity + HUM, DateTime.Now.AddDays(i).ToString("ddd", new CultureInfo("en-EN")));
                     WeatherToDisplays.Add(item);
                 }
                 reader.Close();
