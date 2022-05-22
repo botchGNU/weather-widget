@@ -133,7 +133,6 @@ namespace weather_widget.Model
         public void LoadFromDatabase(string CityName)
         {
             this.CityName = CityName;
-            WeatherToDisplayListModel temp = new WeatherToDisplayListModel();
 
             if (CityName == null || CityName == String.Empty)
             {

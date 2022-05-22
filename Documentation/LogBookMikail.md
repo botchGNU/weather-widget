@@ -2,6 +2,9 @@
 
 - [x] Binding problems (pictures)
 - [x] Location changed bug --> List didn't update
+- [ ] 1h update doesn't work properly
+  - [ ] confirm button doesn't load data, if data is not available in db and needs to downloaded
+
 
 # ToDo
 
@@ -112,3 +115,9 @@ till 02.05 --> per E-Mail
 - [main] merged
 - [Organizational] documentation --> \1/2h
 - [Bugfix] Icons on UI, Location problems --> \1/2h
+
+## 22-05-2022 - Sunday
+
+- [Organizational] documentation -->\1/2h
+  - [UPDATE] Class diagrams
+  -  [UPDATE] ER diagram

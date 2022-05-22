@@ -4,9 +4,9 @@
 
 ````mermaid
 classDiagram
-	DataBaseManager --> APIManager : get data from internet
+	DataBaseManagerModel --> APIManagerModel : gets data from internet
 	
-	APIManager --> JSONModel : helper class to deserialize data from JSON
+	APIManagerModel --> JSONModel : helper class to deserialize data from JSON
 	
 	%% This is helper class, which gets the properties, that we need for our application
 	JSONModel --> JSONResponce
@@ -17,41 +17,61 @@ classDiagram
 	JSONModel --> JSONCity	
 	
 	%% After that, APIManager converts this thata into a List of weatherinfomodel
-	APIManager --> WeatherInfoListModel : convert received JSON into WeatherInfoListModel
+	APIManagerModel --> WeatherInfoListModel : convert received JSON into WeatherInfoListModel
 	
 	WeatherInfoListModel --|> WeatherInfoModel : inherits List of WeatherInfoModel
 	
-	DataBaseUpdateManager --> DataBaseManager : give info to update current weather data
+	DataBaseUpdateManagerModel --> DataBaseManagerModel : give info to update current weather data
 	
-	DataBaseManager --> WeatherInfoListModel : stores into database
+	DataBaseManagerModel --> WeatherInfoListModel : stores into database
 	
-	%% Weather data class, which are going to be displayed (not fix at the moment)
-	DataBaseManager --> WeatherToDisplay : get the relevant data, that has to be displayed
+	%% Weather data class, which are going to be displayed 
+	WeatherToDisplayListModel --|> WeatherToDisplayModel : inherits observablecollection of WeatherToDisplayModel
+	DataBaseManagerModel --> WeatherToDisplayListModel: property observablecollection contains e.g. temp., humidity,...
+	DataBaseManagerModel --|> INotifyPropertyChanged: inherits property changed
 	
-	
-    class APIManager{
+		
+    class APIManagerModel{
     -string API_KEY
     -WeatherInfoListModel GetWeatherInfos(string JSONContent)
     -ToWeatherInfoModel WeatherInfoModel(JSONListItem item)
     -string WindDirConverter(double winddir)
     +Task GetWeather(string location)
     }
-    class WeatherToDisplay{
-    + MAYBE, THERE WILL BE ANOTHER CLASS, THAT WILL REPRESENT THE DATA, WHICH IS GOING TO BE BINDED (DISPLAYED)
+    class WeatherToDisplayModel{
+    + string WeatherDescription
+    + string Weekday
+    + string WeatherIcon
+    + string MaxTemperature
+    + string MinTemperature
+    + string AvgTemperature
+    + string WindSpeed
+    + string Winddirection
+    + string Humidity
+    + BitmapImage WeatherImageSource
+    + WeatherToDisplayModel(string weatherdesc, ...)
     }
-    class DataBaseManager{
-    -
-    -
-    + THIS CLASS WILL HAVE METHODS, TO GET MAX, MIN, AVG, .. FROM DATABASE
-    + THIS CLASS WILL HAVE METHOD TO STORE DATA FROM DATABASE INTO WEATHERINFOLISTMODEL
-    + THIS CLASS WILL SAVE DATA RECEIVED FROM INTERNET INTO DATABASE
+    class WeatherToDisplayListModel~WeatherToDisplayModel~{
     }
-    class DataBaseUpdateManager{
-    + CurrentCity()
-    + SetTimerInitial()
-    + SetTimerContinious()
-    + IsConnectionAvailable()
-    + UpdateWeather()
+    class DataBaseManagerModel{
+    + WeatherToDisplayListModel WeatherToDisplays
+    + string CityName
+    - WeatherInfoListModel weatherInfos
+    - string CountryZip
+    - int CityId
+    - string MS
+    - string CELSIUS
+    - string HUM
+    - string FilePath
+    + DataBaseManagerModel()
+    + GetDataFromOpenWeather(string CityName) void
+    - GetWeather(string CityName) void
+    + SaveIntoDatabase() void
+    + LoadFromDatabase(string CityName) void
+    + GetCitiesByLetters(string LettersForCityname) List~string~
+    - InsertIntoDataBase(WeatherInfoModel weatherInfo) string
+    - CheckIfCurrentDataExist(WeatherInfoModel weatherinfo) bool
+    - UpdateDataBase(WeatherInfoModel weatherInfo) string
     }
     class JSONModel{
     +class JSONResponce
@@ -62,11 +82,11 @@ classDiagram
     +class JSONCity
     }
     class JSONResponce {
-    	~List<JSONListItems> items
+    	~List~JSONListItems~ items
     	~JSONCity City
     }
     class JSONListItem {
-        +List<JSONWeatherType> WeatherTypes
+        +List~JSONWeatherType~ WeatherTypes
     	+JSONWeatherWindInfo WeatherWindInfo
     	+string DateTime
     }
@@ -100,7 +120,14 @@ classDiagram
     	+double Humidity
     	+WeatherInfoModel(string weatherdesc, ...)
     }
-    class WeatherInfoListModel{
+    class WeatherInfoListModel~WeatherInfoModel~{
+    }
+    class DataBaseUpdateManagerModel{
+    + CurrentCity()
+    + SetTimerInitial()
+    + SetTimerContinious()
+    + IsConnectionAvailable()
+    + UpdateWeather()
     }
 class ViewModelBase{
 	Event PropertyChanged
@@ -174,8 +201,8 @@ DashBoardViewModel *-- DashBoardView : binding
 SettingsViewModel *-- SettingsView : binding
 MainWindowXaml <|-- AppXamlCs
 NavigationStore <|-- NavigateCommand
-DataBaseUpdateManager <|-- DashBoardViewModel
-DataBaseUpdateManager <|-- SettingsViewModel
+DataBaseUpdateManagerModel <|-- DashBoardViewModel
+DataBaseUpdateManagerModel <|-- SettingsViewModel
 WeatherToDisplayListModel <|-- DashBoardViewModel
 WeatherToDisplayListModel <|-- SettingsViewModel
 
