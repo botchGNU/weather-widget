@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SQLite;
-using System.Linq;
 
 namespace weather_widget.Model
 {
@@ -25,7 +24,7 @@ namespace weather_widget.Model
 
         }
 
-        
+
         public void SaveToSqlite(string fileName)
         {
             /*
@@ -92,9 +91,9 @@ namespace weather_widget.Model
 
             return conn;
         }
-        
 
-        
+
+
         /// <summary>
         /// Get the average temperature for the day
         /// </summary>
@@ -163,7 +162,7 @@ namespace weather_widget.Model
 
             foreach (WeatherInfoModel weather in this)
             {
-                if(highest)
+                if (highest)
                 {
                     if (result < weather.WindSpeed)
                     {
@@ -178,7 +177,7 @@ namespace weather_widget.Model
                         result = weather.WindSpeed;
                     }
                 }
-                
+
             }
 
             return result;
@@ -191,9 +190,9 @@ namespace weather_widget.Model
             
         }
         */
-        
 
-        
+
+
         /// <summary>
         /// Get the frequently recurring weather type for the day
         /// </summary>
@@ -211,7 +210,7 @@ namespace weather_widget.Model
 
         }
         */
-        
+
     }
 
 }

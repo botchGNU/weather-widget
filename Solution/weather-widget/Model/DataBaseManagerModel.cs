@@ -1,12 +1,11 @@
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
-using System.Text;
-using System.Threading.Tasks;
-using System.Data.SQLite;
-using System.Data;
-using System.Globalization;
 using System.ComponentModel;
+using System.Data;
+using System.Data.SQLite;
+using System.Diagnostics;
+using System.Globalization;
+using System.Threading.Tasks;
 
 namespace weather_widget.Model
 {
@@ -47,9 +46,9 @@ namespace weather_widget.Model
                 GetWeather(CityName);
             }
             catch (Exception ex)
-            { 
+            {
                 // Inform user that it failed
-                Debug.WriteLine("[ERROR]: Getting weather failed: " + ex.Message); 
+                Debug.WriteLine("[ERROR]: Getting weather failed: " + ex.Message);
             }
         }
 
@@ -70,7 +69,7 @@ namespace weather_widget.Model
 
             command.CommandText = $"SELECT id, countryzip FROM citylist WHERE upper(cityname) = upper('{CityName}')";
 
-            SQLiteDataReader reader =  command.ExecuteReader();
+            SQLiteDataReader reader = command.ExecuteReader();
 
             while (reader.Read())
             {
@@ -175,7 +174,7 @@ namespace weather_widget.Model
             // CityName valid ? --> try/catch
             try
             {
-                
+
 
 
                 for (int i = 0; i < dtlist.Count; i++)
@@ -272,7 +271,7 @@ namespace weather_widget.Model
                                 $"WHERE upper(cityname) LIKE '{LettersForCityname.ToUpper()}%'";
 
             SQLiteDataReader reader = cmd.ExecuteReader();
-            List<string> cities= new List<string>();
+            List<string> cities = new List<string>();
 
             while (reader.Read())
             {
@@ -280,14 +279,14 @@ namespace weather_widget.Model
             }
             connection.Close();
 
-            if(cities.Count > 0)
+            if (cities.Count > 0)
             {
                 return cities;
             }
             else
             {
                 cities.Add("Not Available! City doesn't exist in citylist!"); // NA... not available
-                return cities; 
+                return cities;
             }
         }
 
@@ -298,7 +297,7 @@ namespace weather_widget.Model
                     $"weatherinfo(cityid, cityname, countryzip, weatherdescription, weathericon, weatherdaytime, maxtemperature, mintemperature, winddirection, winddirectionasstring, windspeed, humidity)" +
                     $" VALUES({(CityId)},'{CityName}','{CountryZip}','{weatherInfo.WeatherDescription}','{weatherInfo.WeatherIcon}','{weatherInfo.WeatherDayTime.ToString("yyyy-MM-dd HH:mm:ss")}'," +
                     $" '{weatherInfo.MaxTemperature.ToString(new CultureInfo("en-US"))}','{weatherInfo.MinTemperature.ToString(new CultureInfo("en-US"))}','{weatherInfo.WindDirection.ToString(new CultureInfo("en-US"))}'," +
-                    $" '{weatherInfo.WindDirectionAsString}', '{weatherInfo.WindSpeed.ToString(new CultureInfo("en-US"))}', '{weatherInfo.Humidity.ToString(new CultureInfo("en-US"))}')"; 
+                    $" '{weatherInfo.WindDirectionAsString}', '{weatherInfo.WindSpeed.ToString(new CultureInfo("en-US"))}', '{weatherInfo.Humidity.ToString(new CultureInfo("en-US"))}')";
 
             return sqlitecmd;
         }
@@ -321,7 +320,7 @@ namespace weather_widget.Model
             }
             connection.Close();
 
-            if(i > 0)
+            if (i > 0)
             {
                 return true; // it exists
             }

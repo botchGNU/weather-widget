@@ -6,7 +6,7 @@ using weather_widget.Store;
 
 namespace weather_widget.ViewModel
 {
-    class SettingsViewModel : ViewModelBase
+    internal class SettingsViewModel : ViewModelBase
     {
         #region fields
         private DataBaseUpdateManagerModel _updateMan;
@@ -29,8 +29,11 @@ namespace weather_widget.ViewModel
         #endregion
 
         #region properties
-        public string CurrentLocation { get => _updateMan.CurrentCity; 
-            set => _updateMan.CurrentCity = value; }    //Binding for View -> gets/sets location for weather api
+        public string CurrentLocation
+        {
+            get => _updateMan.CurrentCity;
+            set => _updateMan.CurrentCity = value;
+        }    //Binding for View -> gets/sets location for weather api
         #endregion
     }
 }

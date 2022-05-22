@@ -1,9 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using weather_widget.Model;
-
-namespace weather_widget.Command
+﻿namespace weather_widget.Command
 {
     /// <summary>
     /// Exit entire application -> Will call cancellationtokens in the future
