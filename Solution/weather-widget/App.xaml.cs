@@ -40,7 +40,6 @@ namespace weather_widget
             base.OnStartup(e);
         }
 
-
         #region create methods
         /// <summary>
         /// Methods in order to create new ViewModeles -> Passed into ViewModels

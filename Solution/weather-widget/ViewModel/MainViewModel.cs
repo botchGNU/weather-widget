@@ -2,7 +2,7 @@
 
 namespace weather_widget.ViewModel
 {
-    class MainViewModel : ViewModelBase
+    internal class MainViewModel : ViewModelBase
     {
         #region fields
         private readonly NavigationStore _navigationStore;

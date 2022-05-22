@@ -1,15 +1,13 @@
 ﻿using Newtonsoft.Json;
 using System;
-using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Net.Http;
-using System.Text;
 using System.Threading.Tasks;
 
 namespace weather_widget.Model
 {
-    class APIManagerModel
+    internal class APIManagerModel
     {
         private static string API_KEY = File.ReadAllText(@"..\\..\\..\\..\\..\\API.key"); //=> ".\weather-widget\API.key"
         //private static string API_KEY = "11"; //=> ".\weather-widget\API.key"
@@ -24,14 +22,14 @@ namespace weather_widget.Model
                 {
                     string response = await client.GetStringAsync(url);
                     // No error occured (internet connection available & max request is not exceeded)
-                    if(!(response.ToUpper().Contains(@"""MESSAGE"": ""YOUR ACCOUNT IS TEMPORARY""") && response.ToUpper().Contains(@"""COD"": 429")))
+                    if (!(response.ToUpper().Contains(@"""MESSAGE"": ""YOUR ACCOUNT IS TEMPORARY""") && response.ToUpper().Contains(@"""COD"": 429")))
                     {
                         return GetWeatherInfos(response.ToString());
                     }
                 }
                 catch (HttpRequestException ex)
                 {
-                    if(ex.Message.ToUpper().Contains("429"))
+                    if (ex.Message.ToUpper().Contains("429"))
                     {
                         throw new Exception("1: Max request reached!"); // Maximum reached
                     }
@@ -39,11 +37,11 @@ namespace weather_widget.Model
                     {
                         throw new Exception("2: Invalid API-Key!"); // API-Key is wrong
                     }
-                    else if(ex.Message.ToUpper().Contains("404"))
+                    else if (ex.Message.ToUpper().Contains("404"))
                     {
                         throw new Exception("4: Wrong city name / Invalid city name!"); // wrong city
                     }
-                    else if(ex.Message.ToUpper().Contains("500") || ex.Message.ToUpper().Contains("502") || ex.Message.ToUpper().Contains("503") || ex.Message.ToUpper().Contains("504"))
+                    else if (ex.Message.ToUpper().Contains("500") || ex.Message.ToUpper().Contains("502") || ex.Message.ToUpper().Contains("503") || ex.Message.ToUpper().Contains("504"))
                     {
                         throw new Exception("5: Unknown error code! Please contact openweather: https://home.openweathermap.org/questions."); // undefinied error code --> contact openweather 
                     }
@@ -86,7 +84,7 @@ namespace weather_widget.Model
             return new WeatherInfoModel
             (
                 weatherdesc: item.WeatherTypes[0].Description,
-                weathericon: item.WeatherTypes[0].Icon+".png",
+                weathericon: item.WeatherTypes[0].Icon + ".png",
                 weatherdaytime: DateTime.Parse(item.DateTime), // content: string DateTime --> Parse to DateTime
                 maxtemp: double.Parse(item.MainInfo.Temp_max.ToString()),
                 mintemp: double.Parse(item.MainInfo.Temp_min.ToString()),
@@ -95,7 +93,7 @@ namespace weather_widget.Model
                 windspeed: double.Parse(item.WeatherWindInfo.WindSpeed.ToString()),
                 humidity: double.Parse(item.MainInfo.Humidity.ToString())
             );
-        } 
+        }
 
         /// <summary>
         /// Converts the received value into a direction, which is understandable (as String)

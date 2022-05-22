@@ -1,7 +1,5 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Diagnostics;
-using System.Text;
 using System.Timers;
 
 namespace weather_widget.Model
@@ -11,16 +9,18 @@ namespace weather_widget.Model
         #region fields
         private string _currentCity;
         private DataBaseManagerModel _manager;
-        private Timer _threeHourTimer;
+        private System.Timers.Timer _threeHourTimer;
+        // private SynchronizationContext _uiContext;
         #endregion
 
         #region ctor
         public DataBaseUpdateManagerModel()
         {
-            
+
             _manager = new DataBaseManagerModel();
             CurrentCity = "Rankweil";   //current default value
             _manager.CityName = CurrentCity; // NEW: inform default city to databasemanager
+            //_uiContext = SynchronizationContext.Current;
             UpdateWeather();      //uncommented unless api key is in repo
             SetTimerInitial();
             _manager.LoadFromDatabase(CurrentCity);
@@ -74,13 +74,13 @@ namespace weather_widget.Model
             _threeHourTimer.AutoReset = true;
             _threeHourTimer.Enabled = true;
         }
-        
+
         //check if internet connection is available
         private bool IsConnectionAvailable()
         {
             try
             {   //check if domain name is resolvable
-                System.Net.IPHostEntry ipHe =  System.Net.Dns.GetHostEntry("www.openweathermap.org");
+                System.Net.IPHostEntry ipHe = System.Net.Dns.GetHostEntry("www.openweathermap.org");
                 return true;
             }
             catch
@@ -105,14 +105,19 @@ namespace weather_widget.Model
         #region events
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
+            //_uiContext.Send(x => UpdateWeather(),null);
+            //_uiContext.Send(x => SetTimerContinious(),null);
             SetTimerContinious();
             UpdateWeather();
         }
         #endregion
 
         #region properties
-        public string CurrentCity { get => _currentCity; 
-            set => _currentCity = value; }
+        public string CurrentCity
+        {
+            get => _currentCity;
+            set => _currentCity = value;
+        }
         public WeatherToDisplayListModel WeatherList { get => _manager.WeatherToDisplays; }
         #endregion 
     }

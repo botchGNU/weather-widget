@@ -1,5 +1,4 @@
 ﻿using System;
-using System.IO;
 using System.Windows.Input;
 using System.Windows.Media.Imaging;
 using weather_widget.Command;
@@ -8,7 +7,7 @@ using weather_widget.Store;
 
 namespace weather_widget.ViewModel
 {
-    class DashboardViewModel : ViewModelBase
+    internal class DashboardViewModel : ViewModelBase
     {
         #region fields
         private DataBaseUpdateManagerModel _updateMan;
@@ -56,102 +55,62 @@ namespace weather_widget.ViewModel
 
         #region properties  
         //bindings for view <-> viewmodel
-        public string CurrentDate 
+        public string CurrentDate
         {
-            get 
-            { 
-                return 
+            get
+            {
+                return
                     (
-                     DateTime.Now.Day + "/" + 
+                     DateTime.Now.Day + "/" +
                      DateTime.Now.Month + "/" +
                      DateTime.Now.Year
-                    ); 
+                    );
             }
-                
+
         }
         public string CurrentDay { get => DateTime.Now.DayOfWeek.ToString(); }
-        public string CurrentLocation 
-        { 
-            get => _updateMan.CurrentCity; 
-            set 
+        public string CurrentLocation
+        {
+            get => _updateMan.CurrentCity;
+            set
             {
                 OnPropertyChanged(nameof(CurrentLocation));
             }
         }
-        public string Humidity 
-        { 
-            get 
-            { 
-                if (ForecastList.Count == 0)
-                {
-                    return "X";
-                }
-                else
-                {
-                    return Convert.ToString(ForecastList[0]?.Humidity);
-                }
-            } 
-        }
-        public string MinTemp 
+        public string Humidity
         {
             get
             {
-                if (ForecastList.Count == 0)
-                {
-                    return "X";
-                }
-                else
-                {
-                    return ForecastList[0]?.MinTemperature;
-                }
+                return ForecastList.Count == 0 ? "X" : Convert.ToString(ForecastList[0]?.Humidity);
             }
         }
-        public string MaxTemp 
+        public string MinTemp
         {
             get
             {
-                if (ForecastList.Count == 0)
-                {
-                    return "X";
-                }
-                else
-                {
-                    return ForecastList[0]?.MaxTemperature;
-                }
+                return ForecastList.Count == 0 ? "X" : (ForecastList[0]?.MinTemperature);
             }
         }
-        public string AvTemp 
+        public string MaxTemp
         {
             get
             {
-                if (ForecastList.Count == 0)
-                {
-                    return "X";
-                }
-                else
-                {
-                    return ForecastList[0]?.AvgTemperature;
-                }
+                return ForecastList.Count == 0 ? "X" : (ForecastList[0]?.MaxTemperature);
             }
         }
-        public WeatherToDisplayListModel ForecastList { get => _weatherList; }   
+        public string AvTemp
+        {
+            get
+            {
+                return ForecastList.Count == 0 ? "X" : (ForecastList[0]?.AvgTemperature);
+            }
+        }
+        public WeatherToDisplayListModel ForecastList { get => _weatherList; }
         public BitmapImage WeatherImageSource
         {
             get
             {
-                BitmapImage bi3 = new BitmapImage();
-                bi3.BeginInit();
-
-                if (ForecastList.Count == 0)
-                {
-
-                }
-                else
-                {
-                    bi3.UriSource = new Uri(@"..\Resources\Icons\" + ForecastList[0].WeatherIcon, UriKind.RelativeOrAbsolute);
-                    bi3.EndInit();
-                }
-                return bi3;
+                return ForecastList[0].WeatherImageSource;
             }
         }
 
