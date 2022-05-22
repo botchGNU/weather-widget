@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Text;
+using System.Threading;
 using System.Timers;
 
 namespace weather_widget.Model
@@ -11,7 +12,8 @@ namespace weather_widget.Model
         #region fields
         private string _currentCity;
         private DataBaseManagerModel _manager;
-        private Timer _threeHourTimer;
+        private System.Timers.Timer _threeHourTimer;
+        // private SynchronizationContext _uiContext;
         #endregion
 
         #region ctor
@@ -21,6 +23,7 @@ namespace weather_widget.Model
             _manager = new DataBaseManagerModel();
             CurrentCity = "Rankweil";   //current default value
             _manager.CityName = CurrentCity; // NEW: inform default city to databasemanager
+            //_uiContext = SynchronizationContext.Current;
             UpdateWeather();      //uncommented unless api key is in repo
             SetTimerInitial();
             _manager.LoadFromDatabase(CurrentCity);
@@ -105,6 +108,8 @@ namespace weather_widget.Model
         #region events
         private void OnTimedEvent(Object source, ElapsedEventArgs e)
         {
+            //_uiContext.Send(x => UpdateWeather(),null);
+            //_uiContext.Send(x => SetTimerContinious(),null);
             SetTimerContinious();
             UpdateWeather();
         }
