@@ -110,6 +110,14 @@ namespace weather_widget.ViewModel
         {
             get
             {
+                if (ForecastList[0] == null)    
+                {
+                    BitmapImage bi3 = new BitmapImage();
+                    bi3.BeginInit();
+                    bi3.EndInit();
+                    return bi3;
+                }
+                else
                 return ForecastList[0].WeatherImageSource;
             }
         }
